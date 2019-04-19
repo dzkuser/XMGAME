@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Game";
+}
+
+<h2>Game</h2>
+<p id="w"></p>
+<input type="text" id="" />
+<button id="submit">ok</button>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/SuperSocket.js"></script>
+<script>
+    function getParam(paramName) {
+        paramValue = "", isFound = !1;
+        if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+            arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
+            while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+        }
+        return paramValue == "" && (paramValue = null), paramValue
+    }
+    alert();
+    
+    $("#submit").click(function () {
+        $.ajax({
+            url: "/Record/AddRecord",
+            data: { "AccountName": getParam("name"), "Integral": -20, "CreateTime": "2019-7-7", "EndTime": "2019-8-8" },
+            success: function () {
+
+                window.location.href = "/Login/EndGame?name=" + getParam("name") + "&roomID=" + getParam("roomID");
+            }
+
+
+        });
+            
+
+    });
+
+
+
+
+
+
+
+</script>

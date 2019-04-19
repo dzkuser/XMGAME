@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<input type="text"  id="u"/>
+<input type="text" id="p" />
+
+<button id="submit">xxx</button>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/SuperSocket.js"></script>
+
+<script>
+    var s = $.MySuperSocket;
+    $("#submit").click(function () {
+        $.ajax({
+            url: "/Login/Login",
+            data: { "AccountName": $("#u").val(), "UserPassWord": $("#p").val() },
+            success: function (data) {
+                data= JSON.parse(data);
+                console.log(data);
+                if (data.Code == 200) {
+                    console.log(data.Code);
+                  
+                    s.openSocket(open, close, message, erro);
+                    function open(e) {
+                        var entity = {
+                            "FromUser": $("#u").val(),
+                            "Tag": "c"
+                        }
+                        s.sendMessage(entity);
+                        alert("xxx");
+                        window.location.href = "/Login/Home?name="+$("#u").val();
+
+                    }
+                    function close(e) {
+                    }
+                    function message(e) {
+
+                    }
+                    function erro(e) {
+
+                    }
+
+                }
+            }
+
+
+        });
+
+    });
+
+
+
+
+  
+
+</script>
+

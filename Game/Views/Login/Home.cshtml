@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+<button id="submit">xxx</button>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/SuperSocket.js"></script>
+<script>
+    function getParam(paramName) {
+        paramValue = "", isFound = !1;
+        if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+            arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
+            while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+        }
+        return paramValue == "" && (paramValue = null), paramValue
+    }  
+
+
+                    
+                    var s = $.MySuperSocket;
+                    s.openSocket(open, close, message, erro);
+                    function open(e) {
+                        var entity = {
+                            "FromUser": getParam("name"),
+                            "Tag": "c"
+                        }
+                        s.sendMessage(entity);
+                        alert(getParam("name"));                      
+                    }
+                    function close(e) {
+                    }
+                    function message(e) {
+
+                    }
+                    function erro(e) {
+
+                    }
+
+
+    $("#submit").click(function () {
+        window.location.href = "/Login/Room?name=" + getParam("name");
+
+                    });
+
+                
+            
+
+
+    
+ 
+</script>
