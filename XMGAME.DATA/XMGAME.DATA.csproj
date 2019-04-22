@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="mapper\GameMapper.cs" />
     <Compile Include="mapper\RecordMapper.cs" />
     <Compile Include="mapper\UserMapper.cs" />
     <Compile Include="MyDbContext.cs" />

@@ -22,6 +22,7 @@ namespace XMGAME.DATA
         {
             modelBuilder.Configurations.Add(new UserMapper());
             modelBuilder.Configurations.Add(new RecordMapper());
+            modelBuilder.Configurations.Add(new GameMapper());
             base.OnModelCreating(modelBuilder);
         }
     } 
