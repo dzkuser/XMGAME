@@ -19,9 +19,14 @@ namespace XMGAME.DAL
             return dbContext.SaveChanges() > 0 ? true : false;
         }
 
-        public Record GetRecordInfo(string accountName)
+        public Record GetRecordByUserAndRoom(string accountName, string roomID)
         {
-           return  dbContext.Set<Record>().Where(r => r.AccountName == accountName).FirstOrDefault();
+            return dbContext.Set<Record>().Where(r => r.AccountName == accountName && r.RoomID==roomID).FirstOrDefault();
+        }
+
+        public IQueryable<Record> GetRecordInfo(string accountName)
+        {
+           return  dbContext.Set<Record>().Where(r => r.AccountName == accountName);
         }
 
         public IQueryable<Record> GetRecords(string roomID)
@@ -32,7 +37,7 @@ namespace XMGAME.DAL
 
         public bool UpdateRecord(Record record)
         {
-            Record editRrcord = GetRecordInfo(record.AccountName);
+            Record editRrcord = GetRecordByUserAndRoom(record.AccountName,record.RoomID);
             editRrcord.EndTime = record.EndTime;
             editRrcord.Integral = record.Integral;
             dbContext.Set<Record>().Attach(editRrcord);

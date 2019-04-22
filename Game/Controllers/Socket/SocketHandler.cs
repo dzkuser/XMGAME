@@ -147,7 +147,7 @@ namespace Game.Controllers.Socket
                 socket.RoomID = roomID;
                 
             }
-            
+            socket.Tag = "s";
             socket.ToUser =room;
             socket.Message= socket.FromUser + "进入游戏间";         
             handlerSendMessage(socket);
@@ -173,6 +173,10 @@ namespace Game.Controllers.Socket
             else
             {               
                 roomReady[socket.RoomID] = count;
+                socket.Tag = "s";
+                socket.Message = socket.FromUser + "以准备";
+                socket.ToUser = sessionRoom[socket.RoomID];
+                handlerSendMessage(socket);
             }
         }
 

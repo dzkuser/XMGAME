@@ -18,7 +18,7 @@ namespace Game.Controllers
         public ActionResult GetRecordInfo() {
 
             string accountName = Request["accountName"];
-            Record record= recordBLL.GetRecordInfo(accountName);
+            IQueryable<Record> record= recordBLL.GetRecordInfo(accountName);
             if (record != null)
             {
                 return Content(StringHpler.getString(200, "查询成功", record));
@@ -63,9 +63,26 @@ namespace Game.Controllers
 
             }
             else {
-                return Content(StringHpler.getString(500, "修改成功"));
+                return Content(StringHpler.getString(500, "修改失败"));
             }
 
+        }
+
+        public ActionResult GetUserRecord(Record record) {
+
+           
+            Record recordUser = recordBLL.GetRecordByUserAndRoom(record.AccountName,record.RoomID);
+
+            if (recordUser != null)
+            {
+                return Content(StringHpler.getString(200, "查询成功", recordUser));
+
+
+            }
+            else
+            {
+                return Content(StringHpler.getString(500, "查询失败"));
+            }
         }
 
 

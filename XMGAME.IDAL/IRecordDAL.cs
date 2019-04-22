@@ -14,7 +14,7 @@ namespace XMGAME.IDAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Record GetRecordInfo(string accountName);
+        IQueryable<Record> GetRecordInfo(string accountName);
 
         /// <summary>
         /// 添加一条游戏记录
@@ -30,7 +30,19 @@ namespace XMGAME.IDAL
         /// <returns></returns>
         bool UpdateRecord(Record record);
 
+        /// <summary>
+        /// 得到一个房间的所有用户记录
+        /// </summary>
+        /// <param name="roomID">房间ID</param>
+        /// <returns></returns>
         IQueryable<Record> GetRecords(string roomID);
+        /// <summary>
+        ///根据用户 查询一条游戏记录
+        /// </summary>
+        /// <param name="accountName"></param>
+        /// <param name="roomID"></param>
+        /// <returns></returns>
+        Record GetRecordByUserAndRoom(string accountName,string roomID);
 
     }
 }

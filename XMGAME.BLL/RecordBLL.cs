@@ -13,7 +13,7 @@ namespace XMGAME.BLL
     {
         private IRecordDAL recordDAL = new RecordDAL();
 
-        public Record GetRecordInfo(string accountName) {
+        public IQueryable<Record> GetRecordInfo(string accountName) {
             return recordDAL.GetRecordInfo(accountName);
         }
 
@@ -27,6 +27,11 @@ namespace XMGAME.BLL
 
         public IQueryable<Record> GetRecords(string roomID) {
             return recordDAL.GetRecords(roomID);
+        }
+
+        public Record GetRecordByUserAndRoom(string accountName, string roomID) {
+
+            return recordDAL.GetRecordByUserAndRoom(accountName,roomID);
         }
     }
 }

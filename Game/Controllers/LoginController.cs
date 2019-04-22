@@ -50,7 +50,7 @@ namespace Game.Controllers
             if (isSuccess!=null) {
            
                
-                return Content(StringHpler.getString(200,"登录成功"));
+                return Content(StringHpler.getString(200,"登录成功",isSuccess));
             }
             else
             {
@@ -58,6 +58,8 @@ namespace Game.Controllers
             }
 
         }
+
+
 
         public ActionResult Register() {
             User user = new User()
