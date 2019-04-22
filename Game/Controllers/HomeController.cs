@@ -17,5 +17,9 @@ namespace Game.Controllers
             return View();
         }
 
+        public ActionResult Three() {
+
+            return View();
+        }
     }
 }

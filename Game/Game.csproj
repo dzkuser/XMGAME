@@ -252,6 +252,7 @@
     <Content Include="Views\Login\Room.cshtml" />
     <Content Include="Views\Login\Game.cshtml" />
     <Content Include="Views\Login\EndGame.cshtml" />
+    <Content Include="Views\Home\Three.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
