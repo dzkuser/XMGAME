@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XMGAME.Comm;
 
 namespace Game.Controllers
 {
@@ -15,7 +16,8 @@ namespace Game.Controllers
         // GET: Home
         public ActionResult Index()
         {
-  
+            SocketHandler s = new SocketHandler();
+            s.SetUp();
             return View();
         }
 

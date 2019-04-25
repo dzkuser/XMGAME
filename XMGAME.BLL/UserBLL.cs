@@ -31,7 +31,8 @@ namespace XMGAME.BLL
             User user = userDAL.GetByWhere(record, pairs, "").FirstOrDefault();
             return user;
         }
-       
+
+       [ErroAttribute(100)]
         public User Login(string accountName, string passWord) {
             User record = new User();
             record.AccountName = accountName;

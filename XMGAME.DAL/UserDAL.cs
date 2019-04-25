@@ -48,6 +48,7 @@ namespace XMGAME.DAL
         }
         public bool UpdateOrAddToken(User user)
         {
+          
             TokenEntity tokenEntity = dbContext.Set<TokenEntity>().Where(t => t.AccountName == user.AccountName).FirstOrDefault();
             if (tokenEntity != null)
             {
@@ -64,8 +65,7 @@ namespace XMGAME.DAL
                 };
                 dbContext.Set<TokenEntity>().Add(token);
 
-            }
-
+            } 
             return dbContext.SaveChanges() > 0 ? true : false;
         }
     }

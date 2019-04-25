@@ -14,8 +14,9 @@ namespace XMGAME.BLL
         private IRecordDAL recordDAL = new RecordDAL();
         private IUserDAL userDAL = new UserDAL();
 
-       
-        public IQueryable<Record> GetRecordInfo(string accountName) {
+ 
+        public IQueryable<Record> GetRecordInfo(string accountName) 
+        {
 
             Record record = new Record();
             record.AccountName = userDAL.GetUserByToken(accountName).AccountName;

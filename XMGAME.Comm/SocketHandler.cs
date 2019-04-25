@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Web;
 using System.Web.Script.Serialization;
 using XMGAME.Comm;
@@ -302,22 +303,43 @@ namespace XMGAME.Comm
 
                         return RedisHelper.GetData<object>(redisKey);
                     }
-                    else
-                    {
-
+                    
                         object resultM = method.Invoke(obj, paramMethod.Values.ToArray());
                         RedisHelper.SetData(redisKey, resultM);
                         return resultM;
-                    }
-
+                   
                 }
 
 
-            }         
-               return method.Invoke(obj, paramMethod.Values.ToArray());
+            }
+         
+            
+            return  method.Invoke(obj, paramMethod.Values.ToArray());
                     
         }
 
+        private object exMethod(object obj,object[] param,MethodInfo method) {
+
+            object result = null;
+            try
+            {
+                result=method.Invoke(obj, param);
+            }
+            catch (Exception ex)
+            {
+                Attribute attribute = method.GetCustomAttribute(typeof(ErroAttribute));
+                if (attribute != null) {
+                    Type type= attribute.GetType();
+                    string code=type.GetProperty("Code").GetValue(attribute).ToString();
+                    Assembly myAssem = Assembly.GetEntryAssembly();
+                    ResourceManager rm = new ResourceManager("ErroMessage", myAssem);
+                   string message= rm.GetString(code);
+
+                }
+
+            }
+            return result;
+        } 
         private void entityMapping(ref Dictionary<string, object> paramMethod,MethodInfo method,ref Dictionary<string, object> param) {
             ParameterInfo[] parameterInfo = method.GetParameters();
             foreach (var item in parameterInfo)
