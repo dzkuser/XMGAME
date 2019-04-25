@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGAME.DATA", "XMGAME.DATA\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{CA44E457-1113-4CBC-92C8-E62E0D367EDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGame.UnitTestProject", "XMGame.UnitTestProject\XMGame.UnitTestProject.csproj", "{A1558C00-FFB5-4AAB-9BAB-448D9F339CFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{CA44E457-1113-4CBC-92C8-E62E0D367EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA44E457-1113-4CBC-92C8-E62E0D367EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA44E457-1113-4CBC-92C8-E62E0D367EDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1558C00-FFB5-4AAB-9BAB-448D9F339CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1558C00-FFB5-4AAB-9BAB-448D9F339CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1558C00-FFB5-4AAB-9BAB-448D9F339CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1558C00-FFB5-4AAB-9BAB-448D9F339CFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
