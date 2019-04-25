@@ -23,6 +23,10 @@ namespace XMGAME.DATA
             modelBuilder.Configurations.Add(new UserMapper());
             modelBuilder.Configurations.Add(new RecordMapper());
             modelBuilder.Configurations.Add(new GameMapper());
+            modelBuilder.Configurations.Add(new TokenMapper());
+            modelBuilder.Configurations.Add(new GenreMapper());
+            modelBuilder.Configurations.Add(new QuestionMapper());
+            modelBuilder.Configurations.Add(new RecordQuestionMapper());
             base.OnModelCreating(modelBuilder);
         }
     } 

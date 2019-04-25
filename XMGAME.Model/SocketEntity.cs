@@ -18,5 +18,7 @@ namespace XMGAME.Model
         public string Tag { get; set; } = "";
         public string RoomID { get; set; } = "";
 
+        public string ActionMethod = "";
+
     }
 }

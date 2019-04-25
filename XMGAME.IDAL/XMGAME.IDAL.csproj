@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBaseDAL.cs" />
     <Compile Include="IGameDAL.cs" />
+    <Compile Include="IGenreDAL.cs" />
+    <Compile Include="IQuestionDAL.cs" />
     <Compile Include="IRecordDAL.cs" />
+    <Compile Include="IRecordQuestionDAL.cs" />
     <Compile Include="IUserDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

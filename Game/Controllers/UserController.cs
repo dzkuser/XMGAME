@@ -16,14 +16,16 @@ namespace Game.Controllers
         public ActionResult GetUserInfo()
         {
             int id = Convert.ToInt32(Request["id"]);
-            User user= userBLL.GetUserInfo(id);
-            if (user != null) {
-                return Content(StringHpler.getString(200, "查询成功", user));
-            }
-            else
-            {
-                return Content(StringHpler.getString(500, "查询失败", user));
-            }
+            //User user = userBLL.GetUserInfo(id);
+            //if (user != null)
+            //{
+            //    return Content(StringHpler.getString(200, "查询成功", user));
+            //}
+            //else
+            //{
+            //    return Content(StringHpler.getString(500, "查询失败", user));
+            //}
+            return View();
         }
 
         public ActionResult UpdateIntegral(User user) {

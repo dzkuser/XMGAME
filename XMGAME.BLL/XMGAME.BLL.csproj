@@ -43,10 +43,16 @@
   <ItemGroup>
     <Compile Include="GameBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionBLL.cs" />
     <Compile Include="RecordBLL.cs" />
+    <Compile Include="RecordQuestionBLL.cs" />
     <Compile Include="UserBLL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XMGAME.Comm\XMGAME.Comm.csproj">
+      <Project>{E8628669-5FC6-46C3-B490-4860BE0490A7}</Project>
+      <Name>XMGAME.Comm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XMGAME.DAL\XMGAME.DAL.csproj">
       <Project>{C2582785-815F-4FE6-889E-EB860CED9D9D}</Project>
       <Name>XMGAME.DAL</Name>
@@ -59,6 +65,9 @@
       <Project>{623A8305-753D-4CD5-8FD7-2E7311DF6B5A}</Project>
       <Name>XMGAME.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

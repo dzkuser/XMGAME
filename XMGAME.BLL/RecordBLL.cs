@@ -12,26 +12,50 @@ namespace XMGAME.BLL
    public class RecordBLL
     {
         private IRecordDAL recordDAL = new RecordDAL();
+        private IUserDAL userDAL = new UserDAL();
 
+       
         public IQueryable<Record> GetRecordInfo(string accountName) {
-            return recordDAL.GetRecordInfo(accountName);
+
+            Record record = new Record();
+            record.AccountName = userDAL.GetUserByToken(accountName).AccountName;
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            pairs.Add("AccountName", "==");
+            return recordDAL.GetByWhere(record, pairs, "");
+       
         }
 
         public bool AddRecord(Record record) {
-            return recordDAL.AddRecord(record);
+            return recordDAL.Insert(record);
         }
 
         public bool UpdateRecord(Record record) {
-            return recordDAL.UpdateRecord(record);
+            User user = new User() {
+                AccountName= userDAL.GetUserByToken(record.AccountName).AccountName,
+                Integral=record.Integral
+            };
+            userDAL.Update(user);
+            return recordDAL.Update(record);
         }
 
         public IQueryable<Record> GetRecords(string roomID) {
-            return recordDAL.GetRecords(roomID);
+            Record record = new Record();
+            record.RoomID = roomID;
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            pairs.Add("RoomID", "==");
+            return recordDAL.GetByWhere(record, pairs, "");
         }
 
-        public Record GetRecordByUserAndRoom(string accountName, string roomID) {
+        public Record GetRecordByUserAndRoom(string token, string roomID) {
 
-            return recordDAL.GetRecordByUserAndRoom(accountName,roomID);
+            Record record = new Record();
+            record.AccountName = userDAL.GetUserByToken(token).AccountName;
+            record.RoomID = roomID;
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            pairs.Add("AccountName", "==");
+            pairs.Add("RoomID","==");
+            return recordDAL.GetByWhere(record, pairs,"").FirstOrDefault();
+        
         }
     }
 }

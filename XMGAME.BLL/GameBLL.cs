@@ -16,24 +16,29 @@ namespace XMGAME.BLL
 
         public bool EditGame(Game game) {
 
-            return gameDAL.EditGame(game);
+            return gameDAL.Update(game);
         }
 
         public IQueryable<Game> GetGames()
         {
-            return gameDAL.GetGames();
+            return gameDAL.GetAll();
         }
 
         public bool DeleteGame(int id) {
-            return gameDAL.DeleteGame(id);
+
+            return gameDAL.Delete(GetGame(id));
         }
 
         public Game GetGame(int id) {
-            return gameDAL.GetGame(id);
+            Game game = new Game();
+            game.ID = id;
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            pairs.Add("ID", "==");
+            return gameDAL.GetByWhere(game,pairs,"").FirstOrDefault();
         }
 
         public bool AddGame(Game game) {
-            return gameDAL.AddGame(game);
+            return gameDAL.Insert(game);
         }
 
     }

@@ -18,8 +18,40 @@
         }
         return paramValue == "" && (paramValue = null), paramValue
     }
-    alert();
+
+
+
+    var s = $.MySuperSocket;
+    s.openSocket(open, close, message, erro);
+    function open(e) {
+        var entity = {
+            "FromUser": getParam("name"),
+            "Tag": "c"
+        }
+        s.sendMessage(entity);
+
     
+        alert(getParam("name"));
+    }
+    function close(e) {
+    }
+    function message(e) {
+        data = JSON.parse(e.data);
+        if (data.Tag == "b") {
+
+            window.location.href = "/Login/Game?name=" + getParam("name") + "&roomID=" + $("#id").val();
+        } else if (data.Tag == "s") {
+          
+        }
+        console.log("m:");
+        console.log(data);
+
+    }
+    function erro(e) {
+
+    }
+
+
     $("#submit").click(function () {
         $.ajax({
             url: "/Record/AddRecord",

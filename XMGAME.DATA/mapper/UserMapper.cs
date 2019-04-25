@@ -14,6 +14,7 @@ namespace XMGAME.DATA.mapper
 
             this.ToTable("tbUser");
             this.HasKey(t=>t.ID);
+         
         }
 
     }

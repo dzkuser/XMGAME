@@ -29,12 +29,14 @@
                             "Tag": "c"
                         }
                         s.sendMessage(entity);
+
                         alert(getParam("name"));                      
                     }
-                    function close(e) {
-                    }
+                function close(e) {
+                    alert("xxxxxxxx");
+                  }
                     function message(e) {
-
+                        console.log(e);
                     }
                     function erro(e) {
 
@@ -42,9 +44,20 @@
 
 
     $("#submit").click(function () {
-        window.location.href = "/Login/Room?name=" + getParam("name");
 
-                    });
+        var pa = { "Token": getParam("name"),"Integral":123};
+       var st= JSON.stringify(pa);
+        var entity = {
+            "FromUser": getParam("name"),
+            "Message":st,
+            "Tag": "ac",
+            "ActionMethod": "UserBLL.UpdateIntegral"
+           
+        }
+        s.sendMessage(entity);
+
+      //  window.location.href = "/Login/Room?name=" + getParam("name");
+       });
 
                 
             

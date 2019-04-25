@@ -1,4 +1,4 @@
-﻿using Game.Controllers.Socket;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +48,8 @@ namespace Game.Controllers
             string passWord = Request["UserPassWord"];
             User isSuccess = userBLL.Login(loginName,passWord);
             if (isSuccess!=null) {
-           
-               
+                isSuccess.Token = GetGuid();
+                userBLL.UpdateOrAddToken(isSuccess);
                 return Content(StringHpler.getString(200,"登录成功",isSuccess));
             }
             else
@@ -59,6 +59,11 @@ namespace Game.Controllers
 
         }
 
+
+
+        private string GetGuid() {
+            return Guid.NewGuid().ToString();
+        }
 
 
         public ActionResult Register() {

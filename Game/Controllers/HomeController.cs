@@ -1,6 +1,8 @@
-﻿using Game.Controllers.Socket;
+﻿
+using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,7 +15,7 @@ namespace Game.Controllers
         // GET: Home
         public ActionResult Index()
         {
-          
+  
             return View();
         }
 

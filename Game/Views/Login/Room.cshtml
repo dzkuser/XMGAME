@@ -47,7 +47,7 @@
                         if (data.Tag == "b") {
 
                             window.location.href = "/Login/Game?name=" + getParam("name") + "&roomID=" + $("#id").val();
-                        } else if (data.Tag == "i") {
+                        } else if (data.Tag == "s") {
                             $("#id").val(data.RoomID);
                         }
                         console.log("m:");
@@ -65,6 +65,7 @@
             "Tag": "r",
             "RoomID": $("#id").val()
         };
+
              s.sendMessage(c);
 
     });
