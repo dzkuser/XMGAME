@@ -38,13 +38,12 @@
 
         $("#send").click(function () {
 
-            var pa = { "": getParam("name"), "Integral": 123 };
+            var pa = { "AccountName": "dzk", "UserPassWord": "123" };
             var st = JSON.stringify(pa);
-            var entity = {
-                "FromUser": getParam("name"),
+            var entity = {           
                 "Message": st,
                 "Tag": "ac",
-                "ActionMethod": "UserBLL.UpdateIntegral"
+                "ActionMethod": "UserBLL.Login"
 
             }
             s.sendMessage(entity);

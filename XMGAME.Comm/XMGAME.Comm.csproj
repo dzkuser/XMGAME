@@ -115,6 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErroAttribute.cs" />
+    <Compile Include="ErroMessage.Designer.cs">
+      <DependentUpon>ErroMessage.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="ErrorAttribute.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="JsonHelper.cs" />
@@ -137,6 +142,12 @@
       <Project>{623a8305-753d-4cd5-8fd7-2e7311df6b5a}</Project>
       <Name>XMGAME.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ErroMessage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErroMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -105,7 +105,7 @@ namespace XMGAME.Comm
                     handlerSendMessage(socketEntity);
                     break;
                 case SocketEnum.ac:
-                    handlerControllerAction(socketEntity);
+                    handlerControllerAction(socketEntity,session);
                     break;
                 case SocketEnum.c:
                     updateSessionKey(socketEntity, session);
@@ -123,7 +123,14 @@ namespace XMGAME.Comm
         }
 
         //处理发送消息
-        public  void handlerSendMessage(SocketEntity socket) {
+        public void handlerSendMessage(SocketEntity socket, WebSocketSession session = null) {
+
+            if (session != null) {
+
+                session.Send(JsonConvert.SerializeObject(socket));
+                return;
+            }
+
             foreach (var item in socket.ToUser)
             {
                 WebSocketSession toUser = sessionMap[item];
@@ -237,7 +244,7 @@ namespace XMGAME.Comm
         }
 
         //处理执行方法
-        private void handlerControllerAction(SocketEntity socketEntity) {
+        private void handlerControllerAction(SocketEntity socketEntity,WebSocketSession webSocketSession) {
             JavaScriptSerializer js = new JavaScriptSerializer();   
             //得到要执行的方法名称和类名
             string message=socketEntity.ActionMethod;
@@ -247,17 +254,30 @@ namespace XMGAME.Comm
             
             object backObj = null;
             //得到要执行的方法对象和类实例对象
-            MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);    
-            
-            //得到方法执行数据
-            object result = takeRedisData(method,param,backObj);
+            MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);
+            ResponseVo responseVo = null;
+          //  try
+         //   {
+                //得到方法执行数据
+                object result = takeRedisData(method, param, backObj);
+                responseVo=  getResponseVo(obj: result);
+            //}
+            //catch (Exception)
+            //{
+            //   responseVo= exMethod(method);
+            //}
+        
 
             //处理ResponseVo对象并发送数据
-            socketEntity.Message =js.Serialize(getResponseVo(result));
-            List<string> vs = new List<string>();
-            vs.Add(socketEntity.FromUser);
-            socketEntity.ToUser = vs;
-            handlerSendMessage(socketEntity);
+            socketEntity.Message =js.Serialize(responseVo);
+            if (socketEntity.FromUser != "") {
+                List<string> vs = new List<string>();
+                vs.Add(socketEntity.FromUser);
+                socketEntity.ToUser = vs;
+                webSocketSession = null;
+            }
+          
+            handlerSendMessage(socketEntity,webSocketSession);
         }
 
         
@@ -318,34 +338,32 @@ namespace XMGAME.Comm
                     
         }
 
-        private object exMethod(object obj,object[] param,MethodInfo method) {
+        private ResponseVo exMethod(MethodInfo method) {
 
-            object result = null;
-            try
-            {
-                result=method.Invoke(obj, param);
-            }
-            catch (Exception ex)
-            {
-                Attribute attribute = method.GetCustomAttribute(typeof(ErroAttribute));
-                if (attribute != null) {
-                    Type type= attribute.GetType();
-                    string code=type.GetProperty("Code").GetValue(attribute).ToString();
-                    Assembly myAssem = Assembly.GetEntryAssembly();
-                    ResourceManager rm = new ResourceManager("ErroMessage", myAssem);
-                   string message= rm.GetString(code);
+         Attribute attribute = method.GetCustomAttribute(typeof(ErroAttribute));
+         if (attribute == null)
+         return null;
 
-                }
+         Type type= attribute.GetType();
+         string code=type.GetProperty("Code").GetValue(attribute).ToString();
+          
+         ResourceManager rm = new ResourceManager("XMGAME.BLL.ErroMessage.resx",typeof(ErroAttribute).Assembly);
+         string message= rm.GetString(code);
+         ResponseVo responseVo = new ResponseVo()
+         {
+          Code = Convert.ToInt32(code),
+          Message = message
+         };
 
-            }
-            return result;
+        return responseVo;
+
         } 
         private void entityMapping(ref Dictionary<string, object> paramMethod,MethodInfo method,ref Dictionary<string, object> param) {
             ParameterInfo[] parameterInfo = method.GetParameters();
             foreach (var item in parameterInfo)
             {
                 Type type = item.ParameterType;
-                if (type.IsClass)
+                if (type.IsClass&&type!=typeof(string))
                 {
                     Dictionary<string, PropertyInfo> pairs = type.GetProperties().ToDictionary(t => t.Name);
                     Debug.Write(type.FullName);
@@ -355,24 +373,20 @@ namespace XMGAME.Comm
                 }
                 else
                 {
-                    paramMethod.Add(item.Name, param[item.Name]);
+                    if(param.ContainsKey(item.Name.ToUpper()))
+                    paramMethod.Add(item.Name, param[item.Name.ToUpper()]);
                 }
 
             }
         }
 
-        private ResponseVo getResponseVo(object obj) {
-            ResponseVo responseVo = new ResponseVo();
-            if (obj == null)
-            {
-                responseVo.Code = 500;
-                responseVo.Message = "失败";
-            }
-            else {
-                responseVo.Message = "成功";
-                responseVo.Code = 200;
-                responseVo.Data = obj;
-            }
+        private ResponseVo getResponseVo(int code=200 ,string message="成功",object obj=null) {
+            ResponseVo responseVo = new ResponseVo() {
+                    Code=code,
+                    Message=message,
+                    Data=obj
+            };
+ 
             return responseVo;
         }
 

@@ -33,23 +33,25 @@ namespace XMGAME.BLL
         }
 
        [ErroAttribute(100)]
-        public User Login(string accountName, string passWord) {
+        public User Login(string accountName, string userPassWord) {
             User record = new User();
             record.AccountName = accountName;
-            record.UserPassWord = passWord;
+            record.UserPassWord =Md5.GetMD5String(userPassWord);
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("AccountName", "==");
-            pairs.Add("PassWord", "==");
+            pairs.Add("UserPassWord", "==");
             User user= userDAL.GetByWhere(record,pairs,"&&").FirstOrDefault();
             if (user != null) {
                 user.Token = GetGuid();
                 userDAL.UpdateOrAddToken(user);
                 return user;
             }
+   
             return null;
         }
 
         public bool Register(User user) {
+            user.UserPassWord = Md5.GetMD5String(user.UserPassWord);
             return userDAL.Insert(user);
         }
 
