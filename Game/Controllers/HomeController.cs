@@ -12,17 +12,18 @@ namespace Game.Controllers
 {
     public class HomeController : Controller
     {
-
+     
         // GET: Home
+
         public ActionResult Index()
         {
-            SocketHandler s = new SocketHandler();
-            s.SetUp();
+          
+          
             return View();
         }
 
         public ActionResult Three() {
-
+       
             return View();
         }
     }

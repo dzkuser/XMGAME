@@ -8,7 +8,7 @@
 <script>
 
 
-          const wsuri = "ws://127.0.0.1:4000";
+    const wsuri = "ws://localhost:6868";
           this.websock = new WebSocket(wsuri);
           this.websock.onmessage = this.websocketonmessage;
           this.websock.onopen = this.websocketonopen;
@@ -16,20 +16,25 @@
           this.websock.onclose = this.websocketclose;
    
     function websocketonopen(e){ //连接建立之后执行send方法发送数据
-        alert("ok");
-        console.log(e);
-          let actions = { "test": "12345" };
-         websocketsend(JSON.stringify(actions));
+        var pa = { "AccountName": "dzk", "UserPassWord": "123" };
+        var st = JSON.stringify(pa);
+        var entity = {
+            "Message": st,
+            "Tag": "ac",
+            "ActionMethod": "UserBLL.Login"
+
+        }
+         websocketsend(JSON.stringify(entity));
       }
       function websocketonerror(){//连接建立失败重连
-       initWebSocket();
+       initWebSocket(); 
       }
     function  websocketonmessage(e){ //数据接收
         const redata = JSON.parse(e.data);
       }
     function   websocketsend(Data) {//数据发送
             console.log(Data);
-       // websock.send(Data);
+       websock.send(Data);
       }
     function  websocketclose(e){  //关闭
         console.log('断开连接',e);

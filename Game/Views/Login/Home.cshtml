@@ -45,13 +45,13 @@
 
     $("#submit").click(function () {
 
-        var pa = { "Token": getParam("name"),"Integral":123};
+        var pa = { "Token": getParam("name")};
        var st= JSON.stringify(pa);
         var entity = {
             "FromUser": getParam("name"),
             "Message":st,
             "Tag": "ac",
-            "ActionMethod": "UserBLL.UpdateIntegral"
+            "ActionMethod": "UserBLL.GetUserInfoByToken"
            
         }
         s.sendMessage(entity);

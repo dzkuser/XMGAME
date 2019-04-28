@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using XMGAME.BLL;
+using XMGAME.Model;
 
 namespace XMGame.UnitTestProject
 {
@@ -9,11 +10,13 @@ namespace XMGame.UnitTestProject
     {
         private UserBLL userBLL = new UserBLL();
         [TestMethod]
-        public void GetUserInfo()
+        public void GetUserInfoByID(int id)
         {
-            int id = 1;
-            var userInfo = userBLL.GetUserInfo(1);
+            id = 1;
+            var userInfo = userBLL.GetUserInfoByID(id);
             Assert.AreEqual(userInfo.ID, id);
         }
+
+
     }
 }

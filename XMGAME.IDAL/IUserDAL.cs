@@ -15,5 +15,7 @@ namespace XMGAME.IDAL
 
         User GetUserByToken(string token);
 
+       
+
     }
 }

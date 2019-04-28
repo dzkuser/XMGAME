@@ -21,7 +21,7 @@ namespace XMGAME.Model
 
         public string RoomID { get; set; }
 
-        public int State { get; set; }
+        public int State { get; set; } = 0;
 
 
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace XMGAME.BLL {
+namespace XMGAME.Comm {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace XMGAME.BLL {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("XMGAME.BLL.ErroMessage", typeof(ErroMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("XMGAME.Comm.ErroMessage", typeof(ErroMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,15 @@ namespace XMGAME.BLL {
         internal static string _100 {
             get {
                 return ResourceManager.GetString("100", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 莫得咯 的本地化字符串。
+        /// </summary>
+        internal static string _101 {
+            get {
+                return ResourceManager.GetString("101", resourceCulture);
             }
         }
     }

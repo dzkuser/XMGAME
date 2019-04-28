@@ -25,7 +25,8 @@ namespace XMGAME.DAL
 
         public IQueryable<T> GetAll()
         {
-          return  dbContext.Set<T>().OrderBy(t=>t);
+          
+          return  dbContext.Set<T>();
         }
 
         public IQueryable<T> GetByWhere(T entity,Dictionary<string,string> fieldRelation,string relation="")

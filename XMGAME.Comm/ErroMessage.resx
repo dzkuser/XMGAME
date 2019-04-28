@@ -120,4 +120,7 @@
   <data name="100" xml:space="preserve">
     <value>用户名已存在</value>
   </data>
+  <data name="101" xml:space="preserve">
+    <value>莫得咯</value>
+  </data>
 </root>

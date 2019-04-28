@@ -24,16 +24,14 @@ namespace XMGAME.BLL
 
         [RedisAttribute("user",ArgumentName ="token")]
         public User GetUserInfoByToken(string token) {
-            User record = new User();
-            record.Token = token;
-            Dictionary<string, string> pairs = new Dictionary<string, string>();
-            pairs.Add("Token", "==");
-            User user = userDAL.GetByWhere(record, pairs, "").FirstOrDefault();
+            User user = userDAL.GetUserByToken(token);
             return user;
         }
 
        [ErroAttribute(100)]
         public User Login(string accountName, string userPassWord) {
+
+            throw new Exception();
             User record = new User();
             record.AccountName = accountName;
             record.UserPassWord =Md5.GetMD5String(userPassWord);
@@ -41,12 +39,13 @@ namespace XMGAME.BLL
             pairs.Add("AccountName", "==");
             pairs.Add("UserPassWord", "==");
             User user= userDAL.GetByWhere(record,pairs,"&&").FirstOrDefault();
+           
             if (user != null) {
                 user.Token = GetGuid();
                 userDAL.UpdateOrAddToken(user);
                 return user;
             }
-   
+        
             return null;
         }
 

@@ -32,6 +32,13 @@ namespace XMGAME.BLL
         }
 
         public IQueryable<QuestionEntity> GetQuestions() {
+           
+            int max= GetAll().Count();
+              int [] ids= getRadomNumber(1,max,5);
+            return AssembleQuestions(questionDAL.GetByIDs(ids));
+        }
+
+        public IQueryable<QuestionEntity> GetAll() {
             return AssembleQuestions(questionDAL.GetAll());
         }
 
@@ -61,7 +68,18 @@ namespace XMGAME.BLL
             return questionEntitys;
         }
 
-
+        private int[] getRadomNumber(int min,int max,int count) {
+            Random random = new Random();
+            List<int> numbers = new List<int>(count);
+            while (numbers.Count()<count)
+            {
+                int number = random.Next(min,max+1);
+                if (!numbers.Contains(number)) {
+                    numbers.Add(number);
+                }
+            }
+            return numbers.ToArray();
+        }
         public QuestionEntity IsRight(QuestionEntity question)
         {
             return question;

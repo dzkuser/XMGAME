@@ -6,9 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Web;
 using System.Web.Script.Serialization;
-using XMGAME.Comm;
 using XMGAME.Model;
 
 namespace XMGAME.Comm
@@ -33,7 +31,9 @@ namespace XMGAME.Comm
             webSocket.SessionClosed += server_SessionClosed;
             try
             {
-                webSocket.Setup("127.0.0.1", 4000);
+            
+              webSocket.Setup("172.16.31.236", 4008);
+             //   webSocket.Setup("172.16.31.232", 4000);
                 webSocket.Start();
             }
             catch (Exception)
@@ -256,16 +256,17 @@ namespace XMGAME.Comm
             //得到要执行的方法对象和类实例对象
             MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);
             ResponseVo responseVo = null;
-          //  try
-         //   {
+            try
+           {
                 //得到方法执行数据
                 object result = takeRedisData(method, param, backObj);
                 responseVo=  getResponseVo(obj: result);
-            //}
-            //catch (Exception)
-            //{
-            //   responseVo= exMethod(method);
-            //}
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.Source);
+              responseVo= exMethod(method);
+            }
         
 
             //处理ResponseVo对象并发送数据
@@ -293,13 +294,17 @@ namespace XMGAME.Comm
 
 
             Dictionary<string, object> paramMethod = new Dictionary<string, object>();
-            keyToUpper(ref param);
-            //如果参数为实体的话就把参数封装为实体类
-            entityMapping(ref paramMethod,method,ref param);
+            if (param != null) {
+                keyToUpper(ref param);
+                //如果参数为实体的话就把参数封装为实体类
+                entityMapping(ref paramMethod, method, ref param);
 
-            if (param == null) {
-                param = new Dictionary<string, object>();
+                if (param == null)
+                {
+                    param = new Dictionary<string, object>();
+                }
             }
+          
             //获取方法上的自定义特性 
             Attribute attribute = method.GetCustomAttribute(typeof(RedisAttribute));
             //如果有就从Redis中拿数据
@@ -309,7 +314,11 @@ namespace XMGAME.Comm
                 string key = at.GetProperty("Key").GetValue(attribute).ToString();
                 bool isDelete = Convert.ToBoolean(at.GetProperty("IsDelete").GetValue(attribute));
                 string ArgumentName = at.GetProperty("ArgumentName").GetValue(attribute).ToString();
-                string redisKey = key + "." +ArgumentName+"::"+ param[ArgumentName];
+                string redisKey = key + "." + ArgumentName;
+                if (param != null && param.ContainsKey(ArgumentName))
+                {
+                    redisKey += "::" + param.ContainsKey(ArgumentName);
+                }
                 if (isDelete)
                 {
                     RedisHelper.DeleteKey(redisKey);
@@ -347,7 +356,7 @@ namespace XMGAME.Comm
          Type type= attribute.GetType();
          string code=type.GetProperty("Code").GetValue(attribute).ToString();
           
-         ResourceManager rm = new ResourceManager("XMGAME.BLL.ErroMessage.resx",typeof(ErroAttribute).Assembly);
+         ResourceManager rm = new ResourceManager("XMGAME.Comm.ErroMessage",typeof(ErroAttribute).Assembly);
          string message= rm.GetString(code);
          ResponseVo responseVo = new ResponseVo()
          {

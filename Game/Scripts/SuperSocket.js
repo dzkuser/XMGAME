@@ -5,7 +5,7 @@ $.MySuperSocket = {
         if (!window.WebSocket) {
             console.log('您的浏览器不支持WebSocket，请选择其他的浏览器再尝试连接服务器');
         }
-        var wsClient = new WebSocket('ws://localhost:4000');
+        var wsClient = new WebSocket('ws://172.16.31.236:4008');
         ws = wsClient;
         wsClient.onopen = openMethod;
         wsClient.onclose = colseMethod;
