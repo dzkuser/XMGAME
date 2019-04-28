@@ -16,13 +16,7 @@ namespace XMGAME.IDAL
         /// <returns></returns>
         IQueryable<QuestionEntity> GetByIDs(int[] ids);
 
-        /// <summary>
-        /// 查询这道题是答对
-        /// </summary>
-        /// <param name="questionEntity"></param>
-        /// <returns></returns>
-
-        QuestionEntity IsRight(QuestionEntity questionEntity);
+    
 
 
    }

@@ -27,15 +27,19 @@ namespace XMGAME.BLL
         }
 
         public bool AddRecord(Record record) {
+            record.AccountName = userDAL.GetUserByToken(record.AccountName).AccountName;
             return recordDAL.Insert(record);
         }
 
         public bool UpdateRecord(Record record) {
+            User userEdit= userDAL.GetUserByToken(record.AccountName);
             User user = new User() {
-                AccountName= userDAL.GetUserByToken(record.AccountName).AccountName,
+                ID=userEdit.ID,
+                AccountName= userEdit.AccountName,
                 Integral=record.Integral
             };
             userDAL.Update(user);
+            record.AccountName = userEdit.AccountName;
             return recordDAL.Update(record);
         }
 
@@ -44,18 +48,18 @@ namespace XMGAME.BLL
             record.RoomID = roomID;
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("RoomID", "==");
-            return recordDAL.GetByWhere(record, pairs, "");
+            return recordDAL.GetByWhere(record, pairs,"");
         }
 
-        public Record GetRecordByUserAndRoom(string token, string roomID) {
+        public Record GetRecordByUserAndRoom(string accountName, string roomID) {
 
             Record record = new Record();
-            record.AccountName = userDAL.GetUserByToken(token).AccountName;
+            record.AccountName = userDAL.GetUserByToken(accountName).AccountName;
             record.RoomID = roomID;
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("AccountName", "==");
             pairs.Add("RoomID","==");
-            return recordDAL.GetByWhere(record, pairs,"").FirstOrDefault();
+            return recordDAL.GetByWhere(record, pairs," and ").FirstOrDefault();
         
         }
     }

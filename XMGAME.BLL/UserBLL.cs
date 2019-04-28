@@ -31,7 +31,6 @@ namespace XMGAME.BLL
        [ErroAttribute(100)]
         public User Login(string accountName, string userPassWord) {
 
-            throw new Exception();
             User record = new User();
             record.AccountName = accountName;
             record.UserPassWord =Md5.GetMD5String(userPassWord);
@@ -57,12 +56,12 @@ namespace XMGAME.BLL
 
         public bool UpdateIntegral(User user) {
 
-            User userToken= GetUserByToken(user.Token);
+            User userToken= GetUserInfoByToken(user.Token);
             user.AccountName = userToken.AccountName;
             user.ID = userToken.ID;
             bool bo= userDAL.Update(user);
             if (bo) {
-                User userU = GetUserByToken(user.Token);
+                User userU = GetUserInfoByToken(user.Token);
                 List<string> vs = new List<string>();
                 vs.Add(user.Token);
                 SocketEntity socketEntity = new SocketEntity() {
@@ -80,10 +79,6 @@ namespace XMGAME.BLL
 
         public bool UpdateOrAddToken(User user) {
             return userDAL.UpdateOrAddToken(user);
-        }
-
-        public User GetUserByToken(string token) {
-            return userDAL.GetUserByToken(token);
         }
 
         private string GetGuid()

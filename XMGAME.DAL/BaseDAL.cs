@@ -14,7 +14,7 @@ namespace XMGAME.DAL
 {
     public class BaseDAL<T> : IBaseDAL<T> where T : class, new()
     {
-
+    
         private DbContext dbContext = new MyDbContext();
         public bool Delete(T entity)
         {
@@ -101,7 +101,7 @@ namespace XMGAME.DAL
             foreach (var item in fields.Keys)
             {
                 if (fieldRelation.ContainsKey(item)) {
-                    str.Append(item).Append(fieldRelation[item] + $"@{i}").Append(relation);                  
+                    str.Append(item).Append(fieldRelation[item] + $"@{i}").Append(" ").Append(relation);                  
                 }
                 i++;
             }

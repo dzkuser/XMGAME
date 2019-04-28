@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGAME.DATA", "XMGAME.DATA\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{CA44E457-1113-4CBC-92C8-E62E0D367EDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{F2AEA951-7D3A-4D08-AB3A-2F5B7940A13B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGAME.UnitTest", "UnitTestProject1\XMGAME.UnitTest.csproj", "{F2AEA951-7D3A-4D08-AB3A-2F5B7940A13B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

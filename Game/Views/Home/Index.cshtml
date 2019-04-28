@@ -41,12 +41,12 @@
 
         $("#send").click(function () {
 
-            var pa = { "token": "06bc5241-f3f7-46dc-b55d-ecd22bea0818"};
+            var pa = { "token": "3919f72d-960f-47a4-b874-2c81b2a47947","Integral":20};
             var st = JSON.stringify(pa);
             var entity = {           
                 "Tag": "ac",
                 "Message":st,
-                "ActionMethod": "UserBLL.GetUserInfoByToken"
+                "ActionMethod": "UserBLL.UpdateIntegral"
             }
             s.sendMessage(entity);
 

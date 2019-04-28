@@ -19,9 +19,6 @@ namespace XMGAME.DAL
             return dbContext.Set<QuestionEntity>().Where(q => ids.Contains(q.ID));
         }
 
-        public QuestionEntity IsRight(QuestionEntity questionEntity)
-        {
-            return dbContext.Set<QuestionEntity>().Where(q=>q.ID==questionEntity.ID && q.Answer==q.Answer).FirstOrDefault();
-        }
+      
     }
 }

@@ -79,11 +79,7 @@ namespace XMGAME.BLL
                 }
             }
             return numbers.ToArray();
-        }
-        public QuestionEntity IsRight(QuestionEntity question)
-        {
-            return question;
-        }
+        }     
 
     }
 }

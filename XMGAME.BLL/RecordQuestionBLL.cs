@@ -15,6 +15,7 @@ namespace XMGAME.BLL
 
         private RecordBLL recordBLL = new RecordBLL();
         private QuestionBLL questionBLL = new QuestionBLL();
+        private UserDAL userDAL = new UserDAL();
         public bool AddRecordQuestion(RecordQuestion recordQuestion) {
             return recordQuestionDAL.Insert(recordQuestion);
         }
@@ -31,30 +32,28 @@ namespace XMGAME.BLL
         }
 
         public IQueryable<RecordQuestionDTO> GetByRoomID(string roomID) {
-
             return recordQuestionDAL.GetByRoomID(roomID);
-
-
         }
 
-        public bool Answer(RecordQuestionDTO dTO) {
+        public bool IsRight(RecordQuestionDTO dTO) {
             QuestionEntity entity = new QuestionEntity();
-            entity.Answer = dTO.Answer;
-            entity.ID = dTO.RqID;
-            QuestionEntity question= questionBLL.GetQuestion(dTO.RqID);
+            entity.ID = dTO.QuestionID;
+            QuestionEntity question= questionBLL.GetQuestion(dTO.QuestionID);
             Record record = new Record()
             {
+                ID=dTO.RecordID,
                 AccountName = dTO.AccountName,
                 Integral = question.Score,              
             };
 
-            if (question.Answer==dTO.Reply)            
+            if (question.Answer.Equals(dTO.Reply))            
             {
                 record.Integral = question.Score;
             }
             else {
                 record.Integral = -question.Score;
             }
+
             recordBLL.UpdateRecord(record);
             RecordQuestion recordQuestion = new RecordQuestion()
             {
@@ -64,7 +63,12 @@ namespace XMGAME.BLL
                 Reply=dTO.Reply,
                 Goal=record.Integral
             };
-           return  recordQuestionDAL.Insert(recordQuestion);
+             recordQuestionDAL.Insert(recordQuestion);
+            if (record.Integral > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
 
