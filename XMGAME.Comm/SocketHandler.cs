@@ -305,18 +305,18 @@ namespace XMGAME.Comm
             //得到要执行的方法对象和类实例对象
             MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);
             ResponseVo responseVo = null;
-           // try
-           //{
+            try
+            {
                 //得到方法执行数据
                 object result = takeRedisData(method, param, backObj);
                responseVo=  getResponseVo(obj: result);
-            //}
-            //catch (Exception ex)
-            //{
-               
-            //    responseVo = exMethod(method);
-            //}
-        
+            }
+            catch (Exception ex)
+            {
+
+                responseVo = exMethod(method);
+            }
+
 
             //处理ResponseVo对象并发送数据
             socketEntity.Message =JsonHelper.ReplaceDateTime(js.Serialize(responseVo));
