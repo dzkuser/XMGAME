@@ -360,6 +360,10 @@
       <Project>{E8628669-5FC6-46C3-B490-4860BE0490A7}</Project>
       <Name>XMGAME.Comm</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XMGAME.DAL\XMGAME.DAL.csproj">
+      <Project>{C2582785-815F-4FE6-889E-EB860CED9D9D}</Project>
+      <Name>XMGAME.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XMGAME.DATA\XMGAME.DATA.csproj">
       <Project>{BB285580-8C9B-49EF-B398-DCBC3D033728}</Project>
       <Name>XMGAME.DATA</Name>

@@ -22,7 +22,7 @@ namespace XMGAME.BLL
             record.AccountName = userDAL.GetUserByToken(accountName).AccountName;
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("AccountName", "==");
-            return recordDAL.GetByWhere(record, pairs, "");
+            return recordDAL.GetByWhere(record, pairs, "").OrderByDescending(t=>t.ID);
        
         }
 
@@ -48,7 +48,7 @@ namespace XMGAME.BLL
             record.RoomID = roomID;
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("RoomID", "==");
-            return recordDAL.GetByWhere(record, pairs,"");
+            return recordDAL.GetByWhere(record, pairs,"").OrderByDescending(t=>t.Integral);
         }
 
         public Record GetRecordByUserAndRoom(string accountName, string roomID) {

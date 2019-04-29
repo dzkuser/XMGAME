@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Data.Common;
 using Newtonsoft.Json;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace XMGAME.Comm
 {
@@ -329,7 +330,7 @@ namespace XMGAME.Comm
         }
         #endregion
 
-  
+        #region Json转对象
         /// <summary>
         /// Json转对象
         /// </summary>
@@ -344,6 +345,30 @@ namespace XMGAME.Comm
            T obj = (T)serializer.Deserialize(new JsonTextReader(sr), typeof(T));
             return obj;
         }
+        #endregion
+
+        #region 格式化时间
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-4-28 18:42
+        /// 修改时间：
+        /// 功能：把时间格式化
+        /// </summary>
+        /// <param name="aJson">json字符串</param>
+        /// <returns></returns>
+        public static string ReplaceDateTime(string aJson) {
+
+          return   Regex.Replace(aJson, @"\\/Date\((\d+)\)\\/", match =>
+            {
+                DateTime dt = new DateTime(1970, 1, 1);
+                dt = dt.AddMilliseconds(long.Parse(match.Groups[1].Value));
+                dt = dt.ToLocalTime(); 
+                
+                return dt.ToString("yyyy-MM-dd hh:mm:ss"); ;
+            });
+
+        }
+        #endregion
 
 
         #region 返回错误

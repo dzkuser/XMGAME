@@ -27,6 +27,7 @@ namespace XMGAME.DATA
             modelBuilder.Configurations.Add(new GenreMapper());
             modelBuilder.Configurations.Add(new QuestionMapper());
             modelBuilder.Configurations.Add(new RecordQuestionMapper());
+            modelBuilder.Configurations.Add(new ExceptioLogMapper());
             base.OnModelCreating(modelBuilder);
         }
     } 

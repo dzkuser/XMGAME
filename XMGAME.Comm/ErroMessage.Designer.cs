@@ -61,7 +61,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 用户名已存在 的本地化字符串。
+        ///   查找类似 用户登录出错 的本地化字符串。
         /// </summary>
         internal static string _100 {
             get {
@@ -70,11 +70,65 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 莫得咯 的本地化字符串。
+        ///   查找类似  的本地化字符串。
         /// </summary>
         internal static string _101 {
             get {
                 return ResourceManager.GetString("101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用户进入直播间 的本地化字符串。
+        /// </summary>
+        internal static string InRoom {
+            get {
+                return ResourceManager.GetString("InRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 172.16.31.236 的本地化字符串。
+        /// </summary>
+        internal static string ip {
+            get {
+                return ResourceManager.GetString("ip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用户掉线 的本地化字符串。
+        /// </summary>
+        internal static string lostConn {
+            get {
+                return ResourceManager.GetString("lostConn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 4008 的本地化字符串。
+        /// </summary>
+        internal static string port {
+            get {
+                return ResourceManager.GetString("port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 用户准备 的本地化字符串。
+        /// </summary>
+        internal static string ready {
+            get {
+                return ResourceManager.GetString("ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 系统错误 的本地化字符串。
+        /// </summary>
+        internal static string systemErro {
+            get {
+                return ResourceManager.GetString("systemErro", resourceCulture);
             }
         }
     }

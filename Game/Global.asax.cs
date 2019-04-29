@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using XMGAME.Comm;
+using XMGAME.DAL;
+using XMGAME.Model;
 
 namespace Game
 {
@@ -23,16 +27,14 @@ namespace Game
             SocketHandler s = new SocketHandler();
             s.SetUp();
 
-            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+       
+
 
 
         }
 
-        private void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
-        {
-             //    e.Exception.TargetSite.
-        }
+   
 
-      
+   
     }
 }

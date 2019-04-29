@@ -22,15 +22,16 @@ namespace XMGAME.BLL
           return  userDAL.GetEntityByID(id);            
         }
 
+      
         [RedisAttribute("user",ArgumentName ="token")]
         public User GetUserInfoByToken(string token) {
             User user = userDAL.GetUserByToken(token);
             return user;
         }
 
-       [ErroAttribute(100)]
+        [ErroAttribute(100)]
         public User Login(string accountName, string userPassWord) {
-
+            
             User record = new User();
             record.AccountName = accountName;
             record.UserPassWord =Md5.GetMD5String(userPassWord);

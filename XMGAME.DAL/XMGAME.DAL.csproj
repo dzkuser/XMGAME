@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BaseDAL.cs" />
     <Compile Include="BaseDapperDAL.cs" />
+    <Compile Include="ExceptionLogDAL.cs" />
     <Compile Include="GameDAL.cs" />
     <Compile Include="GenreDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

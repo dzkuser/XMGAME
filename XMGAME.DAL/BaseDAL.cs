@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using XMGAME.Comm;
 using XMGAME.DATA;
 using XMGAME.IDAL;
 
@@ -29,6 +30,7 @@ namespace XMGAME.DAL
           return  dbContext.Set<T>();
         }
 
+        [ErroAttribute(101)]
         public IQueryable<T> GetByWhere(T entity,Dictionary<string,string> fieldRelation,string relation="")
         {
             return dbContext.Set<T>().Where(DynamicQueryBulid(entity,fieldRelation,relation));
