@@ -43,6 +43,8 @@ namespace XMGAME.BLL
             if (user != null) {
                 user.Token = GetGuid();
                 userDAL.UpdateOrAddToken(user);
+                  JsonHelper.ToJson(user);
+
                 return user;
             }
         
@@ -65,16 +67,17 @@ namespace XMGAME.BLL
                 User userU = GetUserInfoByToken(user.Token);
                 List<string> vs = new List<string>();
                 vs.Add(user.Token);
-                SocketEntity socketEntity = new SocketEntity() {
+                SocketEntity socketEntity = new SocketEntity()
+                {
                     FromUser = user.Token,
                     ToUser = vs,
                     Message = JsonHelper.ToJson(userU),
-                    Tag="il"
+                    Tag = "il"
 
                 };
                 SocketHandler socketHandler = new SocketHandler();
                 socketHandler.handlerSendMessage(socketEntity);
-          }
+            }
             return bo;
         }
 

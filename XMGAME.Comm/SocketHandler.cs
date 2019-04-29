@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿
+using Newtonsoft.Json;
 using SuperWebSocket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Resources;
+using System.Timers;
 using System.Web.Script.Serialization;
 using XMGAME.Model;
 
@@ -58,8 +61,6 @@ namespace XMGAME.Comm
             webSocket.SessionClosed += HanderSessionClosed;          
             webSocket.Setup(ResourceHelp.GetResourceString("ip"), Convert.ToInt32(ResourceHelp.GetResourceString("port")));
             webSocket.Start();
-       
-          
 
         }
         #endregion
@@ -126,7 +127,7 @@ namespace XMGAME.Comm
         /// </summary>
         /// <param name="session">用户session</param>
         private void HandlerNewSessionConnected(WebSocketSession session)
-        {
+        {                     
             if(!gdicSessiomMap.ContainsKey(session.SessionID))
             gdicSessiomMap.Add(session.SessionID,session);       
         }
@@ -304,17 +305,17 @@ namespace XMGAME.Comm
             //得到要执行的方法对象和类实例对象
             MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);
             ResponseVo responseVo = null;
-            try
-           {
+           // try
+           //{
                 //得到方法执行数据
                 object result = takeRedisData(method, param, backObj);
-                responseVo=  getResponseVo(obj: result);
-            }
-            catch (Exception ex)
-            {
+               responseVo=  getResponseVo(obj: result);
+            //}
+            //catch (Exception ex)
+            //{
                
-                responseVo = exMethod(method);
-            }
+            //    responseVo = exMethod(method);
+            //}
         
 
             //处理ResponseVo对象并发送数据
@@ -363,11 +364,11 @@ namespace XMGAME.Comm
                 Type at = attribute.GetType();
                 string key = at.GetProperty("Key").GetValue(attribute).ToString();
                 bool isDelete = Convert.ToBoolean(at.GetProperty("IsDelete").GetValue(attribute));
-                string ArgumentName = at.GetProperty("ArgumentName").GetValue(attribute).ToString();
+                string ArgumentName = at.GetProperty("ArgumentName").GetValue(attribute).ToString().ToUpper();
                 string redisKey = key + "." + ArgumentName;
                 if (param != null && param.ContainsKey(ArgumentName))
                 {
-                    redisKey += "::" + param.ContainsKey(ArgumentName);
+                    redisKey += "::" + param[ArgumentName];
                 }
                 if (isDelete)
                 {
@@ -480,7 +481,7 @@ namespace XMGAME.Comm
             pairs.Add("token",key);
             User ret = (User)takeRedisData(method,pairs,obj);
             //RecordBLL recordBLL = new RecordBLL();
-            //recordBLL.GetRecordByUserAndRoom(ret.AccountName,roomID);
+            //recordBLL.GetRecordByUserAndRoom(ret.AccountName, roomID);
             //Record record = new Record()
             //{
             //    AccountName = ret.AccountName,
@@ -488,12 +489,25 @@ namespace XMGAME.Comm
             //    EndTime = DateTime.Now,
             //    RoomID = roomID
             //};
-
-          
-            //recordBLL.UpdateRecord(record);      
+            //recordBLL.UpdateRecord(record);
         }
 
-       
+        private void ExecuteTimerTask() {
+            int intTime = Convert.ToInt32(ResourceHelp.GetResourceString("timerTime"));
+            Timer timer = new Timer(intTime);
+            timer.AutoReset = true;
+            timer.Enabled = true;
+            timer.Elapsed += Timer_Elapsed;
 
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            
+        }
+
+        private void VerificationLogin() {
+
+        }
     }
 }

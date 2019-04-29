@@ -124,11 +124,29 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
+        ///   查找类似 D:\userLogin 的本地化字符串。
+        /// </summary>
+        internal static string rememberFile {
+            get {
+                return ResourceManager.GetString("rememberFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 系统错误 的本地化字符串。
         /// </summary>
         internal static string systemErro {
             get {
                 return ResourceManager.GetString("systemErro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 1000 的本地化字符串。
+        /// </summary>
+        internal static string timerTime {
+            get {
+                return ResourceManager.GetString("timerTime", resourceCulture);
             }
         }
     }

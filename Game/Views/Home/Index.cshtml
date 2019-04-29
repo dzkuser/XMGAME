@@ -42,12 +42,12 @@
 
         $("#send").click(function () {
 
-            var pa = { "roomID": "2" };
+            var pa = { "ID": 7 };
             var st = JSON.stringify(pa);
             var entity = {
                 "Tag": "ac",
                 "Message": st,
-                "ActionMethod": "RecordBLL.GetRecords"
+                "ActionMethod": "UserBLL.GetUserInfoByID"
             }
             s.sendMessage(entity);
 
@@ -56,7 +56,7 @@
 
         $("#send2").click(function () {
 
-            var pa = { "token": "dzk" };
+            var pa = { "token": "123" };
             var st = JSON.stringify(pa);
             var entity = {
                 "Tag": "ac",

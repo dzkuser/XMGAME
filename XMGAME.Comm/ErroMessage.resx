@@ -138,7 +138,13 @@
   <data name="ready" xml:space="preserve">
     <value>用户准备</value>
   </data>
+  <data name="rememberFile" xml:space="preserve">
+    <value>D:\userLogin</value>
+  </data>
   <data name="systemErro" xml:space="preserve">
     <value>系统错误</value>
+  </data>
+  <data name="timerTime" xml:space="preserve">
+    <value>1000</value>
   </data>
 </root>
