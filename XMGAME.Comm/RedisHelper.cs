@@ -11,7 +11,7 @@ namespace XMGAME.Comm
     public class RedisHelper
     {
 
-        private static RedisClient redis = new RedisClient("localhost",6379);
+        private static RedisClient redis = new RedisClient(ResourceHelp.GetResourceString("redisHost"),Convert.ToInt32(ResourceHelp.GetResourceString("redisPort")));
 
         public static void SetData(string key,object obj) {
             JavaScriptSerializer js = new JavaScriptSerializer();

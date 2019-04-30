@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeAttribute.cs" />
     <Compile Include="ExceptionLog.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GenreEntity.cs" />

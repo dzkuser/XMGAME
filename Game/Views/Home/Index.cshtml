@@ -38,16 +38,14 @@
         function erro(e) {
             el.val(el.val() + "连接失败！原因【" + e.data + "】\r\n");
         }
-
-
         $("#send").click(function () {
 
-            var pa = { "ID": 7 };
+            var pa = { "AccountName": "123", 'Integral': 20 };
             var st = JSON.stringify(pa);
             var entity = {
                 "Tag": "ac",
                 "Message": st,
-                "ActionMethod": "UserBLL.GetUserInfoByID"
+                "ActionMethod": "UserBLL.UpdateIntegral"
             }
             s.sendMessage(entity);
 
@@ -55,13 +53,18 @@
 
 
         $("#send2").click(function () {
-
-            var pa = { "token": "123" };
+            var pa = {
+                'AccountName': "123",
+                'Integral': 20,
+                'CreateTime': '2019-2-3',
+                'EndTime': '2019-2-3',
+                'RoomID': '111'
+            };
             var st = JSON.stringify(pa);
             var entity = {
                 "Tag": "ac",
                 "Message": st,
-                "ActionMethod": "UserBLL.GetUserInfoByToken"
+                "ActionMethod": "RecordBLL.AddRecord"
             }
             s.sendMessage(entity);
 

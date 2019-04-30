@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XMGAME.Comm
+namespace XMGAME.Model
 {
-    public class ErrorAttribute
-    {
 
+    public class DateTimeAttribute:Attribute
+    {
 
     }
 }

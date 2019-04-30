@@ -70,7 +70,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似  的本地化字符串。
+        ///   查找类似 方法参数异常 的本地化字符串。
         /// </summary>
         internal static string _101 {
             get {
@@ -106,7 +106,16 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 4008 的本地化字符串。
+        ///   查找类似 XMGAME.BLL 的本地化字符串。
+        /// </summary>
+        internal static string mbns {
+            get {
+                return ResourceManager.GetString("mbns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 5009 的本地化字符串。
         /// </summary>
         internal static string port {
             get {
@@ -124,11 +133,47 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
+        ///   查找类似 127.0.0.1 的本地化字符串。
+        /// </summary>
+        internal static string redisHost {
+            get {
+                return ResourceManager.GetString("redisHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 6379 的本地化字符串。
+        /// </summary>
+        internal static string redisPort {
+            get {
+                return ResourceManager.GetString("redisPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 D:\userLogin 的本地化字符串。
         /// </summary>
         internal static string rememberFile {
             get {
                 return ResourceManager.GetString("rememberFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 2 的本地化字符串。
+        /// </summary>
+        internal static string roomSize {
+            get {
+                return ResourceManager.GetString("roomSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 成功 的本地化字符串。
+        /// </summary>
+        internal static string success {
+            get {
+                return ResourceManager.GetString("success", resourceCulture);
             }
         }
         

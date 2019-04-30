@@ -59,17 +59,17 @@ namespace XMGAME.BLL
 
         public bool UpdateIntegral(User user) {
 
-            User userToken= GetUserInfoByToken(user.Token);
+            User userToken= GetUserInfoByToken(user.AccountName);
             user.AccountName = userToken.AccountName;
             user.ID = userToken.ID;
             bool bo= userDAL.Update(user);
             if (bo) {
-                User userU = GetUserInfoByToken(user.Token);
+                User userU = GetUserInfoByID(userToken.ID);
                 List<string> vs = new List<string>();
-                vs.Add(user.Token);
+                vs.Add(userToken.Token);
                 SocketEntity socketEntity = new SocketEntity()
                 {
-                    FromUser = user.Token,
+                    FromUser = userToken.Token,
                     ToUser = vs,
                     Message = JsonHelper.ToJson(userU),
                     Tag = "il"

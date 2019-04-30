@@ -26,9 +26,18 @@ namespace XMGAME.BLL
        
         }
 
-        public bool AddRecord(Record record) {
+        public Record AddRecord(Record record) {
+            string strToken=record.AccountName;
             record.AccountName = userDAL.GetUserByToken(record.AccountName).AccountName;
-            return recordDAL.Insert(record);
+            bool isSuccess=recordDAL.Insert(record);
+            if (isSuccess)
+            {
+               
+              return GetRecordByUserAndRoom(strToken,record.RoomID);
+            }
+            else {
+                return null;
+            }
         }
 
         public bool UpdateRecord(Record record) {
@@ -48,7 +57,8 @@ namespace XMGAME.BLL
             record.RoomID = roomID;
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("RoomID", "==");
-            return recordDAL.GetByWhere(record, pairs,"").OrderByDescending(t=>t.Integral);
+            IQueryable<Record> records= recordDAL.GetByWhere(record, pairs,"").OrderByDescending(t=>t.Integral);
+            return records;
         }
 
         public Record GetRecordByUserAndRoom(string accountName, string roomID) {

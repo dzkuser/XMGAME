@@ -24,9 +24,8 @@ namespace Game
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            SocketHandler s = new SocketHandler();
-            s.SetUp();
-
+            SocketHandler socketHandler = new SocketHandler();
+            socketHandler.SetUp();
        
 
 

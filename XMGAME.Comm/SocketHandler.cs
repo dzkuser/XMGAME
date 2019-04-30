@@ -28,7 +28,7 @@ namespace XMGAME.Comm
         /// <summary>
         ///房间容量
         /// </summary>
-        public  static int gintRoomSize = 2;
+        public  static int gintRoomSize =Convert.ToInt32(ResourceHelp.GetResourceString("roomSize"));
 
         /// <summary>
         /// 用户连接SocketSession 集合 键：用户令牌 值：session 
@@ -45,10 +45,12 @@ namespace XMGAME.Comm
         /// </summary>
         private static Dictionary<string, int> gdicSessionReady = new Dictionary<string, int>();
 
+        private static Dictionary<string, bool> gdicLive = new Dictionary<string, bool>();
+
         /// <summary>
         /// 执行方法的命名空间
         /// </summary>
-        private static string gstrClassPath = "XMGAME.BLL";
+        private static string gstrClassPath =ResourceHelp.GetResourceString("mbns");
         #endregion
 
 
@@ -58,7 +60,7 @@ namespace XMGAME.Comm
             WebSocketServer webSocket = new WebSocketServer();
             webSocket.NewSessionConnected += HandlerNewSessionConnected;
             webSocket.NewMessageReceived += HandlerNewMessageReceived;
-            webSocket.SessionClosed += HanderSessionClosed;          
+            webSocket.SessionClosed += HanderSessionClosed;
             webSocket.Setup(ResourceHelp.GetResourceString("ip"), Convert.ToInt32(ResourceHelp.GetResourceString("port")));
             webSocket.Start();
 
@@ -83,8 +85,8 @@ namespace XMGAME.Comm
             if (UserKey == null) {
                 return;
             }
-            string RoomId = gdicSessionRoom.Where(u => u.Value.Contains(UserKey)).FirstOrDefault().Key;
-            if (RoomId != null&& gdicSessionReady[RoomId] == gintRoomSize) {            
+            string strRoomId = gdicSessionRoom.Where(u => u.Value.Contains(UserKey)).FirstOrDefault().Key;
+            if (strRoomId != null&& gdicSessionReady[strRoomId] == gintRoomSize) {            
               //  lostConnection(userKey, roomID);
             }                       
              gdicSessiomMap.Remove(UserKey);
@@ -92,6 +94,12 @@ namespace XMGAME.Comm
             if (Room != null) {
 
                 Room.Remove(UserKey);
+                if (Room.Count() == 0)
+                {
+                    gdicSessionRoom.Remove(strRoomId);
+                    if (gdicSessionReady.ContainsKey(strRoomId))
+                        gdicSessionReady.Remove(strRoomId);
+                }
                 SocketEntity socketEntity = new SocketEntity()
                 {
                     Tag =SocketEnum.s.ToString(),
@@ -229,7 +237,7 @@ namespace XMGAME.Comm
                 }
                 else
                 {
-                    roomID = DateTime.Now.ToLongTimeString();
+                    roomID = Guid.NewGuid().ToString();
                 }           
                 gdicSessionRoom.Add(roomID,room);
                 gdicSessionReady.Add(roomID,0);
@@ -305,21 +313,21 @@ namespace XMGAME.Comm
             //得到要执行的方法对象和类实例对象
             MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);
             ResponseVo responseVo = null;
-            try
-            {
+            //try
+            //{
                 //得到方法执行数据
                 object result = takeRedisData(method, param, backObj);
                responseVo=  getResponseVo(obj: result);
-            }
-            catch (Exception ex)
-            {
+            //  }
+            //catch (Exception ex)
+            //{
 
-                responseVo = exMethod(method);
-            }
+            //    responseVo = exMethod(method);
+            //  }
 
 
             //处理ResponseVo对象并发送数据
-            socketEntity.Message =JsonHelper.ReplaceDateTime(js.Serialize(responseVo));
+             socketEntity.Message =JsonHelper.ReplaceDateTime(js.Serialize(responseVo));
             if (socketEntity.FromUser != "") {
                 List<string> vs = new List<string>();
                 vs.Add(socketEntity.FromUser);
@@ -340,7 +348,7 @@ namespace XMGAME.Comm
             MethodInfo methodEx = type.GetMethod(method);
             return methodEx;
         }
-
+        [ErroAttribute(101)]
         private object takeRedisData(MethodInfo method, Dictionary<string, object> param, object obj) {
 
 
@@ -456,12 +464,23 @@ namespace XMGAME.Comm
 
             foreach (var item in fields)
             {
-                if (param.ContainsKey(item.Key.ToUpper())) {                   
-                    item.Value.SetValue(obj, param[item.Key.ToUpper()]);
+                if (param.ContainsKey(item.Key.ToUpper())) {
+               
+                    object value = null;
+                    if (item.Value.GetCustomAttribute(typeof(DateTimeAttribute)) != null)
+                    {
+                        value = Convert.ToDateTime(param[item.Key.ToUpper()]);
+                    }
+                    else {
+                        value = param[item.Key.ToUpper()];
+                    }   
+                    item.Value.SetValue(obj, value);
                     param.Remove(item.Key);
                 }                                    
             }
         }
+
+      
 
 
         private void keyToUpper(ref Dictionary<string, object> param) {
@@ -492,20 +511,48 @@ namespace XMGAME.Comm
             //recordBLL.UpdateRecord(record);
         }
 
-        private void ExecuteTimerTask() {
+   //    private delegate void handlerLive();
+        private void SendLiveBag() {
             int intTime = Convert.ToInt32(ResourceHelp.GetResourceString("timerTime"));
             Timer timer = new Timer(intTime);
             timer.AutoReset = true;
             timer.Enabled = true;
             timer.Elapsed += Timer_Elapsed;
-
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            
+
+            SocketEntity objSocketLive = new SocketEntity()
+            {
+                ToUser = gdicSessiomMap.Keys.ToList(),
+                Tag = SocketEnum.live.ToString()
+            };
+
+            handlerSendMessage(objSocketLive);
+
         }
 
+        private void ReceptionLiveBag() {
+            int intTime = 5000;
+            Timer timer = new Timer(intTime);
+            timer.AutoReset = false;
+            timer.Enabled = true;
+            timer.Elapsed += Receprtion;
+        }
+
+
+        private void Receprtion(object sender, ElapsedEventArgs e)
+        {
+            foreach (var item in gdicLive)
+            {
+                if (!item.Value) {
+
+                }
+            }
+           
+
+        }
         private void VerificationLogin() {
 
         }
