@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XMGAME.BLL;
 using XMGAME.Model;
 
@@ -35,8 +32,8 @@ namespace UnitTestProject1
                 EndTime=DateTime.Now,
                 State=0
             };
-           bool isSuccess= recordBLL.AddRecord(record);
-            Assert.AreEqual(isSuccess,true);
+           Record isSuccess= recordBLL.AddRecord(record);
+            Assert.AreEqual(isSuccess.AccountName,"admin");
         }
 
         [TestMethod]

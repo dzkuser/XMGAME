@@ -88,7 +88,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 172.16.31.236 的本地化字符串。
+        ///   查找类似 172.16.31.232 的本地化字符串。
         /// </summary>
         internal static string ip {
             get {
@@ -115,7 +115,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 5009 的本地化字符串。
+        ///   查找类似 4000 的本地化字符串。
         /// </summary>
         internal static string port {
             get {

@@ -127,7 +127,7 @@
     <value>用户进入直播间</value>
   </data>
   <data name="ip" xml:space="preserve">
-    <value>172.16.31.236</value>
+    <value>172.16.31.232</value>
   </data>
   <data name="lostConn" xml:space="preserve">
     <value>用户掉线</value>
@@ -136,7 +136,7 @@
     <value>XMGAME.BLL</value>
   </data>
   <data name="port" xml:space="preserve">
-    <value>5009</value>
+    <value>4000</value>
   </data>
   <data name="ready" xml:space="preserve">
     <value>用户准备</value>

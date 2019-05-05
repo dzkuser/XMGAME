@@ -47,6 +47,8 @@ namespace XMGAME.Comm
 
         private static Dictionary<string, bool> gdicLive = new Dictionary<string, bool>();
 
+        private static Dictionary<string, WebSocketSession> gdicSessionClose = new Dictionary<string, WebSocketSession>();
+
         /// <summary>
         /// 执行方法的命名空间
         /// </summary>
@@ -80,9 +82,12 @@ namespace XMGAME.Comm
 
         private void HanderSessionClosed(WebSocketSession aSession, SuperSocket.SocketBase.CloseReason aValue)
         {
+            Debug.Write("ClosesessionID:"+aSession.SessionID);
           
              string UserKey=  gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
             if (UserKey == null) {
+                UserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
+                if(UserKey==null)
                 return;
             }
             string strRoomId = gdicSessionRoom.Where(u => u.Value.Contains(UserKey)).FirstOrDefault().Key;
@@ -94,11 +99,16 @@ namespace XMGAME.Comm
             if (Room != null) {
 
                 Room.Remove(UserKey);
+                gdicSessionRoom[strRoomId] = Room;
                 if (Room.Count() == 0)
                 {
                     gdicSessionRoom.Remove(strRoomId);
                     if (gdicSessionReady.ContainsKey(strRoomId))
                         gdicSessionReady.Remove(strRoomId);
+                }
+                else {
+
+
                 }
                 SocketEntity socketEntity = new SocketEntity()
                 {
@@ -200,8 +210,18 @@ namespace XMGAME.Comm
 
 
         //处理进入房间
-        private void handlerInRoom(SocketEntity socket) {              
-                List<string> room = null;
+        private void handlerInRoom(SocketEntity socket) {
+            if (gdicSessionClose.ContainsKey(socket.FromUser))
+            {
+                gdicSessionClose[socket.FromUser] = gdicSessiomMap[socket.FromUser];
+                Debug.Write("SessionID:" + gdicSessiomMap[socket.FromUser].SessionID);
+            }
+            else
+            {
+                gdicSessionClose.Add(socket.FromUser, gdicSessiomMap[socket.FromUser]);
+            }
+
+            List<string> room = null;
             //有房间ID并且房没满就进入当前房间
             if (socket.RoomID != ""&&gdicSessionRoom.ContainsKey(socket.RoomID))
             {
@@ -279,15 +299,19 @@ namespace XMGAME.Comm
 
         //修改SessionMap 集合Key
         private void updateSessionKey(SocketEntity socket,WebSocketSession session) {
-            gdicSessiomMap.Remove(session.SessionID);
+
+        
             if (gdicSessiomMap.ContainsKey(socket.FromUser))
             {
+               
                 gdicSessiomMap[socket.FromUser] = session;
             }
-            else {
+            else
+            {
                 gdicSessiomMap.Add(socket.FromUser, session);
+               
             }
-           
+            gdicSessiomMap.Remove(session.SessionID);
         }
 
         //游戏结束退出房间
