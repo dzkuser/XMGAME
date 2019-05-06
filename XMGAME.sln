@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGAME.UnitTest", "UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketStart", "SocketStart\SocketStart.csproj", "{CA29A750-D575-45C7-8B5E-C421DF22E0CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGAME.WebAPI", "XMGAME.WebAPI\XMGAME.WebAPI.csproj", "{7CC7F0CC-A0BE-454E-AC38-668F5E70F25A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMGAME.ConsoleApp4Test", "XMGAME.ConsoleApp4Test\XMGAME.ConsoleApp4Test.csproj", "{3C316D17-CC5E-4444-9FEC-C3386EECCF4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{CA29A750-D575-45C7-8B5E-C421DF22E0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA29A750-D575-45C7-8B5E-C421DF22E0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA29A750-D575-45C7-8B5E-C421DF22E0CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC7F0CC-A0BE-454E-AC38-668F5E70F25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC7F0CC-A0BE-454E-AC38-668F5E70F25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC7F0CC-A0BE-454E-AC38-668F5E70F25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC7F0CC-A0BE-454E-AC38-668F5E70F25A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C316D17-CC5E-4444-9FEC-C3386EECCF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C316D17-CC5E-4444-9FEC-C3386EECCF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C316D17-CC5E-4444-9FEC-C3386EECCF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C316D17-CC5E-4444-9FEC-C3386EECCF4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
