@@ -49,6 +49,8 @@ namespace XMGAME.Comm
 
         private static Dictionary<string, WebSocketSession> gdicSessionClose = new Dictionary<string, WebSocketSession>();
 
+        private static Dictionary<string, List<string>> gdicRoomReadyPerson = new Dictionary<string, List<string>>();
+
         /// <summary>
         /// 执行方法的命名空间
         /// </summary>
@@ -65,6 +67,7 @@ namespace XMGAME.Comm
             webSocket.SessionClosed += HanderSessionClosed;
             webSocket.Setup(ResourceHelp.GetResourceString("ip"), Convert.ToInt32(ResourceHelp.GetResourceString("port")));
             webSocket.Start();
+          
 
         }
         #endregion
@@ -82,33 +85,26 @@ namespace XMGAME.Comm
 
         private void HanderSessionClosed(WebSocketSession aSession, SuperSocket.SocketBase.CloseReason aValue)
         {
-            Debug.Write("ClosesessionID:"+aSession.SessionID);
-          
+            Debug.WriteLine("======================Close");
              string UserKey=  gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
             if (UserKey == null) {
                 UserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
-                if(UserKey==null)
-                return;
+                if (UserKey == null)
+                  return;
             }
             string strRoomId = gdicSessionRoom.Where(u => u.Value.Contains(UserKey)).FirstOrDefault().Key;
             if (strRoomId != null&& gdicSessionReady[strRoomId] == gintRoomSize) {            
-              //  lostConnection(userKey, roomID);
+              //  lostConnection(UserKey, strRoomId);
             }                       
              gdicSessiomMap.Remove(UserKey);
              List<string> Room=gdicSessionRoom.Where(u=>u.Value.Contains(UserKey)).FirstOrDefault().Value;
             if (Room != null) {
 
                 Room.Remove(UserKey);
-                gdicSessionRoom[strRoomId] = Room;
-                if (Room.Count() == 0)
-                {
+                if (Room.Count() == 0) {
                     gdicSessionRoom.Remove(strRoomId);
                     if (gdicSessionReady.ContainsKey(strRoomId))
                         gdicSessionReady.Remove(strRoomId);
-                }
-                else {
-
-
                 }
                 SocketEntity socketEntity = new SocketEntity()
                 {
@@ -183,11 +179,27 @@ namespace XMGAME.Comm
                 case SocketEnum.r:
                     handlerReady(socketEntity);
                     break;
+                case SocketEnum.live:
+                    handlerLiveBag(socketEntity);
+                    break;
             }
           
 
        
         }
+
+
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：
+        /// 功能：接收心跳信息
+        /// </summary>
+        public void handlerLiveBag(SocketEntity aSocketMessage) {
+            if(gdicLive.ContainsKey(aSocketMessage.FromUser))
+            gdicLive[aSocketMessage.FromUser] = true;
+        }
+
 
         //处理发送消息
         public  void handlerSendMessage(SocketEntity aSocketMessage, WebSocketSession aUserSession=null) {
@@ -214,7 +226,7 @@ namespace XMGAME.Comm
             if (gdicSessionClose.ContainsKey(socket.FromUser))
             {
                 gdicSessionClose[socket.FromUser] = gdicSessiomMap[socket.FromUser];
-                Debug.Write("SessionID:" + gdicSessiomMap[socket.FromUser].SessionID);
+               
             }
             else
             {
@@ -289,29 +301,36 @@ namespace XMGAME.Comm
                 }                
             }
             else
-            {               
+            {
+                List<string> objRoomPerson = null;
+                if (gdicRoomReadyPerson.ContainsKey(socket.RoomID))
+                {
+                    objRoomPerson = gdicRoomReadyPerson[socket.RoomID];
+                }
+                else {
+                    objRoomPerson = new List<string>();
+                    gdicRoomReadyPerson.Add(socket.RoomID,objRoomPerson);
+                }
+                objRoomPerson.Add(socket.FromUser);
+                gdicRoomReadyPerson[socket.RoomID] = objRoomPerson;
                 gdicSessionReady[socket.RoomID] = count;            
                 socket.Message =ResourceHelp.GetResourceString("ready");
                 socket.ToUser = gdicSessionRoom[socket.RoomID];
-                handlerSendMessage(socket);
+                handlerSendMessage(socket);                
             }
         }
 
         //修改SessionMap 集合Key
         private void updateSessionKey(SocketEntity socket,WebSocketSession session) {
-
-        
+            gdicSessiomMap.Remove(session.SessionID);
             if (gdicSessiomMap.ContainsKey(socket.FromUser))
             {
-               
                 gdicSessiomMap[socket.FromUser] = session;
             }
-            else
-            {
+            else {
                 gdicSessiomMap.Add(socket.FromUser, session);
-               
             }
-            gdicSessiomMap.Remove(session.SessionID);
+           
         }
 
         //游戏结束退出房间
@@ -341,13 +360,13 @@ namespace XMGAME.Comm
             //{
                 //得到方法执行数据
                 object result = takeRedisData(method, param, backObj);
-               responseVo=  getResponseVo(obj: result);
+                responseVo = GetErroResult(method,result); 
             //  }
-            //catch (Exception ex)
+            //catch (Exception)
             //{
 
-            //    responseVo = exMethod(method);
-            //  }
+            //    responseVo = getResponseVo(500,ResourceHelp.GetResourceString("500"));
+            //}
 
 
             //处理ResponseVo对象并发送数据
@@ -364,6 +383,36 @@ namespace XMGAME.Comm
 
         #endregion
 
+        private ResponseVo GetErroResult ( MethodInfo method ,object aObjResult=null) {
+
+            Attribute attribute = method.GetCustomAttribute(typeof(ErroAttribute));
+            if (attribute == null) {
+                return getResponseVo(obj:aObjResult);
+            }
+            Type type = attribute.GetType();
+            object [] objRelus= (object[])type.GetProperty("Rule").GetValue(attribute);
+            string strCode = null;
+            for (int i = 1; i < objRelus.Length; i+=2)
+            {
+                if (aObjResult == objRelus[i]) {
+                    strCode = objRelus[i - 1].ToString();
+                    break;
+                }
+
+            }
+            if (strCode == null) {
+                strCode = "200";
+            }
+       
+            string message = ResourceHelp.GetResourceString(strCode);
+            ResponseVo responseVo = new ResponseVo()
+            {
+                Code = Convert.ToInt32(strCode),
+                Message = message,
+                Data=aObjResult
+            };
+            return responseVo;
+        }
 
         private MethodInfo GetActionMethod( out object backObj,string className,string method) {
             Assembly assembly = Assembly.Load(gstrClassPath);
@@ -372,9 +421,12 @@ namespace XMGAME.Comm
             MethodInfo methodEx = type.GetMethod(method);
             return methodEx;
         }
-        [ErroAttribute(101)]
+
         private object takeRedisData(MethodInfo method, Dictionary<string, object> param, object obj) {
 
+            if (method == null) {
+                return null;
+            }
 
             Dictionary<string, object> paramMethod = new Dictionary<string, object>();
             if (param != null) {
@@ -422,36 +474,11 @@ namespace XMGAME.Comm
                    
                 }
 
-
-            }
-         
-            
+            }                    
             return  method.Invoke(obj, paramMethod.Values.ToArray());
                     
         }
 
-        private ResponseVo exMethod(MethodInfo method) {            
-            Attribute attribute = method.GetCustomAttribute(typeof(ErroAttribute));
-            if (attribute == null) {
-
-                return new ResponseVo() {
-                    Code=500,
-                    Message=ResourceHelp.GetResourceString("systemErro")
-                };
-
-            }          
-             Type type= attribute.GetType();
-             string code=type.GetProperty("Code").GetValue(attribute).ToString();                   
-             string message= ResourceHelp.GetResourceString(code);
-             ResponseVo responseVo = new ResponseVo()
-             {
-              Code = Convert.ToInt32(code),
-              Message = message
-             };
-
-         return responseVo;
-
-        } 
         private void entityMapping(ref Dictionary<string, object> paramMethod,MethodInfo method,ref Dictionary<string, object> param) {
             ParameterInfo[] parameterInfo = method.GetParameters();
             foreach (var item in parameterInfo)
@@ -474,6 +501,14 @@ namespace XMGAME.Comm
             }
         }
 
+
+        /// <summary>
+        /// 得到实体响应对象
+        /// </summary>
+        /// <param name="code">状态码</param>
+        /// <param name="message">信息</param>
+        /// <param name="obj">返回值</param>
+        /// <returns></returns>
         private ResponseVo getResponseVo(int code=200 ,string message="成功",object obj=null) {
             ResponseVo responseVo = new ResponseVo() {
                     Code=code,
@@ -484,6 +519,16 @@ namespace XMGAME.Comm
             return responseVo;
         }
 
+
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：2019-
+        /// 功能：把传来的参数映射到调用方法需要的实体类
+        /// </summary>
+        /// <param name="fields">实体类属性</param>
+        /// <param name="param">前端的参数</param>
+        /// <param name="obj">实体类对象</param>
         private void MapperEntity(Dictionary<string, PropertyInfo> fields,ref Dictionary<string, object> param, ref object obj) {
 
             foreach (var item in fields)
@@ -516,6 +561,14 @@ namespace XMGAME.Comm
             param = paramUpper;
         }
 
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：2019-
+        /// 功能：用户掉线的处理
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="roomID"></param>
         private void lostConnection(string key,string roomID) {
 
             object obj = null;
@@ -523,19 +576,25 @@ namespace XMGAME.Comm
             Dictionary<string, object> pairs = new Dictionary<string, object>();
             pairs.Add("token",key);
             User ret = (User)takeRedisData(method,pairs,obj);
-            //RecordBLL recordBLL = new RecordBLL();
-            //recordBLL.GetRecordByUserAndRoom(ret.AccountName, roomID);
-            //Record record = new Record()
-            //{
-            //    AccountName = ret.AccountName,
-            //    Integral = -20,
-            //    EndTime = DateTime.Now,
-            //    RoomID = roomID
-            //};
-            //recordBLL.UpdateRecord(record);
+         
+            MethodInfo objRecordMethod = GetActionMethod(out obj,"RecordBLL", "UpdateRecord");
+            pairs = new Dictionary<string, object>();
+            pairs.Add("AccountName",ret.AccountName);
+            pairs.Add("Integral",-20);
+            pairs.Add("EndTime",DateTime.Now);
+            pairs.Add("RoomID",roomID);
+
+            takeRedisData(objRecordMethod,pairs,obj);
         }
 
-   //    private delegate void handlerLive();
+
+
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：
+        /// 功能：发送心跳包
+        /// </summary>
         private void SendLiveBag() {
             int intTime = Convert.ToInt32(ResourceHelp.GetResourceString("timerTime"));
             Timer timer = new Timer(intTime);
@@ -544,6 +603,13 @@ namespace XMGAME.Comm
             timer.Elapsed += Timer_Elapsed;
         }
 
+
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：
+        /// 功能：发送心跳包的委托事件
+        /// </summary>  
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
 
@@ -552,33 +618,86 @@ namespace XMGAME.Comm
                 ToUser = gdicSessiomMap.Keys.ToList(),
                 Tag = SocketEnum.live.ToString()
             };
+            foreach (var item in objSocketLive.ToUser)
+            {
+                if(item!=null &&!gdicLive.ContainsKey(item))
+                gdicLive.Add(item,false);
+            }
 
             handlerSendMessage(objSocketLive);
+            ReceiveLiveBag();
+        }
+
+        private void ReceiveLiveBag()
+        {
+            int intTime = Convert.ToInt32(ResourceHelp.GetResourceString("receiveTime"));
+            Timer timer = new Timer(intTime);
+            timer.AutoReset = false;
+            timer.Enabled = true;
+            timer.Elapsed += ReceiveElapsed;
+        }
+
+
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：2019-
+        /// 功能：发送心跳包的委托事件
+        /// </summary>  
+        private void ReceiveElapsed(object sender, ElapsedEventArgs e)
+        {
+            foreach (var item in gdicLive)
+            {
+                if (!item.Value)
+                {
+                    if (gdicSessiomMap.ContainsKey(item.Key))
+                        gdicSessiomMap[item.Key].Close();
+                }
+            }
 
         }
 
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：2019-
+        /// 功能：当有人准备了就开始计时
+        /// </summary>
         private void ReceptionLiveBag() {
             int intTime = 5000;
             Timer timer = new Timer(intTime);
-            timer.AutoReset = false;
+            timer.AutoReset = true;
             timer.Enabled = true;
             timer.Elapsed += Receprtion;
         }
 
 
+        /// <summary>
+        /// 作者：邓镇康
+        /// 创建时间:2019-5-5
+        /// 修改时间：2019-
+        /// 功能：到时间把房间内没准备的人踢出房间
+        /// </summary>
         private void Receprtion(object sender, ElapsedEventArgs e)
         {
-            foreach (var item in gdicLive)
-            {
-                if (!item.Value) {
 
+            foreach (var item in gdicRoomReadyPerson)
+            {
+                if (item.Value.Count()<gintRoomSize&& gdicSessionRoom[item.Key].Count==gintRoomSize) {
+                    List<string> objRoomUser= gdicSessionRoom[item.Key];
+                    objRoomUser.RemoveAll(t=>item.Value.Contains(t));
+                    gdicSessionRoom[item.Key] = item.Value;
+                    SocketEntity objRemvoUser = new SocketEntity() {
+                        Tag = SocketEnum.s.ToString(),
+                        ToUser = objRoomUser,
+                        Message = ResourceHelp.GetResourceString("outRoom")
+                    };
+                    handlerSendMessage(objRemvoUser);
                 }
             }
            
-
+            
         }
-        private void VerificationLogin() {
-
-        }
+     
     }
 }

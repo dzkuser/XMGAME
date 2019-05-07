@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XMGAME.Comm;
 using XMGAME.DAL;
 using XMGAME.IDAL;
 using XMGAME.Model;
@@ -26,20 +27,23 @@ namespace XMGAME.BLL
        
         }
 
+        [ErroAttribute(Rule = new object[] { 108, null })]
         public Record AddRecord(Record record) {
-            string strToken=record.AccountName;
+            string strToken = record.AccountName;
             record.AccountName = userDAL.GetUserByToken(record.AccountName).AccountName;
-            bool isSuccess=recordDAL.Insert(record);
+            bool isSuccess = recordDAL.Insert(record);
             if (isSuccess)
             {
-               
-              return GetRecordByUserAndRoom(strToken,record.RoomID);
+
+                return GetRecordByUserAndRoom(strToken, record.RoomID);
             }
-            else {
+            else
+            {
                 return null;
             }
         }
 
+        [ErroAttribute(Rule = new object[] { 109,false })]
         public bool UpdateRecord(Record record) {
             User userEdit= userDAL.GetUserByToken(record.AccountName);
             User user = new User() {
@@ -52,6 +56,7 @@ namespace XMGAME.BLL
             return recordDAL.Update(record);
         }
 
+       
         public IQueryable<Record> GetRecords(string roomID) {
             Record record = new Record();
             record.RoomID = roomID;

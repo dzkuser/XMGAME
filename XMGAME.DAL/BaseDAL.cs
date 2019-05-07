@@ -30,7 +30,7 @@ namespace XMGAME.DAL
           return  dbContext.Set<T>();
         }
 
-        [ErroAttribute(101)]
+
         public IQueryable<T> GetByWhere(T entity,Dictionary<string,string> fieldRelation,string relation="")
         {
             return dbContext.Set<T>().Where(DynamicQueryBulid(entity,fieldRelation,relation));

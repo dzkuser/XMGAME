@@ -16,20 +16,22 @@ namespace XMGAME.BLL
 
         private IUserDAL userDAL = new UserDAL();
 
-        [RedisAttribute("user",ArgumentName ="id")]
-        public User GetUserInfoByID(int id) 
-        {           
-          return  userDAL.GetEntityByID(id);            
+        [RedisAttribute("user", ArgumentName = "id")]
+        [ErroAttribute(Rule = new object[] { 102, null })]
+        public User GetUserInfoByID(int id)
+        {
+            return userDAL.GetEntityByID(id);
         }
 
-      
-        [RedisAttribute("user",ArgumentName ="token")]
+
+        [RedisAttribute("user", ArgumentName = "token")]
+        [ErroAttribute(Rule = new object[] { 101, null })]
         public User GetUserInfoByToken(string token) {
             User user = userDAL.GetUserByToken(token);
             return user;
         }
-
-        [ErroAttribute(100)]
+        
+        [ErroAttribute(Rule =new object[]{100,null})]  
         public User Login(string accountName, string userPassWord) {
             
             User record = new User();
@@ -51,12 +53,13 @@ namespace XMGAME.BLL
             return null;
         }
 
+        [ErroAttribute(Rule = new object[] { 103,false })]
         public bool Register(User user) {
             user.UserPassWord = Md5.GetMD5String(user.UserPassWord);
             return userDAL.Insert(user);
         }
 
-
+        [ErroAttribute(Rule = new object[] { 104, false })]
         public bool UpdateIntegral(User user) {
 
             User userToken= GetUserInfoByToken(user.AccountName);
@@ -81,6 +84,7 @@ namespace XMGAME.BLL
             return bo;
         }
 
+        [ErroAttribute(Rule = new object[] { 105, false })]
         public bool UpdateOrAddToken(User user) {
             return userDAL.UpdateOrAddToken(user);
         }

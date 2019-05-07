@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XMGAME.Comm;
 using XMGAME.DAL;
 using XMGAME.IDAL;
 using XMGAME.Model;
@@ -16,6 +17,7 @@ namespace XMGAME.BLL
         private IGenreDAL genreDAL = new GenreDAL();
 
         private RecordBLL recordBLL = new RecordBLL();
+
 
         public bool AddQuestion(QuestionEntity question) {
 
@@ -31,6 +33,8 @@ namespace XMGAME.BLL
             return  questionDAL.Delete(question);
         }
 
+
+        [ErroAttribute(Rule = new object[] { 106, null })]
         public IQueryable<QuestionEntity> GetQuestions() {
            
             int max= GetAll().Count();
@@ -38,10 +42,12 @@ namespace XMGAME.BLL
             return AssembleQuestions(questionDAL.GetByIDs(ids));
         }
 
+        [ErroAttribute(Rule = new object[] { 106, null })]
         public IQueryable<QuestionEntity> GetAll() {
             return AssembleQuestions(questionDAL.GetAll());
         }
 
+        [ErroAttribute(Rule = new object[] { 107, null })]
         public QuestionEntity GetQuestion(int id) {
             QuestionEntity question = new QuestionEntity();
             question.ID = id;

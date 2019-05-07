@@ -16,10 +16,10 @@ namespace XMGAME.Model
         public int Integral { get; set; }
 
         [DateTimeAttribute]
-        public DateTime? CreateTime { get; set; }
+        public DateTime? CreateTime { get; set; } = DateTime.Now;
 
         [DateTimeAttribute]
-        public DateTime? EndTime { get; set; }
+        public DateTime? EndTime { get; set; } =DateTime.Now;
 
         public string RoomID { get; set; }
 

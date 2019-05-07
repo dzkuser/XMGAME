@@ -35,6 +35,7 @@ namespace XMGAME.BLL
             return recordQuestionDAL.GetByRoomID(roomID);
         }
 
+
         public bool IsRight(RecordQuestionDTO dTO) {
             QuestionEntity entity = new QuestionEntity();
             entity.ID = dTO.QuestionID;

@@ -81,10 +81,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Game\Game.csproj">
-      <Project>{ca44e457-1113-4cbc-92c8-e62e0d367edf}</Project>
-      <Name>Game</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XMGAME.BLL\XMGAME.BLL.csproj">
       <Project>{E800B0F1-7FF6-4C06-B68C-F9F8772692CB}</Project>
       <Name>XMGAME.BLL</Name>

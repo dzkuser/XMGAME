@@ -61,7 +61,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 用户登录出错 的本地化字符串。
+        ///   查找类似 用户登录失败 的本地化字符串。
         /// </summary>
         internal static string _100 {
             get {
@@ -70,11 +70,101 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 方法参数异常 的本地化字符串。
+        ///   查找类似 没有改Token的用户 的本地化字符串。
         /// </summary>
         internal static string _101 {
             get {
                 return ResourceManager.GetString("101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 没有改ID的用户 的本地化字符串。
+        /// </summary>
+        internal static string _102 {
+            get {
+                return ResourceManager.GetString("102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 注册失败 的本地化字符串。
+        /// </summary>
+        internal static string _103 {
+            get {
+                return ResourceManager.GetString("103", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 修改积分失败 的本地化字符串。
+        /// </summary>
+        internal static string _104 {
+            get {
+                return ResourceManager.GetString("104", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 修改或增加token失败 的本地化字符串。
+        /// </summary>
+        internal static string _105 {
+            get {
+                return ResourceManager.GetString("105", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 题库题目为空 的本地化字符串。
+        /// </summary>
+        internal static string _106 {
+            get {
+                return ResourceManager.GetString("106", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 没有为改ID的题目 的本地化字符串。
+        /// </summary>
+        internal static string _107 {
+            get {
+                return ResourceManager.GetString("107", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 添加记录失败 的本地化字符串。
+        /// </summary>
+        internal static string _108 {
+            get {
+                return ResourceManager.GetString("108", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 修改记录失败 的本地化字符串。
+        /// </summary>
+        internal static string _109 {
+            get {
+                return ResourceManager.GetString("109", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 成功 的本地化字符串。
+        /// </summary>
+        internal static string _200 {
+            get {
+                return ResourceManager.GetString("200", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 系统失败 的本地化字符串。
+        /// </summary>
+        internal static string _500 {
+            get {
+                return ResourceManager.GetString("500", resourceCulture);
             }
         }
         
@@ -88,7 +178,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 172.16.31.232 的本地化字符串。
+        ///   查找类似 172.16.31.236 的本地化字符串。
         /// </summary>
         internal static string ip {
             get {
@@ -115,7 +205,16 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 4000 的本地化字符串。
+        ///   查找类似 你已经被请出房间 的本地化字符串。
+        /// </summary>
+        internal static string outRoom {
+            get {
+                return ResourceManager.GetString("outRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 5009 的本地化字符串。
         /// </summary>
         internal static string port {
             get {
@@ -129,6 +228,15 @@ namespace XMGAME.Comm {
         internal static string ready {
             get {
                 return ResourceManager.GetString("ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 500 的本地化字符串。
+        /// </summary>
+        internal static string receiveTime {
+            get {
+                return ResourceManager.GetString("receiveTime", resourceCulture);
             }
         }
         
@@ -187,7 +295,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 1000 的本地化字符串。
+        ///   查找类似 10000 的本地化字符串。
         /// </summary>
         internal static string timerTime {
             get {
