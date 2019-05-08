@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="mapper\DealMapper.cs" />
     <Compile Include="mapper\ExceptioLogMapper.cs" />
     <Compile Include="mapper\GameMapper.cs" />
     <Compile Include="mapper\GenreMapper.cs" />

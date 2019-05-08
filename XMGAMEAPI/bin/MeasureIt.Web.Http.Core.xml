@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MeasureIt.Web.Http.Core</name>
+    </assembly>
+    <members>
+        <member name="T:MeasureIt.Discovery.Agents.IMeasurementFilterDiscoveryAgent`1">
+            <summary>
+            Measurement filter discovery agent.
+            </summary>
+            <typeparamref name="TAttribute"/>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.IMeasurementFilterDiscoveryAgent">
+            <summary>
+            Measurement filter discovery agent.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.MeasurementFilterDiscoveryAgent">
+            <summary>
+            Measurement filter discovery agent regarding
+            <see cref="T:MeasureIt.IPerformanceMeasurementDescriptor"/> and
+            <see cref="T:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute"/> concerns.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.IHttpActionInstrumentationDiscoveryService">
+            <summary>
+            Instrumentation discovery service for web purposes.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.HttpActionInstrumentationDiscoveryService">
+            <summary>
+            Instrumentation discovery service for web purposes.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.HttpActionInstrumentationDiscoveryService.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions)">
+            <summary>
+            
+            </summary>
+            <param name="discoveryOptions"></param>
+        </member>
+        <member name="P:MeasureIt.Discovery.HttpActionInstrumentationDiscoveryService.Measurements">
+            <summary>
+            Gets the Measurements discovered by the service.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.HttpActionInstrumentationDiscoveryService.OnDiscover">
+            <summary>
+            Discover handler.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.HttpActionInstrumentationDiscoveryService.GetInstallerContext">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.WebExtensionMethods.TryRemove(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Tries to <see cref="M:System.Collections.Generic.IDictionary`2.Remove(`0)"/> the item corresponding
+            with <paramref name="key"/>. Tests whether
+            <see cref="M:System.Collections.Generic.IDictionary`2.ContainsKey(`0)"/> prior to removing.
+            </summary>
+            <param name="dictionary"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute">
+            <summary>
+            This Attribute serves a dual purpose. First is to configure measurement conditions for the
+            action on which it is a decoration. Second is as a focal point for interception, similar
+            to Castle DynamicProxy IInterceptor.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.#ctor(System.Type,System.Type,System.Type[])">
+            <summary>
+            Constructor
+            </summary>
+            <param name="categoryType"></param>
+            <param name="adapterType"></param>
+            <param name="otherAdapterTypes"></param>
+        </member>
+        <member name="F:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.MeasurementProviderKey">
+            <summary>
+            "api-measurement-provider"
+            </summary>
+        </member>
+        <member name="F:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.MeasurementContextKey">
+            <summary>
+            "api-measurement-context"
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.OnActionExecuting(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Action executed event handler.
+            </summary>
+            <param name="actionContext"></param>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.OnActionExecutingAsync(System.Web.Http.Controllers.HttpActionContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously handles the Action executing event.
+            </summary>
+            <param name="actionContext"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.OnActionExecuted(System.Web.Http.Filters.HttpActionExecutedContext)">
+            <summary>
+            Action executed event handler.
+            </summary>
+            <param name="actionExecutedContext"></param>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Filters.PerformanceMeasurementFilterAttribute.OnActionExecutedAsync(System.Web.Http.Filters.HttpActionExecutedContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously handles the Action executed event.
+            </summary>
+            <param name="actionExecutedContext"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase">
+            <summary>
+            Measurement filter base class.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.Descriptor">
+            <summary>
+            Gets the Descriptor.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.ReadOnly">
+            <summary>
+            Gets or sets whether <see cref="P:System.Diagnostics.PerformanceCounter.ReadOnly"/>. Leaving unspecified
+            assumes read-only.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.InstanceLifetime">
+            <summary>
+            Gets or sets the InstanceLifetime.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.PublishCounters">
+            <summary>
+            Gets or sets whether to PublishCounters.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.ThrowPublishErrors">
+            <summary>
+            Gets or sets whether to ThrowPublishErrors.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.PublishEvent">
+            <summary>
+            Gets or sets whether to PublishEvent.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.SampleRate">
+            <summary>
+            Gets or sets the SampleRate.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Filters.MeasurementFilterAttributeBase.#ctor(System.Type,System.Type,System.Type[])">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="categoryType"></param>
+            <param name="adapterType"></param>
+            <param name="otherAdapterTypes"></param>
+        </member>
+        <member name="T:MeasureIt.Web.Http.Interception.HttpActionMeasurementProvider">
+            <summary>
+            Measurement Provider for web purposes.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Web.Http.Interception.HttpActionMeasurementProvider.DiscoveryService">
+            <summary>
+            Gets the DiscoveryService.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Interception.HttpActionMeasurementProvider.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,MeasureIt.Discovery.IHttpActionInstrumentationDiscoveryService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="options"></param>
+            <param name="discoveryService"></param>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Interception.HttpActionMeasurementProvider.GetMeasurementContext(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            Returns the Measurement Context given <paramref name="targetType"/> and
+            <paramref name="method"/>.
+            </summary>
+            <param name="targetType"></param>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Web.Http.TraceExceptionLogger">
+            <summary>
+            Provides a Trace capability during <see cref="T:System.Exception"/> logging.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.TraceExceptionLogger.Log(System.Web.Http.ExceptionHandling.ExceptionLoggerContext)">
+            <summary>
+            Logs the <paramref name="context"/>.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:MeasureIt.Web.Http.TraceExceptionLogger.LogAsync(System.Web.Http.ExceptionHandling.ExceptionLoggerContext,System.Threading.CancellationToken)">
+            <summary>
+            Logs the <paramref name="context"/> asynchronously.
+            </summary>
+            <param name="context"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

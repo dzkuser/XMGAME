@@ -15,18 +15,16 @@ namespace XMGAME.BLL
 
         private IGameDAL gameDAL = new GameDAL();
 
-        [RedisAttribute(key: "game", IsDelete = true)]
+  
         public bool EditGame(Game game) {
 
             return gameDAL.Update(game);
         }
 
-        [RedisAttribute("game")]
         public IQueryable<Game> GetGames()
         {
             return gameDAL.GetAll();
         }
-        [RedisAttribute(key: "game", IsDelete = true)]
         public bool DeleteGame(int id) {
 
             return gameDAL.Delete(GetGame(id));

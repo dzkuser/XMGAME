@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MeasureIt.Web.Http.Autofac</name>
+    </assembly>
+    <members>
+        <member name="T:MeasureIt.Web.Http.Autofac.AutofacHttpControllerActivator">
+            <summary>
+            Autofac Http controller activator.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.AutofacHttpControllerActivator.#ctor(Autofac.ILifetimeScope)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="scope"></param>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.AutofacHttpControllerActivator.Create(System.Net.Http.HttpRequestMessage,System.Web.Http.Controllers.HttpControllerDescriptor,System.Type)">
+            <summary>
+            Returns a Created <see cref="T:System.Web.Http.Controllers.IHttpController"/> corresponding with the
+            <paramref name="request"/> and <paramref name="ctrlType"/>.
+            </summary>
+            <param name="request"></param>
+            <param name="ctrlDescriptor"></param>
+            <param name="ctrlType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Web.Http.Autofac.IAutofacHttpControllerActivator">
+            <summary>
+            Autofac Http controller activator.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods">
+            <summary>
+            Most of the registration with <see cref="T:Autofac.ContainerBuilder"/> is done via the open source
+            <see cref="!:http://github.com/autofac/Autofac.WebApi/" /> as deployed via <see
+            cref="!:http://www.nuget.org/packages/Autofac.WebApi2/" />. However there are a couple of
+            extra bits that can be adjusted. Chief among them is to enable measurement via <see
+            cref="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.EnableApiMeasurements``3(Autofac.ContainerBuilder,System.Func{``2})"/>.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.RegisterApiService``2(Autofac.ContainerBuilder)">
+            <summary>
+            Registers the <typeparamref name="TService"/> as a kind of
+            <typeparamref name="TInterface"/>.
+            </summary>
+            <typeparam name="TInterface"></typeparam>
+            <typeparam name="TService"></typeparam>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.ReplaceService``2(System.Web.Http.HttpConfiguration,Autofac.IContainer)">
+            <summary>
+            <see cref="M:System.Web.Http.Controllers.ServicesContainer.Replace(System.Type,System.Object)"/> the type of <typeparamref name="TInterface"/>
+            found in the <see cref="P:System.Web.Http.HttpConfiguration.Services"/> with the resolved
+            <typeparamref name="TService"/>. Service may be a concrete class, but more likely it
+            should be the interface that was registered against the <see cref="T:Autofac.ContainerBuilder"/>.
+            </summary>
+            <typeparam name="TInterface"></typeparam>
+            <typeparam name="TService"></typeparam>
+            <param name="config"></param>
+            <param name="container"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.RegisterApiServices(Autofac.ContainerBuilder)">
+            <summary>
+            Registers services with the <paramref name="builder"/> with default
+            <see cref="T:Autofac.Integration.WebApi.AutofacWebApiDependencyResolver"/> and
+            <see cref="T:MeasureIt.Web.Http.Autofac.AutofacHttpControllerActivator"/> implementations provided.
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.RegisterApiServices``2(Autofac.ContainerBuilder)">
+            <summary>
+            Registers services with the <paramref name="builder"/>, including
+            <typeparamref name="TResolver"/> and <typeparamref name="TActivator"/>.
+            </summary>
+            <typeparam name="TResolver"></typeparam>
+            <typeparam name="TActivator"></typeparam>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.RegisterApiServices``3(Autofac.ContainerBuilder)">
+            <summary>
+            Registers services with the <paramref name="builder"/>, including
+            <typeparamref name="TResolver"/> and <typeparamref name="TActivator"/>.
+            </summary>
+            <typeparam name="TResolver"></typeparam>
+            <typeparam name="TActivator"></typeparam>
+            <typeparam name="TExceptionLogger"></typeparam>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.EnableApiMeasurements``2(Autofac.ContainerBuilder,System.Func{MeasureIt.Discovery.InstrumentationDiscoveryOptions})">
+            <summary>
+            Enables runtime interception using <see cref="T:MeasureIt.Web.Http.Interception.HttpActionMeasurementProvider"/> by
+            default.
+            </summary>
+            <typeparam name="TInterface"></typeparam>
+            <typeparam name="TService"></typeparam>
+            <param name="builder"></param>
+            <param name="createOptions"></param>
+            <returns></returns>
+            <see cref="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.EnableApiMeasurements``4(Autofac.ContainerBuilder,System.Func{``2})"/>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.EnableApiMeasurements``3(Autofac.ContainerBuilder,System.Func{``2})">
+            <summary>
+            Enables runtime interception using <see cref="T:MeasureIt.Web.Http.Interception.HttpActionMeasurementProvider"/> by
+            default.
+            </summary>
+            <typeparam name="TInterface"></typeparam>
+            <typeparam name="TService"></typeparam>
+            <typeparam name="TOptions"></typeparam>
+            <param name="builder"></param>
+            <param name="createOptions"></param>
+            <returns></returns>
+            <see cref="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.EnableApiMeasurements``4(Autofac.ContainerBuilder,System.Func{``2})"/>
+        </member>
+        <member name="M:MeasureIt.Web.Http.Autofac.RegistrationExtensionMethods.EnableApiMeasurements``4(Autofac.ContainerBuilder,System.Func{``2})">
+            <summary>
+            Enables runtime interception using <typeparamref name="TService"/> via
+            <paramref name="builder"/>.
+            </summary>
+            <typeparam name="TInterface"></typeparam>
+            <typeparam name="TService"></typeparam>
+            <typeparam name="TOptions"></typeparam>
+            <typeparam name="TProvider"></typeparam>
+            <param name="builder"></param>
+            <param name="createOptions"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

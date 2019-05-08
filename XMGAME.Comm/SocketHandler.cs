@@ -51,6 +51,7 @@ namespace XMGAME.Comm
 
         private static Dictionary<string, List<string>> gdicRoomReadyPerson = new Dictionary<string, List<string>>();
 
+        public static Dictionary<string,string> gdicLoginUser = new Dictionary<string, string>();
         /// <summary>
         /// 执行方法的命名空间
         /// </summary>
@@ -85,7 +86,6 @@ namespace XMGAME.Comm
 
         private void HanderSessionClosed(WebSocketSession aSession, SuperSocket.SocketBase.CloseReason aValue)
         {
-            Debug.WriteLine("======================Close");
              string UserKey=  gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
             if (UserKey == null) {
                 UserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
@@ -213,9 +213,12 @@ namespace XMGAME.Comm
 
             foreach (var item in aSocketMessage.ToUser)
             {
-                WebSocketSession toUser = gdicSessiomMap[item];
-                if(!toUser.InClosing)
-                toUser.Send(JsonConvert.SerializeObject(aSocketMessage));
+                if (gdicSessiomMap.ContainsKey(item)) {
+                    WebSocketSession toUser = gdicSessiomMap[item];
+                    if (!toUser.InClosing)
+                        toUser.Send(JsonConvert.SerializeObject(aSocketMessage));
+                }
+               
             }
                           
         }
@@ -360,17 +363,17 @@ namespace XMGAME.Comm
             //{
                 //得到方法执行数据
                 object result = takeRedisData(method, param, backObj);
-                responseVo = GetErroResult(method,result); 
-            //  }
-            //catch (Exception)
-            //{
+                responseVo = GetErroResult(method,result);
+        //}
+        //    catch (Exception)
+        //    {
 
-            //    responseVo = getResponseVo(500,ResourceHelp.GetResourceString("500"));
-            //}
+        //        responseVo = getResponseVo(500, ResourceHelp.GetResourceString("500"));
+        //    }
 
 
-            //处理ResponseVo对象并发送数据
-             socketEntity.Message =JsonHelper.ReplaceDateTime(js.Serialize(responseVo));
+             //处理ResponseVo对象并发送数据
+            socketEntity.Message =JsonHelper.ReplaceDateTime(js.Serialize(responseVo));
             if (socketEntity.FromUser != "") {
                 List<string> vs = new List<string>();
                 vs.Add(socketEntity.FromUser);
@@ -559,6 +562,18 @@ namespace XMGAME.Comm
                 paramUpper.Add(item.Key.ToUpper(),item.Value);
             }
             param = paramUpper;
+        }
+
+
+        public  void  InformLostLogin(string  astrToken) {
+            List<string> objUser = new List<string>();
+            objUser.Add(astrToken);
+            SocketEntity objMessage = new SocketEntity();
+            objMessage.Tag = SocketEnum.s.ToString();
+            objMessage.Message = ResourceHelp.GetResourceString("loginErro") ;
+            objMessage.ToUser = objUser;
+            handlerSendMessage(objMessage);
+            gdicSessiomMap[astrToken].Close();
         }
 
         /// <summary>

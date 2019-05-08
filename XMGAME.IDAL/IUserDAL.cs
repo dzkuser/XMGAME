@@ -15,7 +15,7 @@ namespace XMGAME.IDAL
 
         User GetUserByToken(string token);
 
-       
+        IQueryable<User> GetUsers(string[] acctounts);
 
     }
 }

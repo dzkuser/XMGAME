@@ -1,0 +1,2269 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MeasureIt.Core</name>
+    </assembly>
+    <members>
+        <member name="T:MeasureIt.Adapters.ContextAdapter">
+            <summary>
+            Context Adapter base class.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Adapters.ContextAdapter.CategoryAdapters">
+            <summary>
+            Gets the CategoryAdapters.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.ContextAdapter.#ctor(System.Collections.Generic.IEnumerable{MeasureIt.IPerformanceCounterCategoryAdapter})">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="categoryAdapters"></param>
+        </member>
+        <member name="T:MeasureIt.Adapters.IInstallerContextAdapter">
+            <summary>
+            Provides an Adapter for <see cref="T:MeasureIt.Adapters.IInstallerContextAdapter"/>.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Adapters.IUninstallerContextAdapter">
+            <summary>
+            Provides an Adapter for <see cref="T:MeasureIt.Adapters.IUninstallerContextAdapter"/>.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Adapters.InstallerContextAdapter">
+            <summary>
+            Establishes an Installer Context Adapter base class.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.InstallerContextAdapter.#ctor(System.Collections.Generic.IEnumerable{MeasureIt.IPerformanceCounterCategoryAdapter})">
+            <summary>
+            Protected Constructors
+            </summary>
+            <param name="categoryAdapters"></param>
+        </member>
+        <member name="T:MeasureIt.Adapters.UninstallerContextAdapter">
+            <summary>
+            Establishes an Uninstaller Context Adapter base class.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.UninstallerContextAdapter.#ctor(System.Collections.Generic.IEnumerable{MeasureIt.IPerformanceCounterCategoryAdapter})">
+            <summary>
+            Protected Constructors
+            </summary>
+            <param name="categoryAdapters"></param>
+        </member>
+        <member name="T:MeasureIt.Adapters.IPerformanceCounterCategoryUninstallerContextAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.IPerformanceCounterCategoryUninstallerContextAdapter.TryUninstallCategories(System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Tries to Uninstall the Categories.
+            </summary>
+            <param name="categoryNames"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Adapters.PerformanceCounterCategoryInstallerContextAdapter">
+            <summary>
+            Context adapter for Performance Counter category creation.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.PerformanceCounterCategoryInstallerContextAdapter.GetInstalledCategories">
+            <summary>
+            Returns the installed <see cref="T:System.Tuple`2"/> items.
+            </summary>
+            <returns></returns>
+            <see cref="M:System.Diagnostics.PerformanceCounterCategory.Create(System.String,System.String,System.Diagnostics.PerformanceCounterCategoryType,System.Diagnostics.CounterCreationDataCollection)"/>
+        </member>
+        <member name="M:MeasureIt.Adapters.PerformanceCounterCategoryInstallerContextAdapter.#ctor(System.Collections.Generic.IEnumerable{MeasureIt.IPerformanceCounterCategoryAdapter})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="categoryAdapters"></param>
+        </member>
+        <member name="T:MeasureIt.Adapters.PerformanceCounterCategoryUninstallerContextAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.PerformanceCounterCategoryUninstallerContextAdapter.TryUninstallCategories(System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Returns the 
+            </summary>
+            <param name="categoryNames"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Adapters.PerformanceCounterCategoryUninstallerContextAdapter.#ctor(System.Collections.Generic.IEnumerable{MeasureIt.IPerformanceCounterCategoryAdapter})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="categoryAdapters"></param>
+        </member>
+        <member name="T:MeasureIt.Adapters.IContextAdapter">
+            <summary>
+            Provides an Adapter for <see cref="T:MeasureIt.Contexts.IContext"/>.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Adapters.IPerformanceCounterCategoryInstallerContextAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Adapters.IPerformanceCounterCategoryInstallerContextAdapter.GetInstalledCategories">
+            <summary>
+            Returns the Installed Categories corresponding with this <see cref="T:MeasureIt.Adapters.IContextAdapter"/>.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.CounterCreationDataAttribute">
+            <summary>
+            Represents a <see cref="T:System.Type"/> rooted <see cref="T:System.Diagnostics.PerformanceCounter"/>
+            <see cref="T:System.Attribute"/>. The benefit of being rooted to a Type is that we can verify at
+            compile time.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataAttribute.Descriptor">
+            <summary>
+            Gets the Descriptor corresponding with the Attribute.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataAttribute.Help">
+            <summary>
+            Gets or sets the Help.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataAttribute.CounterType">
+            <summary>
+            Gets or sets the CounterType.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.CounterCreationDataAttribute.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:MeasureIt.MeasurePerformanceAttribute">
+            <summary>
+            Represents a <see cref="T:System.Type"/> rooted <see cref="T:System.Diagnostics.PerformanceCounter"/>
+            <see cref="T:System.Attribute"/>. The benefit of being rooted to a Type is that we can verify at
+            compile time.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.Descriptor">
+            <summary>
+            Gets the Descriptor corresponding with the Attribute.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.ReadOnly">
+            <summary>
+            Gets or sets whether <see cref="P:System.Diagnostics.PerformanceCounter.ReadOnly"/>. Leaving unspecified
+            assumes read-only.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.InstanceLifetime">
+            <summary>
+            Gets or sets the InstanceLifetime.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.PublishCounters">
+            <summary>
+            Gets or sets whether to PublishCounters.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.ThrowPublishErrors">
+            <summary>
+            Gets or sets whether to ThrowPublishErrors.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.PublishEvent">
+            <summary>
+            Gets or sets whether to PublishEvent.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.MayProceedUnabated">
+            <summary>
+            Gets whether MayproceedUnabated.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.MeasurePerformanceAttribute.SampleRate">
+            <summary>
+            Gets or sets the SampleRate.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.MeasurePerformanceAttribute.#ctor(System.Type,System.Type,System.Type[])">
+            <summary>
+            Constructor
+            </summary>
+            <param name="categoryType"></param>
+            <param name="adapterType"></param>
+            <param name="otherAdapterTypes"></param>
+        </member>
+        <member name="M:MeasureIt.MeasurePerformanceAttribute.#ctor(System.String,System.Type,System.Type,System.Type[])">
+            <summary>
+            Constructor
+            </summary>
+            <param name="counterName"></param>
+            <param name="categoryType"></param>
+            <param name="adapterType"></param>
+            <param name="otherAdapterTypes"></param>
+        </member>
+        <member name="T:MeasureIt.IMeasurePerformanceAttributeBase">
+            <summary>
+            Base interface for the <see cref="T:MeasureIt.IMeasurePerformanceAttribute"/> tree.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.IMeasurePerformanceAttribute`1">
+            <summary>
+            Represents the blueprint for <see cref="T:System.Diagnostics.PerformanceCounter"/>.
+            </summary>
+            <typeparam name="TDescriptor"></typeparam>
+        </member>
+        <member name="P:MeasureIt.IMeasurePerformanceAttribute`1.Descriptor">
+            <summary>
+            Gets the Descriptor.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.IMeasurePerformanceAttribute">
+            <summary>
+            Represents the Descriptor concerns for <see cref="T:MeasureIt.IPerformanceMeasurementDescriptor"/>.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.ICounterCreationDataAttribute">
+            <summary>
+            Represents the blueprint for <see cref="T:System.Diagnostics.CounterCreationData"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ICounterCreationDataAttribute.Descriptor">
+            <summary>
+            Gets the Descriptor.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.IAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Collections.Generic.IBidirectionalList`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Collections.Generic.IMap`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.IMap`2.MappedKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.IMap`2.MappedValues">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.Add(`1,`0)">
+            <summary>
+            
+            </summary>
+            <param name="right"></param>
+            <param name="left"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.ContainsKey(`1)">
+            <summary>
+            
+            </summary>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.Remove(`1)">
+            <summary>
+            
+            </summary>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.TryGetValue(`1,`0@)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.IMap`2.Item(`1)">
+            <summary>
+            
+            </summary>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.Add(System.Collections.Generic.KeyValuePair{`1,`0})">
+            <summary>
+            
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.Contains(System.Collections.Generic.KeyValuePair{`1,`0})">
+            <summary>
+            
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.Remove(System.Collections.Generic.KeyValuePair{`1,`0})">
+            <summary>
+            
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.IMap`2.CopyTo(System.Collections.Generic.KeyValuePair{`1,`0}[],System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+        </member>
+        <member name="T:MeasureIt.Collections.Generic.MapExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.MapExtensionMethods.Mirror``2(System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            Returns the Mirror image of the <paramref name="dictionary"/>.
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <param name="dictionary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.MapExtensionMethods.ToMap``2(System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <param name="dictionary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.MapExtensionMethods.ToMap``2(System.Collections.Generic.IDictionary{``1,``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <param name="dictionary"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Collections.Generic.Map`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>
+            
+            </summary>
+            <param name="leftDictionary"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.#ctor(System.Collections.Generic.IDictionary{`1,`0})">
+            <summary>
+            
+            </summary>
+            <param name="rightDictionary"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Add(`0,`1)">
+            <summary>
+            
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Add(`1,`0)">
+            <summary>
+            
+            </summary>
+            <param name="right"></param>
+            <param name="left"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.ContainsKey(`0)">
+            <summary>
+            Returns whether the Map Contains the <paramref name="left"/> Key.
+            </summary>
+            <param name="left"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.ContainsKey(`1)">
+            <summary>
+            Returns whether the Map Contains the <paramref name="right"/> Key.
+            </summary>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.Keys">
+            <summary>
+            Gets the left Keys.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.MappedKeys">
+            <summary>
+            Gets the Mapped right Keys.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.Values">
+            <summary>
+            Gets the left Values.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.MappedValues">
+            <summary>
+            Gets the Mapped right Values.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Remove(`0)">
+            <summary>
+            Removes the item corresponding to the <paramref name="left"/> Key.
+            </summary>
+            <param name="left"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Remove(`1)">
+            <summary>
+            Removes the item corresponding to the <paramref name="right"/> Key.
+            </summary>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.TryGetValue(`0,`1@)">
+            <summary>
+            Tries to get the Value corresponding to the left <paramref name="key"/>.
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.TryGetValue(`1,`0@)">
+            <summary>
+            Tries to get the Value corresponding to the right <paramref name="key"/>.
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.Item(`0)">
+            <summary>
+            Gets or sets the right value corresponding to the left <paramref name="key"/>.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.Item(`1)">
+            <summary>
+            Gets or sets the left value corresponding to the right <paramref name="key"/>.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Adds the pair <paramref name="item"/>.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Add(System.Collections.Generic.KeyValuePair{`1,`0})">
+            <summary>
+            Adds the pair <paramref name="item"/>.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Clear">
+            <summary>
+            Clears the map.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Contains(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Returns whether the map Contains the <paramref name="item"/>.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Contains(System.Collections.Generic.KeyValuePair{`1,`0})">
+            <summary>
+            Returns whether the map Contains the <paramref name="item"/>.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.Count">
+            <summary>
+            Gets the map Count.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Collections.Generic.Map`2.IsReadOnly">
+            <summary>
+            Gets whether the map IsReadOnly.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Remove(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Removes the map corresponding to the <paramref name="item"/>.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.Remove(System.Collections.Generic.KeyValuePair{`1,`0})">
+            <summary>
+            Removes the map corresponding to the <paramref name="item"/>.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
+            <summary>
+            Copies the mapped items to the <paramref name="array"/> starting at the <paramref name="arrayIndex"/>.
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.CopyTo(System.Collections.Generic.KeyValuePair{`1,`0}[],System.Int32)">
+            <summary>
+            Copies the mapped items to the <paramref name="array"/> starting at the <paramref name="arrayIndex"/>.
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+        </member>
+        <member name="M:MeasureIt.Collections.Generic.Map`2.GetEnumerator">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.ContextBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Contexts.IContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Contexts.IInterceptionMeasurementContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.IInterceptionMeasurementContext.Measure(System.Action)">
+            <summary>
+            
+            </summary>
+            <param name="aspect"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.IInterceptionMeasurementContext.MeasureAsync(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            
+            </summary>
+            <param name="aspectGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.InstallerContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.InstallerContext.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,MeasureIt.Discovery.IInstallerInstrumentationDiscoveryService)">
+            <summary>
+            
+            </summary>
+            <param name="discoveryOptions"></param>
+            <param name="discoveryService"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.InstallerContext.Install">
+            <summary>
+            Installs the set of Performance Counter Categories.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown when an error occurs installing
+            a Performance Counter Category.</exception>
+        </member>
+        <member name="M:MeasureIt.Contexts.InstallerContext.InstallAsync">
+            <summary>
+            <see cref="M:MeasureIt.Contexts.InstallerContext.Install"/> the categories asynchronously.
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when an error occurs uninstalling
+            a Performance Counter Category.</exception>
+        </member>
+        <member name="P:MeasureIt.Contexts.InstallerContext.UninstallState.Result">
+            <summary>
+            Gets or sets the Result of the <see cref="M:MeasureIt.Contexts.InstallerContext.Uninstall"/> operation.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.InstallerContext.UninstallState.Name">
+            <summary>
+            Gets or sets the Name of the <see cref="M:MeasureIt.Contexts.InstallerContext.Uninstall"/> state.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.InstallerContext.Uninstall">
+            <summary>
+            Uninstalls the Performance Counter Categories.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.InstallerContext.UninstallAsync">
+            <summary>
+            <see cref="M:MeasureIt.Contexts.InstallerContext.Uninstall"/> the categories asynchronously.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.ITwoStageMeasurementContext">
+            <summary>
+            TwoStageMeasurementContext interface.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.ITwoStageMeasurementContext.Start(System.Action)">
+            <summary>
+            Starts a new Measurement with optional <paramref name="startingCallback"/>.
+            </summary>
+            <param name="startingCallback"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.ITwoStageMeasurementContext.Stop">
+            <summary>
+            Stops the Measurement Context from running.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Contexts.ITwoStageMeasurementContext.SetError(System.Exception)">
+            <summary>
+            Sets the <see cref="T:System.Exception"/> for the Measurement Context.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="T:MeasureIt.Contexts.ITwoStageMeasurementProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.ITwoStageMeasurementProvider.GetMeasurementContext(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            
+            </summary>
+            <param name="targetType"></param>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.MeasurementContextBase">
+            <summary>
+            Establishes a MeasurementContext base class.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.MeasurementContextBase.Rnd">
+            <summary>
+            Gets the Rnd random number generator.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.MeasurementContextBase.Contexts">
+            <summary>
+            Gets the Contexts.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.MeasurementContextBase.Descriptor">
+            <summary>
+            Gets the Descriptor.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.MeasurementContextBase.Options">
+            <summary>
+             Gets the Options.
+             </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementContextBase.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,MeasureIt.IPerformanceMeasurementDescriptor,MeasureIt.Contexts.IPerformanceMeasurementContext[])">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="options"></param>
+            <param name="descriptor"></param>
+            <param name="contexts"></param>
+        </member>
+        <member name="T:MeasureIt.Contexts.MeasurementContextBase.Gauge">
+            <summary>
+            Provides a simple Gauge for measuring the time of the Contexts.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementContextBase.Gauge.Dispose(System.Boolean)">
+            <summary>
+            Disposes the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementContextBase.Dispose(System.Boolean)">
+            <summary>
+            Disposes the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:MeasureIt.Contexts.TwoStageMeasurementContext">
+            <summary>
+            Provides a TwoStageMeasurementContext for purposes of supporting web based Action Filters.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.TwoStageMeasurementContext.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,MeasureIt.IPerformanceMeasurementDescriptor,MeasureIt.Contexts.IPerformanceMeasurementContext[])">
+            <summary>
+            Public Constructor
+            </summary>
+            <param name="options"></param>
+            <param name="descriptor"></param>
+            <param name="contexts"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.TwoStageMeasurementContext.Start(System.Action)">
+            <summary>
+            Starts a new Measurement with optional <paramref name="startingCallback"/>.
+            </summary>
+            <param name="startingCallback">Callback invoked just prior to actually starting to gauge the measurement.</param>
+        </member>
+        <member name="M:MeasureIt.Contexts.TwoStageMeasurementContext.Stop">
+            <summary>
+            Stops the Context from being evaluated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Contexts.TwoStageMeasurementContext.SetError(System.Exception)">
+            <summary>
+            Sets the Error to the <paramref name="ex"/>.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.TwoStageMeasurementContext.Dispose(System.Boolean)">
+            <summary>
+            Disposes the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:MeasureIt.Contexts.IInstallerContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.IInstallerContext.Install">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.IInstallerContext.InstallAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Contexts.IInstallerContext.Uninstall">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.IInstallerContext.UninstallAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.IMeasurementContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.IMeasurementContext.Descriptor">
+            <summary>
+            Gets the Descriptor.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementContextExtensionMethods.MayReturn(MeasureIt.Contexts.IMeasurementContext)">
+            <summary>
+            Returns whether the calling scope MayReturn depending on the nature of the
+            <paramref name="context"/>. Returning from the scope may not be appropriate in all use
+            cases, so hence the recommended, not mandatory, verbiage.
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.IMeasurementProvider`1">
+            <summary>
+            
+            </summary>
+            <typeparamref name="TContext"/>
+        </member>
+        <member name="M:MeasureIt.Contexts.IMeasurementProvider`1.GetMeasurementContext(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            
+            </summary>
+            <param name="targetType"></param>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.IPerformanceMeasurementContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.IPerformanceMeasurementContext.BeginMeasurement">
+            <summary>
+            Begins the Performance Measurement invocation.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.IPerformanceMeasurementContext.EndMeasurement(System.TimeSpan)">
+            <summary>
+            Ends the Performance Measurement invocation.
+            </summary>
+            <param name="elapsed"></param>
+        </member>
+        <member name="T:MeasureIt.Contexts.MeasurementContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementContext.Measure(System.Action)">
+            <summary>
+            Measures the <paramref name="aspect"/>.
+            </summary>
+            <param name="aspect"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementContext.MeasureAsync(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Measures the aspect retrieved by the <paramref name="aspectGetter"/> asynchronously.
+            </summary>
+            <param name="aspectGetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.MeasurementProviderBase`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Contexts.MeasurementProviderBase`1.Options">
+            <summary>
+            Gets the Options.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementProviderBase`1.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.MeasurementProviderBase`1.GetMeasurementContext(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            Returns the <typeparamref name="TContext"/> corresponding with the Provider,
+            <paramref name="targetType"/> and <paramref name="method"/>.
+            </summary>
+            <param name="targetType"></param>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Contexts.PerformanceMeasurementContext">
+            <summary>
+            Establishes a Performance Measurement Context.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.PerformanceMeasurementContext.#ctor(MeasureIt.IPerformanceMeasurementDescriptor,MeasureIt.IPerformanceCounterAdapter[])">
+            <summary>
+            
+            </summary>
+            <param name="descriptor"></param>
+            <param name="adapters"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.PerformanceMeasurementContext.BeginMeasurement">
+            <summary>
+            Begins the Measurement Context.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Contexts.PerformanceMeasurementContext.EndMeasurement(System.TimeSpan)">
+            <summary>
+            Ends the Measurement Context.
+            </summary>
+            <param name="elapsed"></param>
+        </member>
+        <member name="M:MeasureIt.Contexts.PerformanceMeasurementContext.Dispose(System.Boolean)">
+            <summary>
+            Disposes the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:MeasureIt.MemberInfoEqualityComparer`1">
+            <summary>
+            Provides a general use <see cref="T:System.Reflection.MemberInfo"/> based <typeparamref name="TMember"/>
+            comparison visitor.
+            </summary>
+            <remarks>This comparer is general use enough that it could be re-factored into a shared
+            assembly, or even assembly external to the project. But for now, will leave it as an
+            internal resource.</remarks>
+        </member>
+        <member name="T:MeasureIt.MethodInfoEqualityComparer">
+            <summary>
+            Provides a general use <see cref="T:System.Reflection.MethodInfo"/> comparison visitor.
+            </summary>
+            <remarks>This comparer is general use enough that it could be re-factored into a shared
+            assembly, or even assembly external to the project. But for now, will leave it as an
+            internal resource.</remarks>
+        </member>
+        <member name="T:MeasureIt.CoreRegistrationExtensionMethods">
+            <summary>
+            Exposes some Core Registration extension methods.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.CoreRegistrationExtensionMethods.VerifyIsInterface(System.Type)">
+            <summary>
+            Verifies whether <paramref name="type"/> <see cref="P:System.Type.IsInterface"/>.
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:MeasureIt.CoreRegistrationExtensionMethods.VerifyIsClass(System.Type)">
+            <summary>
+            Verifies whether <paramref name="type"/> <see cref="P:System.Type.IsClass"/>.
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="T:MeasureIt.TotalMemberAccessesPerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.TotalMemberAccessesPerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.TotalMemberAccessesPerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.PerformanceCounterCategoryAdapterBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterCategoryAdapterBase.Name">
+            <summary>
+            Nets or sets the adapter Name.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterCategoryAdapterBase.Help">
+            <summary>
+            Gets the Help.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterCategoryAdapterBase.CategoryType">
+            <summary>
+            Gets the CategoryType.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterCategoryAdapterBase.Measurements">
+            <summary>
+            Gets or sets the Measurements.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterCategoryAdapterBase.InternalMeasurements">
+            <summary>
+            Gets the <see cref="P:MeasureIt.PerformanceCounterCategoryAdapterBase.Measurements"/> for internal use.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterCategoryAdapterBase.#ctor(System.String,System.String,System.Diagnostics.PerformanceCounterCategoryType)">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="name"></param>
+            <param name="help"></param>
+            <param name="categoryType"></param>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterCategoryAdapterBase.#ctor(System.String,System.Diagnostics.PerformanceCounterCategoryType)">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="help"></param>
+            <param name="categoryType"></param>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterCategoryAdapterBase.CreationData">
+            <summary>
+            Gets the CreationData corresponding with the Adapter.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.MemberActivityTimerPerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.MemberActivityTimerPerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.MemberActivityTimerPerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.PerformanceCounterAdapterBase`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TAdapter"></typeparam>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.CalculateAdapterName">
+            <summary>
+            Returns the Calculated <see cref="P:MeasureIt.PerformanceCounterAdapterBase`1.Name"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterAdapterBase`1.Name">
+            <summary>
+            Gets the Name.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterAdapterBase`1.Measurement">
+            <summary>
+            Gets or sets the Measurement corresponding with the Adapter.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterAdapterBase`1.CreationData">
+            <summary>
+            Gets the CreationData descriptors corresponding with the Adapter.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterAdapterBase`1.PrivateCreationData">
+            <summary>
+            Gets the <see cref="P:MeasureIt.PerformanceCounterAdapterBase`1.CreationData"/> for private use.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterAdapterBase`1.Parts">
+            <summary>
+            Gets the internal Parts of the Counter.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.HasAny``1(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns whether <paramref name="dictionary"/> HasAny
+            <see cref="P:System.Collections.Generic.IDictionary`2.Values"/> of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dictionary"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.GetAll``2(``0,System.Func{``1,System.Boolean})">
+            <summary>
+            Returns All of the <see cref="P:System.Collections.Generic.IDictionary`2.Values"/> of type
+            <typeparamref name="T"/> matching <paramref name="predicate"/>.
+            </summary>
+            <typeparam name="TDictionary"></typeparam>
+            <typeparam name="T"></typeparam>
+            <param name="dictionary"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.#ctor">
+            <summary>
+            Protected Constructor
+            </summary>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.InitializePerformanceCounters(System.Dynamic.ExpandoObject)">
+            <summary>
+            Initializes the Performance Counters.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceCounterAdapterBase`1.Counters">
+            <summary>
+            Gets the Counters corresponding with the Adapter.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.PerformanceCounterAdapterBase`1.Dispose(System.Boolean)">
+            <summary>
+            Disposes the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:MeasureIt.MemberAccessRatePerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.MemberAccessRatePerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.MemberAccessRatePerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.LastMemberExecutionTimePerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.LastMemberExecutionTimePerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.LastMemberExecutionTimePerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.ErrorRatePerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.ErrorRatePerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.ErrorRatePerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.CurrentConcurrentCountPerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.CurrentConcurrentCountPerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measururement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.CurrentConcurrentCountPerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.DefaultPerformanceCounterCategoryAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.AverageTimePerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.AverageTimePerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Begins the Measurement.
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.AverageTimePerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Ends the Measurement.
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.DescriptorBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.DescriptorBase.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.DescriptorBase.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.DescriptorBase.#ctor(MeasureIt.DescriptorBase)">
+            <summary>
+            Protected Copy Constructor
+            </summary>
+            <param name="other"></param>
+        </member>
+        <member name="M:MeasureIt.DescriptorBase.Clone">
+            <summary>
+            Returns a Clone of this object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.IMeasurementOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IMeasurementOptions.RootType">
+            <summary>
+            Gets or sets the RootType. Due to the strategy in terms of how
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IMeasurementOptions.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.IPublishingOptions">
+            <summary>
+            Publishing options.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPublishingOptions.PublishCounters">
+            <summary>
+            Gets or sets whether to PublishCounters.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPublishingOptions.ThrowPublishErrors">
+            <summary>
+            Gets or sets whether to ThrowPublishErrors.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPublishingOptions.PublishEvent">
+            <summary>
+            Gets or sets whether to PublishEvent.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPublishingOptions.MayProceedUnabated">
+            <summary>
+            Gets whether MayProceed with Measurement Unabated.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.ISamplingOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ISamplingOptions.ReadOnly">
+            <summary>
+            Gets or sets whether ReadOnly.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ISamplingOptions.SampleRate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.PerformanceMeasurementDescriptorDiscoveryAgentBase`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDescriptor"></typeparam>
+            <typeparam name="TAttribute"></typeparam>
+        </member>
+        <member name="M:MeasureIt.Discovery.Agents.PerformanceMeasurementDescriptorDiscoveryAgentBase`2.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,MeasureIt.Discovery.DiscoveryServiceExportedTypesGetterDelegate)">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="discoveryOptions"></param>
+            <param name="getExportedTypes"></param>
+        </member>
+        <member name="M:MeasureIt.Discovery.Agents.PerformanceMeasurementDescriptorDiscoveryAgentBase`2.DiscoverValues(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Discovers the descriptors providing <paramref name="discoveryOptions"/> and
+            <paramref name="exportedTypes"/>.
+            </summary>
+            <param name="discoveryOptions"></param>
+            <param name="exportedTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.PerformanceMeasurementDescriptorDiscoveryAgent">
+            <summary>
+            Discovery agent regarding the <see cref="T:MeasureIt.IPerformanceMeasurementDescriptor"/> and
+            <see cref="T:MeasureIt.MeasurePerformanceAttribute"/> concerns.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.PerformanceCounterAdapterDiscoveryAgent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.Agents.PerformanceCounterAdapterDiscoveryAgent.DiscoverValues(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Discovers the values given <paramref name="options"/> and <paramref name="exportedTypes"/>.
+            </summary>
+            <param name="options"></param>
+            <param name="exportedTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.IPerformanceMeasurementDescriptorDiscoveryAgent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.IPerformanceMeasurementDescriptorDiscoveryAgent`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.IPerformanceCounterAdapterDiscoveryAgent">
+            <summary>
+            Agent for purposes of discovering Performance Counter Adapters.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.DiscoveryAgentBase`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.Agents.DiscoveryAgentBase`1.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,MeasureIt.Discovery.DiscoveryServiceExportedTypesGetterDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="discoveryOptions"></param>
+            <param name="getExportedTypes"></param>
+        </member>
+        <member name="M:MeasureIt.Discovery.Agents.DiscoveryAgentBase`1.DiscoverValues(MeasureIt.Discovery.IInstrumentationDiscoveryOptions,System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Override to Discover the Values.
+            </summary>
+            <param name="options"></param>
+            <param name="exportedTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Discovery.Agents.DiscoveryAgentBase`1.GetEnumerator">
+            <summary>
+            Returns the enumerator for the Discovery agent.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.Agents.IDiscoveryAgent`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.IInstrumentationDiscoveryOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.RandomSeed">
+            <summary>
+            Gets or sets the RandomSeed.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.ThrowOnInstallerFailure">
+            <summary>
+            Gets or sets whether to ThrowOnInstallerFailure.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.ThrowOnUninstallerFailure">
+            <summary>
+            Gets or sets whether to ThrowOnUninstallerFailure.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.IncludeInherited">
+            <summary>
+            Gets or sets whether to IncludeInherited among the Reflected upon Classes, Types,
+            Methods and Attributes.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.ConstructorBindingAttr">
+            <summary>
+            Gets or sets the Constructor <see cref="T:System.Reflection.BindingFlags"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.MethodBindingAttr">
+            <summary>
+            Gets or sets the Method <see cref="T:System.Reflection.BindingFlags"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryOptions.Assemblies">
+            <summary>
+            Gets or sets the Assemblies in which to perform Discovery.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.DiscoveryServiceExportedTypesGetterDelegate">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.RuntimeInstrumentationDiscoveryService">
+            <summary>
+            Discovery service for purposes of supporting Runtime Instrumentation.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.RuntimeInstrumentationDiscoveryService.Measurements">
+            <summary>
+            Gets the Measurements corresponding with the Discovery service.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.RuntimeInstrumentationDiscoveryService.CategoryAdapters">
+            <summary>
+            Gets the CategoryAdapters corresponding with the DiscoveryService.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.RuntimeInstrumentationDiscoveryService.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions)">
+            <summary>
+            
+            </summary>
+            <param name="discoveryOptions"></param>
+        </member>
+        <member name="M:MeasureIt.Discovery.RuntimeInstrumentationDiscoveryService.OnDiscovered">
+            <summary>
+            Discoverey handler.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.IRuntimeInstrumentationDiscoveryService">
+            <summary>
+            Discovery service for purposes of supporting Runtime Instrumentation.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IRuntimeInstrumentationDiscoveryService.CategoryAdapters">
+            <summary>
+            Gets the CategoryAdapters associated with the Installer.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase">
+            <summary>
+            InstrumentationDiscoveryServiceBase base class.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Assemblies">
+            <summary>
+            Gets the Assemblies from which to Discover any Instrumentation.
+            </summary>
+        </member>
+        <member name="F:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.GetExportedTypes">
+            <summary>
+            Exported types delegate.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Measurements">
+            <summary>
+            Gets the Measurements corresponding with the Discovery Service.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.CounterAdapters">
+            <summary>
+            Gets the CounterAdapterDescriptors.
+            These will be discovered in order to substantiate any Measurement claims.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.DiscoveryOptions">
+            <summary>
+            Gets the DiscoveryOptions.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions)">
+            <summary>
+            Protected Constructor
+            </summary>
+            <param name="discoveryOptions"></param>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.IsPending">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.OnDiscover">
+            <summary>
+            <see cref="M:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Discover"/> handler.
+            </summary>
+        </member>
+        <member name="E:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Discovered">
+            <summary>
+            Discovered event.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.OnDiscovered">
+            <summary>
+            Signals when <see cref="E:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Discovered"/>.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Discover">
+            <summary>
+            Discovers the Performance Monitoring Instrumentation from the <see cref="P:MeasureIt.Discovery.InstrumentationDiscoveryServiceBase.Assemblies"/>.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.InstallerInstrumentationDiscoveryService">
+            <summary>
+            Installer requires the Runtime Discovery Service as well as connecting the dots.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstallerInstrumentationDiscoveryService.#ctor(MeasureIt.Discovery.IInstrumentationDiscoveryOptions)">
+            <summary>
+            
+            </summary>
+            <param name="discoveryOptions"></param>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstallerInstrumentationDiscoveryService.GetInstallerContext">
+            <summary>
+            Returns an Installer Context for use from the Discovery Service.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.IInstrumentationDiscoveryService">
+            <summary>
+            InstrumentationDiscoveryService interaface.
+            </summary>
+        </member>
+        <member name="E:MeasureIt.Discovery.IInstrumentationDiscoveryService.Discovered">
+            <summary>
+            Discovered event.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.IInstrumentationDiscoveryService.Discover">
+            <summary>
+            Discovers the Performance Monitoring Instrumentation from the Assemblies.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryService.IsPending">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.IInstrumentationDiscoveryService.Measurements">
+            <summary>
+            Gets the Measurements.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Discovery.IInstallerInstrumentationDiscoveryService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.IInstallerInstrumentationDiscoveryService.GetInstallerContext">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.InstallerInstrumentationDiscoveryServiceExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstallerInstrumentationDiscoveryServiceExtensionMethods.Install``1(``0,System.Action{System.Collections.Generic.IEnumerable{System.Tuple{MeasureIt.IPerformanceCounterCategoryAdapter,System.Diagnostics.PerformanceCounterCategory}}})">
+            <summary>
+            Performs an Install given the <paramref name="service"/>. Discovers the Categories
+            as an immediate precursor to the Install request.
+            </summary>
+            <typeparam name="TService"></typeparam>
+            <param name="service"></param>
+            <param name="respond"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstallerInstrumentationDiscoveryServiceExtensionMethods.TryUninstall``1(``0)">
+            <summary>
+            Performs an Uninstall given the <paramref name="service"/>.
+            </summary>
+            <typeparam name="TService"></typeparam>
+            <param name="service"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.Discovery.InstrumentationDiscoveryOptions">
+            <summary>
+            InstrumentationDiscoveryOptions class.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.RandomSeed">
+            <summary>
+            Gets or sets the RandomSeed.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.ThrowOnInstallerFailure">
+            <summary>
+            Gets or sets whether to ThrowOnInstallerFailure.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.ThrowOnUninstallerFailure">
+            <summary>
+            Gets or sets whether to ThrowOnUninstallerFailure.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.IncludeInherited">
+            <summary>
+            Gets or sets whether ot IncludeInherited.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.ConstructorBindingAttr">
+            <summary>
+            Gets or sets the ConstructorBindingAttr.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.MethodBindingAttr">
+            <summary>
+            Gets or sets the MethodBindingAttr.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Discovery.InstrumentationDiscoveryOptions.Assemblies">
+            <summary>
+            Gets or sets the Assemblies.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstrumentationDiscoveryOptions.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Discovery.InstrumentationDiscoveryOptions.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:MeasureIt.Disposable">
+            <summary>
+            Disposable class definition.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.Disposable.IsDisposed">
+            <summary>
+            Gets whether IsDisposed.
+            </summary>
+        </member>
+        <member name="E:MeasureIt.Disposable.Disposed">
+            <summary>
+            Disposed event.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.Disposable.RaiseDisposed(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:MeasureIt.Disposable.Disposed"/> event with the <paramref name="e"/> <see cref="T:System.EventArgs"/>.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:MeasureIt.Disposable.Dispose(System.Boolean)">
+            <summary>
+            Disposes the object.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:MeasureIt.Disposable.Dispose">
+            <summary>
+            Disposes the object.
+            </summary>
+        </member>
+        <member name="F:MeasureIt.Constants.MinSampleRate">
+            <summary>
+            0d or 0 percent sample rate.
+            </summary>
+        </member>
+        <member name="F:MeasureIt.Constants.MaxSampleRate">
+            <summary>
+            1d or 100 percent sample rate.
+            </summary>
+        </member>
+        <member name="F:MeasureIt.Constants.DefaultSampleRate">
+            <summary>
+            Based on <see cref="F:MeasureIt.Constants.MaxSampleRate"/>.
+            </summary>
+            <see cref="F:MeasureIt.Constants.MaxSampleRate"/>
+        </member>
+        <member name="T:MeasureIt.IPerformanceCounterCategoryAdapter">
+            <summary>
+            Category Adapter is the concrete type that facilitates the feature set for each
+            <see cref="T:System.Diagnostics.PerformanceCounterCategory"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterCategoryAdapter.Name">
+            <summary>
+            Gets or sets the Name. The default falls back on the <see cref="P:System.Type.FullName"/>,
+            including namespace. Empty string is interpreted as Null, with the default fall back
+            position. This is because we cannot have an empty name appearing for a
+            <see cref="P:System.Diagnostics.PerformanceCounterCategory.CategoryName"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterCategoryAdapter.Help">
+            <summary>
+            Gets the Help.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterCategoryAdapter.CategoryType">
+            <summary>
+            Gets the <see cref="T:System.Diagnostics.PerformanceCounterCategoryType"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterCategoryAdapter.Measurements">
+            <summary>
+            Gets or sets the Measurements.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterCategoryAdapter.InternalMeasurements">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IList`1"/> for internal use.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterCategoryAdapter.CreationData">
+            <summary>
+            Gets a readonly collection of CreationData.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.IPerformanceCounterAdapter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterAdapter.Name">
+            <summary>
+            Gets the Name of the PerformanceCounterAdapter. Defaults to the class name,
+            sans the convention of stripping the PerformanceCounterAdapter suffix.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterAdapter.Measurement">
+            <summary>
+            Gets or sets the Measurement.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterAdapter.CreationData">
+            <summary>
+            Gets the CreationData.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceCounterAdapter.Counters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.IPerformanceCounterAdapter.BeginMeasurement(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:MeasureIt.IPerformanceCounterAdapter.EndMeasurement(System.TimeSpan,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="elapsed"></param>
+            <param name="descriptor"></param>
+        </member>
+        <member name="T:MeasureIt.PerformanceMeasurementDescriptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.Prefix">
+            <summary>
+            Gets or sets the Prefix.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.MemberSignature">
+            <summary>
+            Gets or sets the MemberSignature.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.CategoryType">
+            <summary>
+            Gets or sets the CategoryType.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.CategoryAdapter">
+            <summary>
+            Gets or sets the CategoryAdapter.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.AdapterTypes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.Adapters">
+            <summary>
+            Gets the adapters.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.ReadOnly">
+            <summary>
+            Gets or sets whether ReadOnly.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.InstanceLifetime">
+            <summary>
+            Gets or sets the InstanceLifetime.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.PublishCounters">
+            <summary>
+            Gets or sets whether to PublishCounters.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.ThrowPublishErrors">
+            <summary>
+            Gets or sets whether to ThrowPublishErrors.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.PublishEvent">
+            <summary>
+            Gets or sets whether to PublishEvent.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.MayProceedUnabated">
+            <summary>
+            Gets whether MayProceedUnabated.
+            </summary>
+            <see cref="P:MeasureIt.PerformanceMeasurementDescriptor.PublishCounters"/>
+            <see cref="P:MeasureIt.PerformanceMeasurementDescriptor.PublishEvent"/>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.SampleRate">
+            <summary>
+            Gets the SampleRate for the Descriptor.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.RootType">
+            <summary>
+            Gets or sets the RootType.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.Method">
+            <summary>
+            Gets or sets the Method.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.#ctor(System.Type,System.Type,System.Type[])">
+            <summary>
+            
+            </summary>
+            <param name="categoryType"></param>
+            <param name="adapterType"></param>
+            <param name="otherAdapterTypes"></param>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.#ctor(System.String,System.Type,System.Type,System.Type[])">
+            <summary>
+            
+            </summary>
+            <param name="prefix"></param>
+            <param name="categoryType"></param>
+            <param name="adapterType"></param>
+            <param name="otherAdapterTypes"></param>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.Exception">
+            <summary>
+            Gets the Exception.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.PerformanceMeasurementDescriptor.HasError">
+            <summary>
+            Gets whether HasError.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.SetError(System.Exception)">
+            <summary>
+            Sets the Error to the <paramref name="ex"/>.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.CreateContext">
+            <summary>
+            Creates a Context corresponding with the Descriptor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.Equals(MeasureIt.IPerformanceMeasurementDescriptor,MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Returns whether <paramref name="x"/> Equals <paramref name="y"/>.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.Equals(MeasureIt.IPerformanceMeasurementDescriptor)">
+            <summary>
+            Returns whether this instance Equals the <paramref name="other"/> one.
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.Equals(MeasureIt.PerformanceMeasurementDescriptor)">
+            <summary>
+            Returns whether this instance Equals the <paramref name="other"/> one.
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptor.Clone">
+            <summary>
+            Returns a Clone of the object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptorExtensionMethods.GetParameterSignature(System.Reflection.ParameterInfo)">
+            <summary>
+            Returns the Signature corresponding with the <paramref name="parameter"/>.
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.PerformanceMeasurementDescriptorExtensionMethods.GetMethodSignature(System.Reflection.MethodInfo,System.Type,System.String)">
+            <summary>
+            Returns the Signature corresponding with the <paramref name="method"/>.
+            </summary>
+            <param name="method"></param>
+            <param name="rootType"></param>
+            <param name="prefix"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.CounterCreationDataDescriptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataDescriptor.Adapter">
+            <summary>
+            Gets or sets the Adapter corresponding with the Descriptor.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataDescriptor.Name">
+            <summary>
+            Gets the Descriptor Name.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataDescriptor.Help">
+            <summary>
+            Gets or sets the Descriptor Help.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.CounterCreationDataDescriptor.CounterType">
+            <summary>
+            Gets or sets the Descriptor CounterType.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.CounterCreationDataDescriptor.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.CounterCreationDataDescriptor.GetCounterCreationData">
+            <summary>
+            Returns the creation data corresponding to the Descriptor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.CounterCreationDataDescriptor.Clone">
+            <summary>
+            Returns a Clone of the object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.IPerformanceMeasurementDescriptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.Prefix">
+            <summary>
+            Gets or sets the Prefix. Prefix supersedes the <see cref="P:MeasureIt.IPerformanceMeasurementDescriptor.MemberSignature"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.CategoryType">
+            <summary>
+            Gets or sets the CategoryType.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.CategoryAdapter">
+            <summary>
+            Gets or sets the CategoryAdapter.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.MemberSignature">
+            <summary>
+            Gets or sets the MemberSignature, either based on the <see cref="T:System.Reflection.MethodInfo"/>,
+            or the set <see cref="P:MeasureIt.IPerformanceMeasurementDescriptor.Prefix"/>, which ever came first.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.AdapterTypes">
+            <summary>
+            Connect the <see cref="T:System.Diagnostics.PerformanceCounter"/> with the adapters themselves.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.Adapters">
+            <summary>
+            Gets the <see cref="T:MeasureIt.IPerformanceCounterAdapter"/> corresponding with the <see cref="P:MeasureIt.IPerformanceMeasurementDescriptor.AdapterTypes"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.InstanceLifetime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.Exception">
+            <summary>
+            Gets the Exception which occurred during invocation of the target method.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IPerformanceMeasurementDescriptor.HasError">
+            <summary>
+            Gets whether the Descriptor Has <see cref="P:MeasureIt.IPerformanceMeasurementDescriptor.Exception"/>.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.IPerformanceMeasurementDescriptor.SetError(System.Exception)">
+            <summary>
+            Sets the <see cref="P:MeasureIt.IPerformanceMeasurementDescriptor.Exception"/> which occurred during invocation of the target method.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:MeasureIt.IPerformanceMeasurementDescriptor.CreateContext">
+            <summary>
+            Returns a new <see cref="T:MeasureIt.Contexts.IPerformanceMeasurementContext"/> corresponding to the Descriptor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.IDescriptor">
+            <summary>
+            Establishes a common Descriptor theme for the Assembly.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.IDescriptor.Id">
+            <summary>
+            Gets the Id.
+            </summary>
+        </member>
+        <member name="T:MeasureIt.ICounterCreationDataDescriptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ICounterCreationDataDescriptor.Adapter">
+            <summary>
+            Gets or sets the parent Adapter.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ICounterCreationDataDescriptor.Name">
+            <summary>
+            Gets the Name for the <see cref="T:System.Diagnostics.CounterCreationData"/>.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ICounterCreationDataDescriptor.Help">
+            <summary>
+            Gets or sets the Help.
+            </summary>
+        </member>
+        <member name="P:MeasureIt.ICounterCreationDataDescriptor.CounterType">
+            <summary>
+            Gets or sets the <see cref="T:System.Diagnostics.PerformanceCounterType"/>.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.ICounterCreationDataDescriptor.GetCounterCreationData">
+            <summary>
+            Returns the a <see cref="T:System.Diagnostics.CounterCreationData"/> corresponding to the Descriptor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.ModelExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:MeasureIt.ModelExtensionMethods.TryVerifyTypeDelegate">
+            <summary>
+            Tries to Verify the <paramref name="type"/>, providing a
+            <paramref name="failureMessage"/> upon failure.
+            </summary>
+            <param name="type"></param>
+            <param name="failureMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ModelExtensionMethods.VerifyType``1(System.Type,MeasureIt.ModelExtensionMethods.TryVerifyTypeDelegate)">
+            <summary>
+            Verifies that the <paramref name="type"/> is assignable to the
+            <typeparamref name="TAssignableTo"/> type. <typeparamref name="TAssignableTo"/> may be
+            anything, but is usually an interface.
+            </summary>
+            <typeparam name="TAssignableTo"></typeparam>
+            <param name="type"></param>
+            <param name="tryVerify"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ModelExtensionMethods.VerifyTypes``1(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Verifies that the <paramref name="types"/> are assignable to the
+            <typeparamref name="TAssignableTo"/> type. <typeparamref name="TAssignableTo"/> may be
+            anything, but is usually an interface.
+            </summary>
+            <typeparam name="TAssignableTo"></typeparam>
+            <param name="types"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.EnumExtensionMethods">
+            <summary>
+            Provides some enumeration extension methods.
+            </summary>
+        </member>
+        <member name="M:MeasureIt.EnumExtensionMethods.Contains(System.Enum,System.Enum[])">
+            <summary>
+            Returns whether <paramref name="value"/> Contains Any of the <paramref name="others"/>.
+            </summary>
+            <param name="value"></param>
+            <param name="others"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.EnumExtensionMethods.ContainedBy(System.Enum,System.Enum[])">
+            <summary>
+            Returns whether <paramref name="value"/> is ContainedBy Any of the <paramref name="others"/>.
+            </summary>
+            <param name="value"></param>
+            <param name="others"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MeasureIt.ReflectionExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.IsRelatedTo(System.Type,System.Type)">
+            <summary>
+            Returns whether <paramref name="type"/> and <paramref name="otherType"/> are Related.
+            </summary>
+            <param name="type"></param>
+            <param name="otherType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.HasAttribute``1(System.Type)">
+            <summary>
+            Returns whether <paramref name="type"/> Has <typeparamref name="TAttribute"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.HasAttribute``1(System.Type,System.Boolean)">
+            <summary>
+            Returns whether <paramref name="type"/> Has <typeparamref name="TAttribute"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="type"></param>
+            <param name="inherit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.HasAttribute``1(System.Reflection.MemberInfo)">
+            <summary>
+            Returns whether <paramref name="member"/> Has <typeparamref name="TAttribute"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="member"></param>
+            <returns></returns>
+            <remarks>May apply solely for <see cref="T:System.Reflection.MethodInfo"/>, or maybe
+            <see cref="T:System.Reflection.PropertyInfo"/>, or even <see cref="T:System.Reflection.FieldInfo"/>.</remarks>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.HasAttributes``1(System.Reflection.MemberInfo)">
+            <summary>
+            Returns whether <paramref name="member"/> Has <typeparamref name="TAttribute"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="member"></param>
+            <returns></returns>
+            <remarks>May apply solely for <see cref="T:System.Reflection.MethodInfo"/>, or maybe
+            <see cref="T:System.Reflection.PropertyInfo"/>, or even <see cref="T:System.Reflection.FieldInfo"/>.</remarks>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.HasAttributes``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            Returns whether <paramref name="member"/> Has <typeparamref name="TAttribute"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="member"></param>
+            <param name="inherit"></param>
+            <returns></returns>
+            <remarks>May apply solely for <see cref="T:System.Reflection.MethodInfo"/>, or maybe
+            <see cref="T:System.Reflection.PropertyInfo"/>, or even <see cref="T:System.Reflection.FieldInfo"/>.</remarks>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.GetCustomAttributes``1(System.Reflection.MemberInfo,System.Boolean)">
+            <summary>
+            -
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="member"></param>
+            <param name="inherit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.GetAttributeValue``2(System.Type,System.Func{``0,``1},``1)">
+            <summary>
+            Returns a <typeparamref name="TResult"/> based on the <paramref name="type"/>,
+            <paramref name="getter"/>, and <paramref name="defaultValue"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="type"></param>
+            <param name="getter"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.GetAttributeValue``3(``0,System.Func{``1,``2},``2)">
+            <summary>
+            Returns a <typeparamref name="TResult"/> based on the <paramref name="obj"/>,
+            <paramref name="getter"/>, and <paramref name="defaultValue"/>.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TAttribute"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="obj"></param>
+            <param name="getter"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.GetAttributeValues``2(System.Type,System.Func{``0,``1})">
+            <summary>
+            Returns a <typeparamref name="TResult"/> based on the <paramref name="type"/>,
+            <paramref name="getter"/>.
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="type"></param>
+            <param name="getter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.GetAttributeValues``3(``0,System.Func{``1,``2})">
+            <summary>
+            Returns the <typeparamref name="TResult"/> based on the <paramref name="member"/> and
+            <paramref name="getter"/>.
+            </summary>
+            <typeparam name="TMember"></typeparam>
+            <typeparam name="TAttribute"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="member"></param>
+            <param name="getter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MeasureIt.ReflectionExtensionMethods.Filter``1(System.Collections.Generic.ICollection{``0},System.Func{System.Collections.Generic.IEnumerable{``0},``0,System.Boolean})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="items"></param>
+            <param name="excluded"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

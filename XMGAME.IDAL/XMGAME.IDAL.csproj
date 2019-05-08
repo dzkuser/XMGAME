@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseDAL.cs" />
+    <Compile Include="IDealDAL.cs" />
     <Compile Include="IExceptionLogDAL.cs" />
     <Compile Include="IGameDAL.cs" />
     <Compile Include="IGenreDAL.cs" />

@@ -120,6 +120,18 @@
   <data name="100" xml:space="preserve">
     <value>用户登录失败</value>
   </data>
+  <data name="1001" xml:space="preserve">
+    <value>以存在交易</value>
+  </data>
+  <data name="1002" xml:space="preserve">
+    <value>余额不足</value>
+  </data>
+  <data name="1003" xml:space="preserve">
+    <value>交易失败</value>
+  </data>
+  <data name="1004" xml:space="preserve">
+    <value>不存在交易</value>
+  </data>
   <data name="101" xml:space="preserve">
     <value>没有改Token的用户</value>
   </data>
@@ -158,6 +170,9 @@
   </data>
   <data name="ip" xml:space="preserve">
     <value>172.16.31.236</value>
+  </data>
+  <data name="loginErro" xml:space="preserve">
+    <value>登录异常，已在其他地方登录</value>
   </data>
   <data name="lostConn" xml:space="preserve">
     <value>用户掉线</value>

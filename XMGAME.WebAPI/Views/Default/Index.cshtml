@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+
+
+    $.ajax({
+        url: '/login',
+        type: 'post',
+        data: { "paras": ['dzk', 'abcdzk'] },
+        success: function (e) {
+            console.log(e);
+        } 
+    });
+
+
+</script>

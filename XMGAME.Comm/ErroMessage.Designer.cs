@@ -70,6 +70,42 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
+        ///   查找类似 以存在交易 的本地化字符串。
+        /// </summary>
+        internal static string _1001 {
+            get {
+                return ResourceManager.GetString("1001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 余额不足 的本地化字符串。
+        /// </summary>
+        internal static string _1002 {
+            get {
+                return ResourceManager.GetString("1002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 交易失败 的本地化字符串。
+        /// </summary>
+        internal static string _1003 {
+            get {
+                return ResourceManager.GetString("1003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 不存在交易 的本地化字符串。
+        /// </summary>
+        internal static string _1004 {
+            get {
+                return ResourceManager.GetString("1004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 没有改Token的用户 的本地化字符串。
         /// </summary>
         internal static string _101 {
@@ -183,6 +219,15 @@ namespace XMGAME.Comm {
         internal static string ip {
             get {
                 return ResourceManager.GetString("ip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 登录异常，已在其他地方登录 的本地化字符串。
+        /// </summary>
+        internal static string loginErro {
+            get {
+                return ResourceManager.GetString("loginErro", resourceCulture);
             }
         }
         

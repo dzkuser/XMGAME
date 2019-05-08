@@ -16,14 +16,15 @@ namespace XMGAME.BLL
         private IUserDAL userDAL = new UserDAL();
 
  
-        public IQueryable<Record> GetRecordInfo(string accountName) 
+        public IQueryable<Record> GetRecordInfo(string accountName,int gameID) 
         {
 
             Record record = new Record();
             record.AccountName = userDAL.GetUserByToken(accountName).AccountName;
             Dictionary<string, string> pairs = new Dictionary<string, string>();
             pairs.Add("AccountName", "==");
-            return recordDAL.GetByWhere(record, pairs, "").OrderByDescending(t=>t.ID);
+            pairs.Add("GameID","==");
+            return recordDAL.GetByWhere(record, pairs, " && ").OrderByDescending(t=>t.ID);
        
         }
 
@@ -42,6 +43,27 @@ namespace XMGAME.BLL
                 return null;
             }
         }
+
+
+      
+
+
+        
+        public bool AddRecordNotReturn(Record record) {
+            string strToken = record.AccountName;
+            record.AccountName = userDAL.GetUserByToken(record.AccountName).AccountName;
+            bool isSuccess = recordDAL.Insert(record);
+            User userEdit = userDAL.GetUserByToken(strToken);
+            User user = new User()
+            {
+                ID = userEdit.ID,
+                AccountName = userEdit.AccountName,
+                Integral = record.Integral
+            };
+            userDAL.Update(user);
+            return isSuccess;
+        }
+
 
         [ErroAttribute(Rule = new object[] { 109,false })]
         public bool UpdateRecord(Record record) {

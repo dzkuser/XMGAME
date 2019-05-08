@@ -17,6 +17,8 @@ namespace XMGAME.DAL
     {
         private DbContext dbContext = new MyDbContext();
 
+
+
         public User GetUserByToken(string token)
         {
             var user = (from u in dbContext.Set<User>()
@@ -67,6 +69,12 @@ namespace XMGAME.DAL
 
             } 
             return dbContext.SaveChanges() > 0 ? true : false;
+        }
+
+        public IQueryable<User> GetUsers(string[] acctounts)
+        {
+           return dbContext.Set<User>().Where(t => acctounts.Contains(t.AccountName));
+          
         }
     }
 }
