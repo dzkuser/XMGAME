@@ -110,6 +110,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -133,15 +134,22 @@
     <Compile Include="ResourceHelp.cs" />
     <Compile Include="SocketEnum.cs" />
     <Compile Include="SocketHandler.cs" />
-    <Compile Include="SocketHelper.cs" />
-    <Compile Include="SocketTagType.cs" />
-    <Compile Include="StringHpler.cs" />
+    <Compile Include="TransactionAttribute.cs" />
+    <Compile Include="TransactionHelp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XMGAME.DATA\XMGAME.DATA.csproj">
+      <Project>{BB285580-8C9B-49EF-B398-DCBC3D033728}</Project>
+      <Name>XMGAME.DATA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMGAME.IDAL\XMGAME.IDAL.csproj">
+      <Project>{C2C7E1B5-50AA-4CCD-8CC6-D039144B8704}</Project>
+      <Name>XMGAME.IDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XMGAME.Model\XMGAME.Model.csproj">
       <Project>{623a8305-753d-4cd5-8fd7-2e7311df6b5a}</Project>
       <Name>XMGAME.Model</Name>

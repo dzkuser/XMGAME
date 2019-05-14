@@ -12,7 +12,9 @@ namespace XMGAME.DAL
 {
     public class BaseDapperDAL
     {
-
+        /// <summary>
+        /// 数据库连接字符串
+        /// </summary>
         protected string ConnString { get; set; } = ConfigurationManager.ConnectionStrings["MySqlStr"].ConnectionString;
 
         protected IDbConnection GetConnection()

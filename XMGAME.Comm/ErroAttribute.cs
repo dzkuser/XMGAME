@@ -7,9 +7,13 @@ using XMGAME.Model;
 
 namespace XMGAME.Comm
 {
+
    public class ErroAttribute:Attribute
     {
      
+        /// <summary>
+        /// 错误状态码
+        /// </summary>
         public int Code { get; set; }
 
         /// <summary>
@@ -17,6 +21,9 @@ namespace XMGAME.Comm
         /// </summary>
         public bool IfErro { get; set; } = false;
 
+        /// <summary>
+        /// 规则
+        /// </summary>
         public object[] Rule { get; set; }
 
     }

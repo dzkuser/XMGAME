@@ -28,7 +28,7 @@ namespace XMGAME.Comm
         /// <summary>
         ///房间容量
         /// </summary>
-        public  static int gintRoomSize =Convert.ToInt32(ResourceHelp.GetResourceString("roomSize"));
+        public static int gintRoomSize = Convert.ToInt32(ResourceHelp.GetResourceString("roomSize"));
 
         /// <summary>
         /// 用户连接SocketSession 集合 键：用户令牌 值：session 
@@ -38,24 +38,49 @@ namespace XMGAME.Comm
         /// <summary>
         /// 游戏房间 key：房间ID value：房间内用户令牌集合
         /// </summary>
-        private static Dictionary<string, List<string>> gdicSessionRoom = new Dictionary<string,List<string>>();
+        private static Dictionary<string, List<string>> gdicSessionRoom = new Dictionary<string, List<string>>();
 
         /// <summary>
         /// 房间准备人数 key: 房间ID value :
         /// </summary>
         private static Dictionary<string, int> gdicSessionReady = new Dictionary<string, int>();
 
+        /// <summary>
+        /// 在线人数
+        /// </summary>
         private static Dictionary<string, bool> gdicLive = new Dictionary<string, bool>();
 
+        /// <summary>
+        /// 保存要关闭的Session
+        /// </summary>
         private static Dictionary<string, WebSocketSession> gdicSessionClose = new Dictionary<string, WebSocketSession>();
 
+        /// <summary>
+        /// 记录房间内谁准备了
+        /// </summary>
         private static Dictionary<string, List<string>> gdicRoomReadyPerson = new Dictionary<string, List<string>>();
 
-        public static Dictionary<string,string> gdicLoginUser = new Dictionary<string, string>();
+        /// <summary>
+        /// 记录房间谁已经结束游戏
+        /// </summary>
+        private static Dictionary<string, List<string>> gdicGameOver = new Dictionary<string, List<string>>();
+
+        /// <summary>
+        /// 保存登录人员
+        /// </summary>
+        public static Dictionary<string, string> gdicLoginUser = new Dictionary<string, string>();
+
+        /// <summary>
+        /// 记录每个游戏的房间
+        /// </summary>
+        public static Dictionary<int, Dictionary<string, List<string>>> gdicGameRoom = new Dictionary<int, Dictionary<string, List<string>>>();
+
+
+
         /// <summary>
         /// 执行方法的命名空间
         /// </summary>
-        private static string gstrClassPath =ResourceHelp.GetResourceString("mbns");
+        private static string gstrClassPath = ResourceHelp.GetResourceString("mbns");
         #endregion
 
 
@@ -68,12 +93,13 @@ namespace XMGAME.Comm
             webSocket.SessionClosed += HanderSessionClosed;
             webSocket.Setup(ResourceHelp.GetResourceString("ip"), Convert.ToInt32(ResourceHelp.GetResourceString("port")));
             webSocket.Start();
-          
+
 
         }
         #endregion
 
-        #region server 的处理方法
+
+        #region Socket连接关闭时触发
         /// <summary>
         /// 作者：邓镇康
         /// 创建时间:2019-4
@@ -86,37 +112,66 @@ namespace XMGAME.Comm
 
         private void HanderSessionClosed(WebSocketSession aSession, SuperSocket.SocketBase.CloseReason aValue)
         {
-             string UserKey=  gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
-            if (UserKey == null) {
-                UserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
-                if (UserKey == null)
-                  return;
+            Dictionary<string, List<string>> objRoom = gdicSessionRoom;
+            if (gdicSessiomMap.ContainsKey(aSession.SessionID))
+            {
+                gdicSessiomMap.Remove(aSession.SessionID);
             }
-            string strRoomId = gdicSessionRoom.Where(u => u.Value.Contains(UserKey)).FirstOrDefault().Key;
-            if (strRoomId != null&& gdicSessionReady[strRoomId] == gintRoomSize) {            
-              //  lostConnection(UserKey, strRoomId);
-            }                       
-             gdicSessiomMap.Remove(UserKey);
-             List<string> Room=gdicSessionRoom.Where(u=>u.Value.Contains(UserKey)).FirstOrDefault().Value;
+            string strUserKey = gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
+            if (strUserKey == null)
+            {
+                strUserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
+                if (strUserKey == null)
+                    return;
+            }         
+            //string strUserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
+            //if (strUserKey == null) {
+            //    return;
+            //}
+            gdicSessiomMap.Remove(strUserKey);
+            string strRoomId = objRoom.Where(u => u.Value.Contains(strUserKey)).FirstOrDefault().Key;
+            if (strRoomId == null) {
+                return;
+            }
+        
+            List<string> Room = objRoom.Where(u => u.Value.Contains(strUserKey)).FirstOrDefault().Value;
             if (Room != null) {
-
-                Room.Remove(UserKey);
+                if (gdicGameOver.ContainsKey(strRoomId)) {
+                    List<string> perpons = gdicGameOver[strRoomId];
+                    if (!perpons.Contains(strUserKey)) {
+                        perpons.Add(strUserKey);
+                    }
+                    gdicGameOver[strRoomId] = perpons;
+                }
+                Room.Remove(strUserKey);
+            
+                if (gdicRoomReadyPerson[strRoomId].Contains(strUserKey)) {
+                       List<string> perpons= gdicRoomReadyPerson[strRoomId];
+                       perpons.Remove(strUserKey);
+                       gdicRoomReadyPerson[strRoomId] = perpons;
+                    gdicSessionReady[strRoomId] = perpons.Count();
+                }
                 if (Room.Count() == 0) {
-                    gdicSessionRoom.Remove(strRoomId);
+                    objRoom.Remove(strRoomId);
                     if (gdicSessionReady.ContainsKey(strRoomId))
                         gdicSessionReady.Remove(strRoomId);
+                         gdicRoomReadyPerson.Remove(strRoomId);
                 }
                 SocketEntity socketEntity = new SocketEntity()
                 {
-                    Tag =SocketEnum.s.ToString(),
+                    Tag = SocketEnum.s.ToString(),
                     Message = ResourceHelp.GetResourceString("lostConn"),
                     ToUser = Room
                 };
                 handlerSendMessage(socketEntity);
             }
-          
+
         }
 
+        #endregion
+
+
+        #region 有新socket连接时触发
         /// <summary>
         /// 作者：邓镇康
         /// 创建时间:2019-4
@@ -127,12 +182,14 @@ namespace XMGAME.Comm
         /// <param name="value">前端传来的信息</param>
         private void HandlerNewMessageReceived(WebSocketSession session, string value)
         {
-                  
-           handlerMessage(value,session);                    
+
+            handlerMessage(value, session);
         }
 
+        #endregion
 
 
+        #region 有新信息接收时触发
         /// <summary>
         /// 作者：邓镇康
         /// 创建时间:2019-
@@ -141,24 +198,24 @@ namespace XMGAME.Comm
         /// </summary>
         /// <param name="session">用户session</param>
         private void HandlerNewSessionConnected(WebSocketSession session)
-        {                     
-            if(!gdicSessiomMap.ContainsKey(session.SessionID))
-            gdicSessiomMap.Add(session.SessionID,session);       
+        {
+            if (!gdicSessiomMap.ContainsKey(session.SessionID))
+                gdicSessiomMap.Add(session.SessionID, session);
         }
 
         #endregion
 
-        #region 处理前台传入的信息
 
+        #region 解析传入的信息并执行相对应的方法
         /// <summary>
-        /// 
+        /// 处理前端传来的信息判断要执行什么操作
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="session"></param>
-        public void handlerMessage(string message,WebSocketSession session) {
+        /// <param name="message">信息</param>
+        /// <param name="session">websocket连接Session</param>
+        public void handlerMessage(string message, WebSocketSession session) {
 
-            SocketEntity socketEntity=  JsonHelper.JsonToObject<SocketEntity>(message);
-            SocketEnum socketEnum =(SocketEnum) Enum.Parse(typeof(SocketEnum), socketEntity.Tag);
+            SocketEntity socketEntity = JsonHelper.JsonToObject<SocketEntity>(message);
+            SocketEnum socketEnum = (SocketEnum)Enum.Parse(typeof(SocketEnum), socketEntity.Tag);
             switch (socketEnum)
             {
                 case SocketEnum.i:
@@ -168,7 +225,7 @@ namespace XMGAME.Comm
                     handlerSendMessage(socketEntity);
                     break;
                 case SocketEnum.ac:
-                    handlerControllerAction(socketEntity,session);
+                    handlerControllerAction(socketEntity, session);
                     break;
                 case SocketEnum.c:
                     updateSessionKey(socketEntity, session);
@@ -182,13 +239,18 @@ namespace XMGAME.Comm
                 case SocketEnum.live:
                     handlerLiveBag(socketEntity);
                     break;
+                case SocketEnum.gv:
+                    handlerGameOver(socketEntity);
+                    break;
             }
-          
 
-       
+
+
         }
+        #endregion
 
 
+        #region 处理方法
         /// <summary>
         /// 作者：邓镇康
         /// 创建时间:2019-5-5
@@ -196,20 +258,28 @@ namespace XMGAME.Comm
         /// 功能：接收心跳信息
         /// </summary>
         public void handlerLiveBag(SocketEntity aSocketMessage) {
-            if(gdicLive.ContainsKey(aSocketMessage.FromUser))
-            gdicLive[aSocketMessage.FromUser] = true;
+            if (gdicLive.ContainsKey(aSocketMessage.FromUser))
+                gdicLive[aSocketMessage.FromUser] = true;
         }
 
 
-        //处理发送消息
-        public  void handlerSendMessage(SocketEntity aSocketMessage, WebSocketSession aUserSession=null) {
+        /// <summary>
+        /// 处理发送信息
+        /// </summary>
+        /// <param name="aSocketMessage">信息实体对象</param>
+        /// <param name="aUserSession">用户 websocket session 可以为空</param>
+        public void handlerSendMessage(SocketEntity aSocketMessage, WebSocketSession aUserSession = null) {
 
-            if (aUserSession!=null) {
+            if (aUserSession != null) {
 
-                if(!aUserSession.InClosing)
-                aUserSession.Send(JsonConvert.SerializeObject(aSocketMessage));
+                if (!aUserSession.InClosing)
+                    aUserSession.Send(JsonConvert.SerializeObject(aSocketMessage));
                 return;
             }
+            //Task.Factory.StartNew(() => {
+            //    SendDataBySessionId(sessionObj, data, objRoom.User1Session);
+            //});
+
 
             foreach (var item in aSocketMessage.ToUser)
             {
@@ -218,34 +288,170 @@ namespace XMGAME.Comm
                     if (!toUser.InClosing)
                         toUser.Send(JsonConvert.SerializeObject(aSocketMessage));
                 }
-               
+
             }
-                          
+
         }
 
+        //private static void SendDataBySessionId(SocketSession session, string data, string sessionId)
+        //{
+        //    session.AppServer.GetSessionByID(sessionId).Send(data);
+        //}
 
-        //处理进入房间
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aobjSocket"></param>
+        private void handlerGameOver(SocketEntity aobjSocket) {
+            if (!gdicGameOver.ContainsKey(aobjSocket.RoomID)) {
+                return;
+            }         
+             List<string> per= gdicGameOver[aobjSocket.RoomID];
+            if (per.Contains(aobjSocket.FromUser)) {
+                return;
+            }
+            per.Add(aobjSocket.FromUser);
+            gdicGameOver[aobjSocket.RoomID] = per;
+            if (per.Count() == gintRoomSize) {            
+                gdicSessionRoom.Remove(aobjSocket.RoomID);
+                gdicSessionReady.Remove(aobjSocket.RoomID);
+                gdicRoomReadyPerson.Remove(aobjSocket.RoomID);
+                aobjSocket.FromUser = "System";
+                aobjSocket.Tag = SocketEnum.vg.ToString();
+                aobjSocket.ToUser = per;
+                handlerSendMessage(aobjSocket);
+            }
+
+
+        }
+
+        /// <summary>
+        /// 处理用户进入游戏房间房间（单游戏）
+        /// </summary>
+        /// <param name="socket">信息对象</param>
         private void handlerInRoom(SocketEntity socket) {
+
+            CloseArea(socket);
+            List<string> room = null;
+            //有房间ID并且房没满就进入当前房间
+            if (socket.RoomID != ""&&gdicSessionRoom.ContainsKey(socket.RoomID))
+            {
+                  room= gdicSessionRoom[socket.RoomID].Count()<gintRoomSize?gdicSessionRoom[socket.RoomID]:null;             
+            }
+            else {
+                //随机进房
+                RandomInRoom(ref room,gdicSessionRoom);
+            }
+               //把用户放到房间
+            if (room != null&&!room.Contains(socket.FromUser)&&room.Count()<gintRoomSize)
+            {        
+                room.Add(socket.FromUser);                              
+                socket.RoomID = gdicSessionRoom.Where(u => u.Value == room).FirstOrDefault().Key;
+            }
+            else {
+                //新建房间
+                InNewRoom(ref room,ref socket);
+                
+            }
+            socket.ToUser =room;
+            socket.Message= ResourceHelp.GetResourceString("InRoom");         
+            handlerSendMessage(socket);
+
+        }
+
+        /// <summary>
+        /// 保存要关闭的Session
+        /// </summary>
+        /// <param name="socket"></param>
+        private void CloseArea(SocketEntity socket) {
             if (gdicSessionClose.ContainsKey(socket.FromUser))
             {
                 gdicSessionClose[socket.FromUser] = gdicSessiomMap[socket.FromUser];
-               
+
+            }
+            else
+            {
+                gdicSessionClose.Add(socket.FromUser, gdicSessiomMap[socket.FromUser]);
+            }
+        }
+
+        /// <summary>
+        /// 随机进房
+        /// </summary>
+        /// <param name="aRoom">返回出去的房间</param>
+        /// <param name="aobjRooms">房间集合</param>
+        private void RandomInRoom(ref List<string> aRoom,Dictionary<string,List<string>> aobjRooms) {
+            foreach (List<string> item in aobjRooms.Values)
+            {
+                if (item.Count() < gintRoomSize)
+                {
+                    aRoom = item;
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 新建房间
+        /// </summary>
+        /// <param name="room">返回出去的房间</param>
+        /// <param name="socket">socket信息</param>
+        private void InNewRoom(ref List<string> room,ref SocketEntity socket) {
+            room = new List<string>();
+            room.Add(socket.FromUser);
+            string roomID = "";
+            if (socket.RoomID.Trim() != "")
+            {
+                roomID = socket.RoomID;
+            }
+            else
+            {
+                roomID = Guid.NewGuid().ToString();
+            }
+            gdicSessionRoom.Add(roomID, room);
+            gdicSessionReady.Add(roomID, 0);
+            gdicRoomReadyPerson.Add(roomID,new List<string>());
+            socket.RoomID = roomID;
+        }
+
+        /// <summary>
+        /// 处理有（多个\单个）游戏时进房间
+        /// </summary>
+        /// <param name="socket">信息对象</param>
+        private void handlerInRoomMoreGame(SocketEntity socket)
+        {
+
+            if (gdicSessionClose.ContainsKey(socket.FromUser))
+            {
+                gdicSessionClose[socket.FromUser] = gdicSessiomMap[socket.FromUser];
+
             }
             else
             {
                 gdicSessionClose.Add(socket.FromUser, gdicSessiomMap[socket.FromUser]);
             }
 
+            if (!gdicGameRoom.ContainsKey(socket.GameID)) {
+
+                List<string> objUser = new List<string>();
+                objUser.Add(socket.FromUser);
+                socket.FromUser = "";
+                socket.Message = ResourceHelp.GetResourceString("inRoomErro") ;
+                handlerSendMessage(socket);
+                return;
+            }
+            Dictionary<string,List<string>> objRooms=gdicGameRoom[socket.GameID];
             List<string> room = null;
             //有房间ID并且房没满就进入当前房间
-            if (socket.RoomID != ""&&gdicSessionRoom.ContainsKey(socket.RoomID))
+            if (socket.RoomID != "" && objRooms.ContainsKey(socket.RoomID))
             {
-                  room= gdicSessionRoom[socket.RoomID].Count()<gintRoomSize?gdicSessionRoom[socket.RoomID]:null;
-               
+                room = objRooms[socket.RoomID].Count() < gintRoomSize ? objRooms[socket.RoomID] : null;
             }
-            else {
+            else
+            {
                 //随机进房
-                foreach (List<string> item in gdicSessionRoom.Values)
+                foreach (List<string> item in objRooms.Values)
                 {
                     if (item.Count() < gintRoomSize)
                     {
@@ -254,14 +460,15 @@ namespace XMGAME.Comm
                     }
                 }
             }
-               //把用户放到房间
-            if (room != null&&!room.Contains(socket.FromUser)&&room.Count()<gintRoomSize)
+            //把用户放到房间
+            if (room != null && !room.Contains(socket.FromUser) && room.Count() < gintRoomSize)
             {
-          
-                   room.Add(socket.FromUser);                              
-                socket.RoomID = gdicSessionRoom.Where(u => u.Value == room).FirstOrDefault().Key;
+
+                room.Add(socket.FromUser);
+                socket.RoomID = objRooms.Where(u => u.Value == room).FirstOrDefault().Key;
             }
-            else {
+            else
+            {
                 //新建房间
                 room = new List<string>();
                 room.Add(socket.FromUser);
@@ -273,26 +480,36 @@ namespace XMGAME.Comm
                 else
                 {
                     roomID = Guid.NewGuid().ToString();
-                }           
-                gdicSessionRoom.Add(roomID,room);
-                gdicSessionReady.Add(roomID,0);
+                }
+                objRooms.Add(roomID, room);
+                gdicSessionReady.Add(roomID, 0);
                 socket.RoomID = roomID;
-                
+
             }
-            socket.ToUser =room;
-            socket.Message= ResourceHelp.GetResourceString("InRoom");         
+            socket.ToUser = room;
+            socket.Message = ResourceHelp.GetResourceString("InRoom");
             handlerSendMessage(socket);
 
         }
 
-        //游戏准备
+        /// <summary>
+        /// 处理用户准备
+        /// </summary>
+        /// <param name="socket">信息对象</param>
         private void handlerReady(SocketEntity socket) {       
             int count=  gdicSessionReady[socket.RoomID];
-            count++;     
+            count++;
+            List<string> objRoomPerson = gdicRoomReadyPerson[socket.RoomID];
+            if (!objRoomPerson.Contains(socket.FromUser)) {
+                objRoomPerson.Add(socket.FromUser);
+            }
+      
+            gdicRoomReadyPerson[socket.RoomID] = objRoomPerson;
             //所有人准备了就返回标识码 b 代表开始 
             if (count == gintRoomSize) {
                 if (gdicSessionRoom[socket.RoomID].Count() == gintRoomSize)
                 {
+                    gdicGameOver.Add(socket.RoomID,new List<string>());
                     socket.Tag = SocketEnum.b.ToString();
                     socket.ToUser = gdicSessionRoom[socket.RoomID];
                     gdicSessionReady[socket.RoomID] = count;
@@ -304,18 +521,7 @@ namespace XMGAME.Comm
                 }                
             }
             else
-            {
-                List<string> objRoomPerson = null;
-                if (gdicRoomReadyPerson.ContainsKey(socket.RoomID))
-                {
-                    objRoomPerson = gdicRoomReadyPerson[socket.RoomID];
-                }
-                else {
-                    objRoomPerson = new List<string>();
-                    gdicRoomReadyPerson.Add(socket.RoomID,objRoomPerson);
-                }
-                objRoomPerson.Add(socket.FromUser);
-                gdicRoomReadyPerson[socket.RoomID] = objRoomPerson;
+            {              
                 gdicSessionReady[socket.RoomID] = count;            
                 socket.Message =ResourceHelp.GetResourceString("ready");
                 socket.ToUser = gdicSessionRoom[socket.RoomID];
@@ -323,7 +529,12 @@ namespace XMGAME.Comm
             }
         }
 
-        //修改SessionMap 集合Key
+
+        /// <summary>
+        /// 修改SessionMap 集合Key 保持与用户通讯
+        /// </summary>
+        /// <param name="socket"></param>
+        /// <param name="session"></param>
         private void updateSessionKey(SocketEntity socket,WebSocketSession session) {
             gdicSessiomMap.Remove(session.SessionID);
             if (gdicSessiomMap.ContainsKey(socket.FromUser))
@@ -336,7 +547,11 @@ namespace XMGAME.Comm
            
         }
 
-        //游戏结束退出房间
+        /// <summary>
+        /// 游戏结束退出房间
+        /// Tag:q
+        /// </summary>
+        /// <param name="socket">信息实体</param>
         private void quit(SocketEntity socket)
         {
             List<string> toUser = new List<string>();
@@ -346,7 +561,12 @@ namespace XMGAME.Comm
             handlerSendMessage(socket);
         }
 
-        //处理执行方法
+        /// <summary>
+        /// 处理前端要的执行方法
+        /// Tag:ac
+        /// </summary>
+        /// <param name="socketEntity">信息实体</param>
+        /// <param name="webSocketSession">用户session</param>
         private void handlerControllerAction(SocketEntity socketEntity,WebSocketSession webSocketSession) {
             JavaScriptSerializer js = new JavaScriptSerializer();   
             //得到要执行的方法名称和类名
@@ -357,22 +577,23 @@ namespace XMGAME.Comm
             
             object backObj = null;
             //得到要执行的方法对象和类实例对象
-            MethodInfo method = GetActionMethod(out backObj,className:am[0],method:am[1]);
+        
             ResponseVo responseVo = null;
-            //try
-            //{
+          try
+            {
+                MethodInfo method = GetActionMethod(out backObj, className: am[0], method: am[1]);
                 //得到方法执行数据
-                object result = takeRedisData(method, param, backObj);
-                responseVo = GetErroResult(method,result);
-        //}
-        //    catch (Exception)
-        //    {
+                object result = takeData(method, param, backObj);
+                 responseVo = GetErroResult(method, result);
+            }
+            catch (Exception ex)
+          {
+    
+               responseVo = getResponseVo(500, ex.StackTrace);
+            }
 
-        //        responseVo = getResponseVo(500, ResourceHelp.GetResourceString("500"));
-        //    }
 
-
-             //处理ResponseVo对象并发送数据
+            //处理ResponseVo对象并发送数据
             socketEntity.Message =JsonHelper.ReplaceDateTime(js.Serialize(responseVo));
             if (socketEntity.FromUser != "") {
                 List<string> vs = new List<string>();
@@ -386,6 +607,13 @@ namespace XMGAME.Comm
 
         #endregion
 
+        #region 自定义辅助方法
+        /// <summary>
+        /// 得到错误信息和错误的状态码
+        /// </summary>
+        /// <param name="method">执行的方法</param>
+        /// <param name="aObjResult">执行方法的结果</param>
+        /// <returns></returns>
         private ResponseVo GetErroResult ( MethodInfo method ,object aObjResult=null) {
 
             Attribute attribute = method.GetCustomAttribute(typeof(ErroAttribute));
@@ -417,6 +645,13 @@ namespace XMGAME.Comm
             return responseVo;
         }
 
+        /// <summary>
+        /// 根据类名和方法名得到方法对象
+        /// </summary>
+        /// <param name="backObj">返回出去的类实例</param>
+        /// <param name="className">类名</param>
+        /// <param name="method">方法名</param>
+        /// <returns></returns>
         private MethodInfo GetActionMethod( out object backObj,string className,string method) {
             Assembly assembly = Assembly.Load(gstrClassPath);
             Type type = assembly.GetType(gstrClassPath + "." + className);
@@ -425,7 +660,14 @@ namespace XMGAME.Comm
             return methodEx;
         }
 
-        private object takeRedisData(MethodInfo method, Dictionary<string, object> param, object obj) {
+        /// <summary>
+        /// 从数据库中拿数据或从Redis拿数据
+        /// </summary>
+        /// <param name="method">方法对象</param>
+        /// <param name="param">方法需要的参数</param>
+        /// <param name="obj">类实例对象</param>
+        /// <returns></returns>
+        private object takeData(MethodInfo method, Dictionary<string, object> param, object obj) {
 
             if (method == null) {
                 return null;
@@ -467,10 +709,9 @@ namespace XMGAME.Comm
     
                     if (RedisHelper.ContainsKey(redisKey))
                     {
-
                         return RedisHelper.GetData<object>(redisKey);
                     }
-                    
+                
                         object resultM = method.Invoke(obj, paramMethod.Values.ToArray());
                         RedisHelper.SetData(redisKey, resultM);
                         return resultM;
@@ -482,6 +723,12 @@ namespace XMGAME.Comm
                     
         }
 
+        /// <summary>
+        /// 实体映射 把传来的参数
+        /// </summary>
+        /// <param name="paramMethod"></param>
+        /// <param name="method"></param>
+        /// <param name="param"></param>
         private void entityMapping(ref Dictionary<string, object> paramMethod,MethodInfo method,ref Dictionary<string, object> param) {
             ParameterInfo[] parameterInfo = method.GetParameters();
             foreach (var item in parameterInfo)
@@ -552,9 +799,11 @@ namespace XMGAME.Comm
             }
         }
 
-      
-
-
+     
+        /// <summary>
+        /// 把字典的键变成大写
+        /// </summary>
+        /// <param name="param">字典对象</param>
         private void keyToUpper(ref Dictionary<string, object> param) {
             Dictionary<string, object> paramUpper = new Dictionary<string, object>();
             foreach (var item in param)
@@ -564,7 +813,10 @@ namespace XMGAME.Comm
             param = paramUpper;
         }
 
-
+        /// <summary>
+        /// 通知被逼掉线用户
+        /// </summary>
+        /// <param name="astrToken">用户令牌</param>
         public  void  InformLostLogin(string  astrToken) {
             List<string> objUser = new List<string>();
             objUser.Add(astrToken);
@@ -590,7 +842,7 @@ namespace XMGAME.Comm
             MethodInfo method = GetActionMethod(out obj,"UserBLL", "GetUserByToken");
             Dictionary<string, object> pairs = new Dictionary<string, object>();
             pairs.Add("token",key);
-            User ret = (User)takeRedisData(method,pairs,obj);
+            User ret = (User)takeData(method,pairs,obj);
          
             MethodInfo objRecordMethod = GetActionMethod(out obj,"RecordBLL", "UpdateRecord");
             pairs = new Dictionary<string, object>();
@@ -599,7 +851,7 @@ namespace XMGAME.Comm
             pairs.Add("EndTime",DateTime.Now);
             pairs.Add("RoomID",roomID);
 
-            takeRedisData(objRecordMethod,pairs,obj);
+            takeData(objRecordMethod,pairs,obj);
         }
 
 
@@ -713,6 +965,7 @@ namespace XMGAME.Comm
            
             
         }
-     
+#endregion
+
     }
 }

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Http;
 using XMGAME.BLL;
 using XMGAME.WebAPI.Models;
-
 using System.Configuration;
 using XMGAME.Model;
 using System.Net.Http;
@@ -14,6 +13,9 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Reflection;
 using XMGAME.Comm;
+using System.Data.Entity;
+using XMGAME.DATA;
+using System.Transactions;
 
 namespace XMGAME.API.Controllers
 {
@@ -28,34 +30,10 @@ namespace XMGAME.API.Controllers
 
         [HttpPost]
         [Route("take")]
-        public result_base Post(HttpRequestMessage request) {
+        public result_base Post(ParsItem parsItem) {
             result_base retObj = new result_base();
             ParsItem pars = new ParsItem();
-            try
-            {
-                switch (request.Content.Headers.ContentType.MediaType)
-                {
-                    case "application/x-www-form-urlencoded":
-                        var form = request.Content.ReadAsFormDataAsync().Result;
-                        if (form.AllKeys.Length > 0)
-                        {
-                            pars = JsonConvert.DeserializeObject<ParsItem>(form.AllKeys[0]);
-                        }
-                        break;
-
-                    case "application/json":
-                        var json = request.Content.ReadAsStringAsync().Result;
-                        pars = JsonConvert.DeserializeObject<ParsItem>(json.ToString());
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                retObj.errorCode = "1100";
-                retObj.errorMsg = ex.Message;
-                retObj.result = false;           
-                return retObj;
-            }
+            pars = parsItem;         
             retObj.errorCode = "0";
             checkParsItem(pars,out retObj);
 
@@ -105,6 +83,7 @@ namespace XMGAME.API.Controllers
         /// </param>
         /// <returns></returns>
         private object GetCredit(ParsItem aobjParsItem) {
+           string [] str=  aobjParsItem.paras[0].Split(',');
             return userBLL.GetUsers(aobjParsItem.paras[0].Split(','));          
         }
 
@@ -116,42 +95,48 @@ namespace XMGAME.API.Controllers
         /// 
         /// </param>
         /// <returns></returns>
+        [Transaction]
         [Erro(Rule =new object[] {1001,1001,1002,1002,1003,1003})]
-        private  object EditCredit(ParsItem aobjParsItem) {
-          
+        private  object EditCredit(ParsItem aobjParsItem) {        
             result_base _ret = new result_base();
             List<string> paras = aobjParsItem.paras;
-            bool isExist= dealBLL.IsExistTradingCode(paras[3]);
-            if (isExist) {
+            bool isExist = dealBLL.IsExistTradingCode(paras[3], paras[1]);
+            if (isExist)
+            {
                 return 1001;
             }
             DealEntity dealAdd = new DealEntity()
             {
-                AgencyAccount=paras[0],
-                VipAccount=paras[1],
-                TradingPrice=Convert.ToDecimal(paras[2]),
-                TradingCode=paras[3]
+                AgencyAccount = paras[0],
+                VipAccount = paras[1],
+                TradingPrice = Convert.ToDecimal(paras[2]),
+                TradingCode = paras[3]
             };
-            if (dealAdd.TradingPrice < 0) {
-                if (TakeIntegral(dealAdd) == false) {
+            if (dealAdd.TradingPrice < 0)
+            {
+                if (TakeIntegral(dealAdd) == false)
+                {
                     return 1002;
                 }
             }
 
-            bool isSuccess=dealBLL.AddDeal(dealAdd);
+            bool isSuccess = dealBLL.AddDeal(dealAdd);         
             if (isSuccess)
-            {
+            { 
+
                 User editUser = new User();
                 editUser.ID = userBLL.GetUserByAccountName(dealAdd.VipAccount).ID;
                 editUser.AccountName = paras[1];
                 editUser.Integral = Convert.ToInt32(paras[2]);
-                bool updateSeccess= userBLL.UpdateIntegralByApi(editUser);
-                if (!updateSeccess) {
+                bool updateSeccess = userBLL.UpdateIntegralByApi(editUser);
+                if (!updateSeccess)
+                {
                     return 1003;
                 }
             }
-            else {
-                return 1003;       
+            else
+            {
+                return 1003;
             }
             return 0;
         }
@@ -167,7 +152,7 @@ namespace XMGAME.API.Controllers
         [Erro(Rule = new object[] { 1004, 1004 })]
         private object EditCreditConfirm(ParsItem aobjParsItem) {      
             List<string> paras = aobjParsItem.paras;
-            bool isExist = dealBLL.IsExistTradingCode(paras[0]);
+            bool isExist = dealBLL.IsExistTradingCode(paras[0],paras[1]);
             if (!isExist)
             {
                 return 1004;
@@ -280,17 +265,25 @@ namespace XMGAME.API.Controllers
         /// <returns></returns>
         private result_base ExecuteMethod(MethodInfo method, object obj, object[] param, ref result_base _ret)
         {
+            Attribute attribute = method.GetCustomAttribute(typeof(TransactionAttribute));
             object objResult = null;
             try
             {
-                objResult = method.Invoke(obj, param);
+                if (attribute == null)
+                {
+                    objResult = method.Invoke(obj, param);
+                }
+                else {
+                    objResult = TransactionHelp.ExecuteTransaction(obj,method,param);
+                }            
+                
             }
             catch (Exception ex)
             {
-                _ret.errorCode = "110";
+               _ret.errorCode = "110";
                 _ret.errorMsg = ex.Message;
                 return _ret;
-            }
+           }
             return GetErroResult(method, _ret, objResult);
 
         }
@@ -355,6 +348,9 @@ namespace XMGAME.API.Controllers
             MethodInfo methodEx = type.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Instance);
             return methodEx;
         }
+
+        
+
         #endregion
     }
 }

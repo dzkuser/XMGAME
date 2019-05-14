@@ -133,7 +133,7 @@
     <value>不存在交易</value>
   </data>
   <data name="101" xml:space="preserve">
-    <value>没有改Token的用户</value>
+    <value>没有该Token的用户</value>
   </data>
   <data name="102" xml:space="preserve">
     <value>没有改ID的用户</value>
@@ -165,8 +165,14 @@
   <data name="500" xml:space="preserve">
     <value>系统失败</value>
   </data>
+  <data name="expirationTime" xml:space="preserve">
+    <value>1200000</value>
+  </data>
   <data name="InRoom" xml:space="preserve">
     <value>用户进入直播间</value>
+  </data>
+  <data name="inRoomErro" xml:space="preserve">
+    <value>游戏编号出错，请重试</value>
   </data>
   <data name="ip" xml:space="preserve">
     <value>172.16.31.236</value>
@@ -184,7 +190,7 @@
     <value>你已经被请出房间</value>
   </data>
   <data name="port" xml:space="preserve">
-    <value>5009</value>
+    <value>7009</value>
   </data>
   <data name="ready" xml:space="preserve">
     <value>用户准备</value>

@@ -54,6 +54,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -108,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -126,6 +128,10 @@
     <ProjectReference Include="..\XMGAME.Comm\XMGAME.Comm.csproj">
       <Project>{E8628669-5FC6-46C3-B490-4860BE0490A7}</Project>
       <Name>XMGAME.Comm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMGAME.DATA\XMGAME.DATA.csproj">
+      <Project>{BB285580-8C9B-49EF-B398-DCBC3D033728}</Project>
+      <Name>XMGAME.DATA</Name>
     </ProjectReference>
     <ProjectReference Include="..\XMGAME.Model\XMGAME.Model.csproj">
       <Project>{623A8305-753D-4CD5-8FD7-2E7311DF6B5A}</Project>

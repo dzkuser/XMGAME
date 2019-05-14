@@ -13,12 +13,22 @@ using XMGAME.Model;
 namespace XMGAME.DAL
 {
 
+    /// <summary>
+    /// 作者：邓镇康
+    /// 创建时间:2019-5-9
+    /// 修改时间：
+    /// 用户数据访问
+    /// </summary>
     public class UserDAL : BaseDAL<User>,IUserDAL
     {
         private DbContext dbContext = new MyDbContext();
 
 
-
+        /// <summary>
+        /// 根据用户令牌查询用户
+        /// </summary>
+        /// <param name="token">用户令牌</param>
+        /// <returns></returns>
         public User GetUserByToken(string token)
         {
             var user = (from u in dbContext.Set<User>()
@@ -34,20 +44,12 @@ namespace XMGAME.DAL
            return  MapperData(user);
            
         }
-
-        private User MapperData(object user) {
-            User userT = new User();
-            Type type = userT.GetType();
-            Type userType = user.GetType();
-            PropertyInfo[] propertionInfo= type.GetProperties();
-            Dictionary<string,PropertyInfo> pairs= userType.GetProperties().ToDictionary(t => t.Name);
-            foreach (var item in propertionInfo)
-            {
-                if (pairs.ContainsKey(item.Name))
-                    item.SetValue(userT,pairs[item.Name].GetValue(user));
-            }
-            return userT;
-        }
+   
+        /// <summary>
+        /// 更新或者增加用户令牌
+        /// </summary>
+        /// <param name="user">用户信息</param>
+        /// <returns></returns>
         public bool UpdateOrAddToken(User user)
         {
           
@@ -71,10 +73,38 @@ namespace XMGAME.DAL
             return dbContext.SaveChanges() > 0 ? true : false;
         }
 
+        /// <summary>
+        /// 根据用户名查询用户（可多个）
+        /// </summary>
+        /// <param name="acctounts">多个用户令牌</param>
+        /// <returns></returns>
         public IQueryable<User> GetUsers(string[] acctounts)
         {
            return dbContext.Set<User>().Where(t => acctounts.Contains(t.AccountName));
           
+        }
+
+        /// <summary>
+        ///  映射返回数据
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private User MapperData(object user)
+        {
+            if (user == null) {
+                return null;
+            }
+            User userT = new User();
+            Type type = userT.GetType();
+            Type userType = user.GetType();
+            PropertyInfo[] propertionInfo = type.GetProperties();
+            Dictionary<string, PropertyInfo> pairs = userType.GetProperties().ToDictionary(t => t.Name);
+            foreach (var item in propertionInfo)
+            {
+                if (pairs.ContainsKey(item.Name))
+                    item.SetValue(userT, pairs[item.Name].GetValue(user));
+            }
+            return userT;
         }
     }
 }

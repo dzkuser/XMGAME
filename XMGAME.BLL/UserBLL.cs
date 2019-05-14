@@ -11,12 +11,32 @@ using XMGAME.Model;
 
 namespace XMGAME.BLL
 {
+
+    /// <summary>
+    /// 作者：邓镇康
+    /// 创建时间:2019-5-10
+    /// 修改时间
+    /// 功能：用户信息逻辑处理类
+    /// </summary>
     public class UserBLL
     {
 
+        #region 私有变量
+        /// <summary>
+        /// 用户信息数据访问对象
+        /// </summary>
         private IUserDAL userDAL = new UserDAL();
+        #endregion
 
-        [RedisAttribute("user", ArgumentName = "id")]
+        #region CRUD
+
+        /// <summary>
+        /// 根据用户ID 得到用户信息
+        /// 错误状态码 102 ：没有该用户
+        /// </summary>
+        /// <param name="id">用户ID</param>
+        /// <returns></returns>
+    
         [ErroAttribute(Rule = new object[] { 102, null })]
         public User GetUserInfoByID(int id)
         {
@@ -24,13 +44,27 @@ namespace XMGAME.BLL
         }
 
 
+        /// <summary>
+        /// 根据用户令牌查询用户信息
+        /// 错误状态码 101：没有该令牌的用户
+        /// </summary>
+        /// <param name="token">用户令牌</param>
+        /// <returns></returns>
+ 
         [ErroAttribute(Rule = new object[] { 101, null })]
-        public User GetUserInfoByToken(string token) {
-            User user = new User();          
-            user = userDAL.GetUserByToken(token);
-            return user;                        
+        public User GetUserInfoByToken(string token) {        
+             return userDAL.GetUserByToken(token);
+                                  
         }
         
+
+        /// <summary>
+        /// 登录
+        /// 错误状态码 100：登录失败
+        /// </summary>
+        /// <param name="accountName">用户名</param>
+        /// <param name="userPassWord">密码</param>
+        /// <returns></returns>
         [ErroAttribute(Rule =new object[]{100,null})]  
         public User Login(string accountName, string userPassWord) {
             
@@ -43,26 +77,41 @@ namespace XMGAME.BLL
             User user= userDAL.GetByWhere(record,pairs,"&&").FirstOrDefault();
            
             if (user != null) {
-                if (SocketHandler.gdicLoginUser.ContainsKey(accountName)) {
-                    SocketHandler socketHandler = new SocketHandler();
-                    socketHandler.InformLostLogin(SocketHandler.gdicLoginUser[accountName]);
-                    SocketHandler.gdicLoginUser.Remove(accountName);
-                }              
+                //if (SocketHandler.gdicLoginUser.ContainsKey(accountName))
+                //{
+                //    SocketHandler socketHandler = new SocketHandler();
+                //    socketHandler.InformLostLogin(SocketHandler.gdicLoginUser[accountName]);
+                //    SocketHandler.gdicLoginUser.Remove(accountName);
+                //}
                 user.Token = GetGuid();
                 userDAL.UpdateOrAddToken(user);
-                SocketHandler.gdicLoginUser.Add(accountName,user.Token);
+                //if(!SocketHandler.gdicLoginUser.ContainsKey(accountName))
+                //SocketHandler.gdicLoginUser.Add(accountName,user.Token);
+
                 return user;
             }
         
             return null;
         }
 
+        /// <summary>
+        /// 注册
+        /// 错误状态码 103 ：注册失败
+        /// </summary>
+        /// <param name="user">用户信息</param>
+        /// <returns></returns>
         [ErroAttribute(Rule = new object[] { 103,false })]
         public bool Register(User user) {
             user.UserPassWord = Md5.GetMD5String(user.UserPassWord);
             return userDAL.Insert(user);
         }
 
+        /// <summary>
+        /// 修改积分
+        /// 错误状态码 104 ：修改失败
+        /// </summary>
+        /// <param name="user">用户信息  AccountName 的值是用户令牌</param>
+        /// <returns></returns>    
         [ErroAttribute(Rule = new object[] { 104, false })]
         public bool UpdateIntegral(User user) {
 
@@ -71,34 +120,47 @@ namespace XMGAME.BLL
             user.ID = userToken.ID;
             bool bo= userDAL.Update(user);
             if (bo) {
-                //User userU = GetUserInfoByID(userToken.ID);
-                //List<string> vs = new List<string>();
-                //vs.Add(userToken.Token);
-                //SocketEntity socketEntity = new SocketEntity()
-                //{
-                //    FromUser = userToken.Token,
-                //    ToUser = vs,
-                //    Message = JsonHelper.ToJson(userU),
-                //    Tag = "il"
-                //};
-                //SocketHandler socketHandler = new SocketHandler();
-                //socketHandler.handlerSendMessage(socketEntity);
+                RedisHelper.DeleteKey("user.TOKEN::"+user.Token);
+              
             }
             return bo;
         }
 
+        /// <summary>
+        /// 修改积分
+        /// </summary>
+        /// <param name="user">用户信息  AccountName 的值是不变</param>
+        /// <returns></returns>       
+    
         public bool UpdateIntegralByApi(User user) {
-            return userDAL.Update(user);
+            bool isSuccess= userDAL.Update(user);
+            if (isSuccess) {
+                RedisHelper.DeleteKey("user.TOKEN::" + user.Token);
+            }
+            return isSuccess;
         }
 
+        /// <summary>
+        /// 更新或者增加用户令牌
+        /// 错误状态码：105 ：修改或增加token失败
+        /// </summary>
+        /// <param name="user">用户信息</param>
+        /// <returns></returns>
+    
         [ErroAttribute(Rule = new object[] { 105, false })]
         public bool UpdateOrAddToken(User user) {
+            
             return userDAL.UpdateOrAddToken(user);
         }
 
-        public IQueryable<User> GetUsers(string[] accounts) {
+        /// <summary>
+        /// 根据用户名 得到用户积分
+        /// </summary>
+        /// <param name="accounts">用户名数组</param>
+        /// <returns></returns>
+        public IQueryable<object> GetUsers(string[] accounts) {
          return   (from user in userDAL.GetUsers(accounts)
-             select new User()
+             select new 
              {
                  AccountName=user.AccountName,
                  Integral=user.Integral
@@ -106,6 +168,12 @@ namespace XMGAME.BLL
              ; 
         }
 
+        /// <summary>
+        /// 判断余额是否充足
+        /// </summary>
+        /// <param name="token">用户令牌</param>
+        /// <param name="integral">对比的值</param>
+        /// <returns></returns>
         public bool IsAdequatebalance(string token,int integral) {
 
             User queryUser = GetUserInfoByToken(token);
@@ -119,8 +187,12 @@ namespace XMGAME.BLL
 
         }
 
-
-
+        /// <summary>
+        /// 根据用户名得到用户信息
+        /// </summary>
+        /// <param name="accountName">用户名</param>
+        /// <returns></returns>
+        
         public User GetUserByAccountName(string accountName) {
             return userDAL.GetUsers(new string[] { accountName} ).FirstOrDefault();
         }
@@ -129,5 +201,6 @@ namespace XMGAME.BLL
             return Guid.NewGuid().ToString();
         }
 
+        #endregion
     }
 }

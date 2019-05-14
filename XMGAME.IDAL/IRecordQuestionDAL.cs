@@ -21,7 +21,6 @@ namespace XMGAME.IDAL
         /// </summary>
         /// <param name="recordID">记录表ID</param>
         /// <returns></returns>
-
         RecordQuestionDTO GetByRecordID(int recordID);
 
         /// <summary>
@@ -29,7 +28,6 @@ namespace XMGAME.IDAL
         /// </summary>
         /// <param name="roomID"> 房间ID</param>
         /// <returns></returns>
-
         IQueryable<RecordQuestionDTO> GetByRoomID(string roomID);
     }
 }

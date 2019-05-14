@@ -9,6 +9,7 @@ namespace XMGAME.IDAL
    public interface IBaseDAL<T>
    {
 
+        #region CRUD
         /// <summary>
         /// 增加一条记录
         /// </summary>
@@ -50,9 +51,9 @@ namespace XMGAME.IDAL
         /// <returns></returns>
         IQueryable<T> GetByWhere(T entity, Dictionary<string, string> fieldRelation, string relation);
 
+        #endregion
 
-      
-     
 
-   }
+
+    }
 }

@@ -25,7 +25,7 @@ namespace XMGAME.Model
 
         public int State { get; set; } = 0;
 
-        public int GameID { get; set; } = 0;
+        public int? GameID { get; set; }
 
 
 

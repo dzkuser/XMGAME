@@ -106,7 +106,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 没有改Token的用户 的本地化字符串。
+        ///   查找类似 没有该Token的用户 的本地化字符串。
         /// </summary>
         internal static string _101 {
             get {
@@ -205,11 +205,29 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
+        ///   查找类似 1200000 的本地化字符串。
+        /// </summary>
+        internal static string expirationTime {
+            get {
+                return ResourceManager.GetString("expirationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 用户进入直播间 的本地化字符串。
         /// </summary>
         internal static string InRoom {
             get {
                 return ResourceManager.GetString("InRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 游戏编号出错，请重试 的本地化字符串。
+        /// </summary>
+        internal static string inRoomErro {
+            get {
+                return ResourceManager.GetString("inRoomErro", resourceCulture);
             }
         }
         
@@ -259,7 +277,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 5009 的本地化字符串。
+        ///   查找类似 7009 的本地化字符串。
         /// </summary>
         internal static string port {
             get {
