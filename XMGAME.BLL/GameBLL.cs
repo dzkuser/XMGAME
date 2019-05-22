@@ -43,7 +43,7 @@ namespace XMGAME.BLL
         /// 得到所有游戏
         /// </summary>
         /// <returns></returns>
-        [Redis("game")]
+      //  [Redis("game")]
         public IQueryable<Game> GetGames()
         {
             return gameDAL.GetAll();
@@ -77,11 +77,21 @@ namespace XMGAME.BLL
         /// </summary>
         /// <param name="game">游戏信息实体类</param>
         /// <returns></returns>
-        [RedisAttribute(key:"game",IsDelete =true)]
+      //  [RedisAttribute(key:"game",IsDelete =true)]
         public bool AddGame(Game game) {
             return gameDAL.Insert(game);
         }
 
+        public int GetGameIDByName(string GameName) {
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            pairs.Add("Name","==");
+            Game game = new Game()
+            {
+                Name = GameName
+            };
+            return gameDAL.GetByWhere(game,pairs,"").FirstOrDefault().ID;
+
+        }
         #endregion
     }
 }

@@ -55,11 +55,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActityDAL.cs" />
+    <Compile Include="ActRecordDAL.cs" />
+    <Compile Include="ActToRecordDAL.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="BaseDapperDAL.cs" />
     <Compile Include="DealDAL.cs" />
     <Compile Include="ExceptionLogDAL.cs" />
     <Compile Include="GameDAL.cs" />
+    <Compile Include="GameRuleDAL.cs" />
     <Compile Include="GenreDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionDAL.cs" />

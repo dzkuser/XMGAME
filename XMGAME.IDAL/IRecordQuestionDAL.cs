@@ -29,5 +29,7 @@ namespace XMGAME.IDAL
         /// <param name="roomID"> 房间ID</param>
         /// <returns></returns>
         IQueryable<RecordQuestionDTO> GetByRoomID(string roomID);
+
+       
     }
 }

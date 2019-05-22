@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace XMGAME.Model
 {
+
+    /// <summary>
+    /// 作者：邓镇康
+    /// 创建时间:2019-5-16
+    /// 修改时间：2019-
+    /// 功能：交易信息实体类
+    /// </summary>
     public class DealEntity
     {
         /// <summary>

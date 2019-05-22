@@ -19,15 +19,33 @@ using System.Transactions;
 
 namespace XMGAME.API.Controllers
 {
+
+    /// <summary>
+    /// 作者：邓镇康
+    /// 创建时间:2019-5-19
+    /// 修改时间：2019-
+    /// 功能：
+    /// </summary>
     public class HandlerController : ApiController
     {
 
         static string gstrClassPath = "XMGAME.API";
         string MD5Key = ConfigurationManager.AppSettings["MD5Key"];
-        public UserBLL userBLL = new UserBLL();
+        private UserBLL userBLL = new UserBLL();
 
-        public DealBLL dealBLL = new DealBLL();
+        private DealBLL dealBLL = new DealBLL();
 
+        private GameBLL gameBLL = new GameBLL();
+
+        private RecordBLL recordBLL = new RecordBLL();
+
+        private RecordQuestionBLL recordQuestionBLL = new RecordQuestionBLL();
+
+        /// <summary>
+        /// 请求入口
+        /// </summary>
+        /// <param name="parsItem"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("take")]
         public result_base Post(ParsItem parsItem) {
@@ -184,7 +202,166 @@ namespace XMGAME.API.Controllers
             return true;
         }
 
+
+        /// <summary>
+        /// 游戏记录详细
+        /// </summary>
+        /// <param name="aobjParsItem">
+        /// paras:
+        /// [0]	y	会员账号
+        //[1] 游戏ID
+        //[2]  开始时间
+        //[3]  结束时间
+        //[4]  页码
+        //[5]  代理
+        //[6]  每页记录条数
+        /// 
+        /// </param>
+        /// <returns></returns>
+        private object GetRecord(ParsItem aobjParsItem) {
+            string[] paramName = new string[] { "AccountName", "GameID", "CreateDate", "CreateDate"};
+            string[] paramOpter = new string[] { "=", "=", ">=", "<=" };
+            List<string> _paras = aobjParsItem.paras;
+            StringBuilder sqlBuilder = new StringBuilder();
+            List<object> sqlParam = new List<object>();
+
+            string ID = "";
+            if (!"".Equals(_paras[5]))
+            {
+                sqlBuilder.AppendFormat("select * from tbRecord a join tbUser b on a.AccountName = b.AccountName where b.UserPassWord = @p{0}", sqlParam.Count);
+                sqlParam.Add(Md5.GetMD5String(_paras[5]));
+                ID = "a.ID";
+                
+            }
+            else {
+                sqlBuilder.Append(" select * from tbRecord ");
+                sqlBuilder.Append(" where 1=1 ");
+                ID = "ID";
+            }
+
+            ExceAssembleSql(ref sqlBuilder,paramName,paramOpter,_paras,ref sqlParam);
+            if ("".Equals(_paras[6])) {
+                _paras[6] = "10";
+            }
+            Page page = new Page();
+            int count= recordBLL.GetRecordBySql(sqlBuilder.ToString(),sqlParam.ToArray()).Count();
+            page.total = count;
+            page.pageSize = Convert.ToInt32(_paras[6]);
+            page.pageNum = Convert.ToInt32(_paras[4]);
+            Sort(ref sqlBuilder,ID);
+            Paging(ref sqlBuilder,_paras[4],_paras[6]);
+            page.data = AssembleRecord( recordBLL.GetRecordBySql(sqlBuilder.ToString(),sqlParam.ToArray()));        
+            return page;
+        }
+
+
+        private List<object> AssembleRecord(IQueryable<Record> records) {
+            List<object> objList = new List<object>();
+           Dictionary<int,Game> games= gameBLL.GetGames().ToDictionary(t=>t.ID);
+            foreach (var item in records)
+            {
+                object obj = new
+                {
+                    AccountName=item.AccountName,
+                    Integral=item.Integral,
+                    Time=item.Time,
+                    Name=games[item.GameID.Value].Name
+                };
+                objList.Add(obj);
+            }
+            return objList;
+        }
+
+
+
+
+        private IQueryable<object> GetRecordCollect(ParsItem aobjParsItem) {
+            List<string> paras = aobjParsItem.paras;
+            string strAccountName = null;
+            DateTime? createTime=null; 
+            DateTime? endTime =null;
+            if (!"".Equals(paras[0])) {
+                strAccountName = paras[0];
+            }
+            if (!"".Equals(paras[1])) {
+                createTime = Convert.ToDateTime(paras[1]);
+            }
+            if (!"".Equals(paras[2]))
+            {
+                endTime = Convert.ToDateTime(paras[2]);
+            }
+           return recordBLL.GetRecordCollect(strAccountName,createTime,endTime);
+        }
+
+        /// <summary>
+        /// 查询所有游戏或查询用户玩过的游戏
+        /// </summary>
+        /// <param name="aobjParsItem">
+        /// paras 为空时代表要查所有游戏
+        /// paras ：
+        /// [0] 用户名 代表要查用户玩过的游戏
+        /// </param>
+        /// <returns></returns>
+
+        private IQueryable<object> GetGameOrByAccount(ParsItem aobjParsItem) {
+
+            if (aobjParsItem.paras.Count==0)
+            {
+                return (from g in gameBLL.GetGames()
+                        select new
+                        {
+                            ID = g.ID,
+                            Name = g.Name
+                        });
+            }
+            return recordBLL.GetGameByAccountNameRecord(aobjParsItem.paras[0]);
+          
+        }
+
+      
+        /// <summary>
+        /// 查询游戏记录的具体信息
+        /// </summary>
+        /// <param name="aobjParsItem">
+        /// paras ：
+        /// [0] 记录ID
+        /// </param>
+        /// <returns></returns>
+        private IQueryable<object> GetRecordSpecific(ParsItem aobjParsItem) {
+
+            return (from rq in recordQuestionBLL.GetByRoomID(aobjParsItem.paras[0])
+
+                    select new
+                    {
+                        Topic = rq.Topic,
+                        Answer = rq.Answer,
+                        Reply = rq.Reply,
+                        Goal = rq.Goal,
+                        Score = rq.Score
+                    });
+        }
+
+
+        private IQueryable<object> GetRecordCollectByAgency(ParsItem aobjParsItem) {
+            List<string> paras = aobjParsItem.paras;
+            DateTime? createTime = null;
+            DateTime? endTime = null;
+       
+            if (!"".Equals(paras[2]))
+            {
+                createTime = Convert.ToDateTime(paras[2]);
+            }
+            if (!"".Equals(paras[3]))
+            {
+                endTime = Convert.ToDateTime(paras[3]);
+            }
+            return recordBLL.GetRecordCollectByAgency(paras[0],createTime,endTime,Convert.ToInt32(paras[1]));
+
+        }
+
+
         #region 共用方法
+
         void checkParsItem(ParsItem pars, out result_base ret_data)
         {
             ret_data = new result_base();
@@ -349,8 +526,37 @@ namespace XMGAME.API.Controllers
             return methodEx;
         }
 
-        
+        private void AssembleSql(ref StringBuilder sqlBuileder,string fileName,string strOperator,object value,ref List<object> sqlParam)
+        {
+            if (!"".Equals(value)) {
+                sqlBuileder.AppendFormat(" and {0} {1} @p{2}  ",fileName,strOperator,sqlParam.Count);
+                sqlParam.Add(value);
+            }
+         
+        }
 
+        private void Paging(ref StringBuilder sqlBuilder,string pageIndex,string pageSize="10") {
+            sqlBuilder.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY ",(Convert.ToInt32(pageIndex)-1)*Convert.ToInt32(pageSize),pageSize);
+        }
+
+        private void Sort(ref StringBuilder sqlBuilder,string fileName,string rule="desc") {
+
+            sqlBuilder.AppendFormat(" order by {0} {1}  ", fileName, rule);
+
+        }
+
+        private void ExceAssembleSql(ref StringBuilder sqlBuilder, string[] paramName, string[] paramOpter, List<string> _paras, ref List<object> sqlParam) {
+            for (int i = 0; i < _paras.Count; i++)
+            {
+                if (paramName.Length > i)
+                {
+                    AssembleSql(ref sqlBuilder, paramName[i], paramOpter[i], _paras[i], ref sqlParam);
+                }
+            }
+
+        }
+
+       
         #endregion
     }
 }

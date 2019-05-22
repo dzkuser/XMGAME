@@ -187,6 +187,24 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
+        ///   查找类似 操作成功 的本地化字符串。
+        /// </summary>
+        internal static string _120 {
+            get {
+                return ResourceManager.GetString("120", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 操作失败 的本地化字符串。
+        /// </summary>
+        internal static string _121 {
+            get {
+                return ResourceManager.GetString("121", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 成功 的本地化字符串。
         /// </summary>
         internal static string _200 {
@@ -232,7 +250,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 172.16.31.236 的本地化字符串。
+        ///   查找类似 127.16.31.236 的本地化字符串。
         /// </summary>
         internal static string ip {
             get {
@@ -277,7 +295,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 7009 的本地化字符串。
+        ///   查找类似 7787 的本地化字符串。
         /// </summary>
         internal static string port {
             get {

@@ -48,7 +48,11 @@ namespace XMGAME.Comm
         /// <summary>
         /// 所有玩家都以结束
         /// </summary>
-        vg
+        vg,
+        /// <summary>
+        /// 用户掉线
+        /// </summary>
+        lost
    
 
 

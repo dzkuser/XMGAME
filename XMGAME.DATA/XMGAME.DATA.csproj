@@ -48,9 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="mapper\ActivityMapper.cs" />
+    <Compile Include="mapper\ActRecordMapper.cs" />
+    <Compile Include="mapper\ActToRecordMapper.cs" />
     <Compile Include="mapper\DealMapper.cs" />
     <Compile Include="mapper\ExceptioLogMapper.cs" />
     <Compile Include="mapper\GameMapper.cs" />
+    <Compile Include="mapper\GameRuleMapper.cs" />
     <Compile Include="mapper\GenreMapper.cs" />
     <Compile Include="mapper\QuestionMapper.cs" />
     <Compile Include="mapper\RecordMapper.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XMGAME.Comm;
 using XMGAME.DAL;
 using XMGAME.IDAL;
 using XMGAME.Model;
@@ -23,6 +24,11 @@ namespace XMGAME.BLL
         /// 答题记录数据访问对象
         /// </summary>
         private IRecordQuestionDAL recordQuestionDAL = new RecordQuestionDAL();
+
+        /// <summary>
+        /// 题目数据访问对象
+        /// </summary>
+        private IQuestionDAL questionDAL = new QuestionDAL();
 
 
         /// <summary>
@@ -123,6 +129,85 @@ namespace XMGAME.BLL
             }
             return false;
         }
+
+        /// <summary>
+        /// 把传来的答题数据放在redis
+        /// </summary>
+        /// <param name="dTO">
+        /// 主要用到的参数：QuestionID：题目ID ，AccountName：用户令牌，RecordID：记录ID ，Reply ：用户的答案
+        /// </param>,RecordQuestionDTO questionDTO,string name
+        /// <returns></returns>
+        public bool  IsRightToRedis(List<RecordQuestionDTO> dTOS)
+        {
+
+            List<int> objIds = GetQuestionID(dTOS);
+            IQueryable<QuestionEntity> questions = questionDAL.GetByIDs(objIds.ToArray());
+            ContrastAnswer(dTOS, questions);
+            recordBLL.UpdateRecordToRedis(new Record() { AccountName=dTOS[0].AccountName});
+
+            return true;
+
+        }
+
+        /// <summary>
+        /// 装配答题记录的集合
+        /// </summary>
+        /// <param name="dTOs">前台传来的答题记录DTO集合</param>
+        /// <param name="questions">题目记录</param>
+        private void  ContrastAnswer(List<RecordQuestionDTO> dTOs, IQueryable<QuestionEntity> questions)
+        {
+          
+            Dictionary<int, QuestionEntity> objQuestionDic = questions.ToDictionary(t => t.ID);
+            var dateNow = DateTime.Now;
+            int sum = 0;
+            foreach (var item in dTOs)
+            {
+                if (objQuestionDic.ContainsKey(item.QuestionID))
+                {
+                    RecordQuestion recordQuestion = new RecordQuestion()
+                    {
+                        Atime = item.Atime,
+                        Question = item.QuestionID,
+                        Reply = item.Reply,
+                    };
+                    QuestionEntity questionEntity = objQuestionDic[item.QuestionID];
+                    if (item.Reply.Equals(questionEntity.Answer))
+                    {
+                        sum += questionEntity.Score;
+                        recordQuestion.Goal = questionEntity.Score;
+                    }
+                    else {
+                        sum += -questionEntity.Score;
+                        recordQuestion.Goal =-questionEntity.Score;
+                    }
+                    string strKey = item.AccountName + "::RecordQuestion";
+                    RedisHelper.SetDataByList(strKey,recordQuestion);
+                }
+            }
+            string strSumKey = dTOs[0].AccountName + "::RecordQuestionSum";
+            RedisHelper.SetData(strSumKey,sum);
+           
+
+        }
+
+   
+
+        /// <summary>
+        /// 提取集合里的QuestionID
+        /// </summary>
+        /// <param name="dTOs"></param>
+        /// <returns></returns>
+        private List<int> GetQuestionID(List<RecordQuestionDTO> dTOs)
+        {
+            List<int> objIDs = new List<int>();
+            foreach (var item in dTOs)
+            {
+                objIDs.Add(item.QuestionID);
+            }
+            return objIDs;
+        }
+
+
 
         #endregion
 

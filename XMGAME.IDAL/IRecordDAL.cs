@@ -32,5 +32,11 @@ namespace XMGAME.IDAL
         /// <param name="roomID">房间ID</param>
         /// <returns></returns>
         IQueryable<object> GetRightCount(string roomID);
+
+        IQueryable<object> GetRecordCollect(string account, DateTime? createTime, DateTime? endTime);
+
+        IQueryable<object> GetRecordCollectByAgency(string agent, DateTime? createTime, DateTime? endTime,int gameID);
+
+       
     }
 }

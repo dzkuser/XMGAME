@@ -62,9 +62,9 @@ namespace XMGAME.DAL
         /// <param name="fieldRelation">字段规则 比如： ID = 或 ID > </param>
         /// <param name="relation">连接条件的运算符 不如 ： && ，|| </param>
         /// <returns></returns>
-        public IQueryable<T> GetByWhere(T entity,Dictionary<string,string> fieldRelation,string relation="")
+        public IQueryable<T> GetByWhere(T entity,Dictionary<string,string> fieldRelation,string relation="", bool isPage = false, int pageNum = 1, int pageSize = 10)
         {
-            return dbContext.Set<T>().Where(DynamicQueryBulid(entity,fieldRelation,relation));
+            return dbContext.Set<T>().Where(DynamicQueryBulid(entity,fieldRelation,relation,isPage,pageNum,pageSize));
         }
 
         /// <summary>
@@ -77,6 +77,17 @@ namespace XMGAME.DAL
             dbContext.Set<T>().Add(entity);
             return dbContext.SaveChanges()>0?true:false;
            
+        }
+
+        /// <summary>
+        /// 添加多条记录
+        /// </summary>
+        /// <param name="entitys">实体类集合</param>
+        /// <returns></returns>
+        public bool InsertMore(List<T> entitys)
+        {
+             dbContext.Set<T>().AddRange(entitys);
+            return dbContext.SaveChanges() > 0 ? true : false;
         }
 
         /// <summary>
@@ -150,6 +161,7 @@ namespace XMGAME.DAL
             return fields;
         }
 
+
         /// <summary>
         ///动态查询
         /// </summary>
@@ -157,7 +169,7 @@ namespace XMGAME.DAL
         /// <param name="fieldRelation">字段规则</param>
         /// <param name="relation">连接条件运算符</param>
         /// <returns></returns>
-        private Expression<Func<T, bool>> DynamicQueryBulid(T entity, Dictionary<string, string> fieldRelation, string relation) {
+        private Expression<Func<T, bool>> DynamicQueryBulid(T entity, Dictionary<string, string> fieldRelation, string relation,bool isPage=false,int pageNum=1,int pageSize=10) {
 
             StringBuilder str = new StringBuilder();
             Dictionary<string, object> fields = GetProperty(entity);
@@ -172,10 +184,31 @@ namespace XMGAME.DAL
             var lambdaStr = str.ToString();
             lambdaStr = lambdaStr.Substring(0, lambdaStr.Length - relation.Length);
 
+            if (isPage) {
+                lambdaStr += String.Format(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY ",(pageNum-1)*pageSize,pageSize);
+            }
+         
             return DynamicExpressionParser.ParseLambda<T, bool>(new ParsingConfig(), false, lambdaStr, fields.Values.ToArray());
 
 
         }
+
+      
+
+
+
+
+        public IQueryable<T> QueryBySql<T>(string sql, object[] param)
+        {
+           
+            return dbContext.Database.SqlQuery<T>(sql, param).AsQueryable();
+        }
+
+      
+
+
+
+
         #endregion
 
     }

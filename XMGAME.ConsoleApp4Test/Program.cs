@@ -13,12 +13,13 @@ namespace XMGAME.ConsoleApp4Test
     class Program
     {
         static string MD5Key = "c33e90a9-0714-48ee-89cc-8be9aff00710";
-        static string Url = "http://localhost:64652/Service";
+        static string Url = "http://172.16.31.232:9678/take";
 
 
         static void Main(string[] args)
         {
             Login();
+         
         }
 
         static void Login()
@@ -28,6 +29,7 @@ namespace XMGAME.ConsoleApp4Test
             paras.Add("useridbbb");
             paras.Add("1");
             string retText = SubmitDataToWebAPI("Login", paras);
+   
         }
 
 

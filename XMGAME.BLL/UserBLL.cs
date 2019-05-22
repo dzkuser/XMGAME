@@ -26,9 +26,40 @@ namespace XMGAME.BLL
         /// 用户信息数据访问对象
         /// </summary>
         private IUserDAL userDAL = new UserDAL();
+
+        /// <summary>
+        /// 活动信息逻辑处理类
+        /// </summary>
+        private ActityBLL mobjActityBLL = new ActityBLL();
+
+        /// <summary>
+        /// 活动参加记录处理类
+        /// </summary>
+        private ActToRecordBLL mobjActTRBLL = new ActToRecordBLL();
         #endregion
 
         #region CRUD
+
+        /// <summary>
+        /// 修改用户信息
+        /// </summary>
+        /// <param name="id">用户ID</param>
+        /// <returns></returns>
+        public bool UpdateUser(User user) {       
+            return userDAL.Update(user);
+        }
+
+        /// <summary>
+        /// 得到所有用户
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<User> GetUserALL() {
+            return userDAL.GetAll();
+        }
+
+        //public IQueryable<User> GetUserByWhereAndPage(User user,Dictionary<string,string> filePaton,string relation) {
+
+        //}
 
         /// <summary>
         /// 根据用户ID 得到用户信息
@@ -36,7 +67,13 @@ namespace XMGAME.BLL
         /// </summary>
         /// <param name="id">用户ID</param>
         /// <returns></returns>
-    
+
+        public bool DeleteUser(int id) {
+            User user= userDAL.GetEntityByID(id);
+            return userDAL.Delete(user);
+            
+        }
+
         [ErroAttribute(Rule = new object[] { 102, null })]
         public User GetUserInfoByID(int id)
         {
@@ -77,22 +114,18 @@ namespace XMGAME.BLL
             User user= userDAL.GetByWhere(record,pairs,"&&").FirstOrDefault();
            
             if (user != null) {
-                //if (SocketHandler.gdicLoginUser.ContainsKey(accountName))
-                //{
-                //    SocketHandler socketHandler = new SocketHandler();
-                //    socketHandler.InformLostLogin(SocketHandler.gdicLoginUser[accountName]);
-                //    SocketHandler.gdicLoginUser.Remove(accountName);
-                //}
                 user.Token = GetGuid();
                 userDAL.UpdateOrAddToken(user);
-                //if(!SocketHandler.gdicLoginUser.ContainsKey(accountName))
-                //SocketHandler.gdicLoginUser.Add(accountName,user.Token);
+                
+
 
                 return user;
             }
         
             return null;
         }
+
+    
 
         /// <summary>
         /// 注册
@@ -191,8 +224,7 @@ namespace XMGAME.BLL
         /// 根据用户名得到用户信息
         /// </summary>
         /// <param name="accountName">用户名</param>
-        /// <returns></returns>
-        
+        /// <returns></returns>      
         public User GetUserByAccountName(string accountName) {
             return userDAL.GetUsers(new string[] { accountName} ).FirstOrDefault();
         }

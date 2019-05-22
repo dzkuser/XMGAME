@@ -41,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IActivityDAL.cs" />
+    <Compile Include="IActRecordDAL.cs" />
+    <Compile Include="IActToRecordDAL.cs" />
     <Compile Include="IBaseDAL.cs" />
     <Compile Include="IDealDAL.cs" />
     <Compile Include="IExceptionLogDAL.cs" />
     <Compile Include="IGameDAL.cs" />
+    <Compile Include="IGameRuleDAL.cs" />
     <Compile Include="IGenreDAL.cs" />
     <Compile Include="IQuestionDAL.cs" />
     <Compile Include="IRecordDAL.cs" />

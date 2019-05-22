@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XMGAME.Comm;
 using XMGAME.DATA;
 using XMGAME.IDAL;
 using XMGAME.Model;
@@ -70,6 +71,69 @@ namespace XMGAME.DAL
 
              });
         }
+
+        public IQueryable<object> GetRecordCollect(string account, DateTime? createTime,DateTime? endTime) {
+            IQueryable<Record> recordSet = dbContext.Set<Record>();
+        
+            if (account != null) {
+                recordSet=recordSet.Where(t=>t.AccountName==account);
+            }
+            if (createTime != null) {
+               recordSet= recordSet.Where(t => t.CreateDate >= createTime);
+            }
+            if (endTime != null) {
+             recordSet=recordSet.Where(t=>t.CreateDate<=endTime);
+            }
+
+        return    (from r in recordSet
+             join g in dbContext.Set<Game>()
+             on r.GameID equals g.ID
+             group r by new { g.ID, g.Name } into rg
+             select new
+             {
+                 ID = rg.Key.ID,
+                 Name = rg.Key.Name,
+                 Integral = rg.Sum(b => b.Integral)
+             }
+             );
+            
+
+        }
+
+        public IQueryable<object> GetRecordCollectByAgency(string agent, DateTime? createTime, DateTime? endTime, int gameID) {
+            IQueryable<Record> recordSet = dbContext.Set<Record>();
+        
+            if (createTime != null)
+            {
+                recordSet.Where(t=>true);
+                recordSet = recordSet.Where(t => t.CreateDate >= createTime);
+            }
+            if (endTime != null)
+            {
+                recordSet = recordSet.Where(t => t.CreateDate <= endTime);
+            }
+            if (gameID > 0) {
+                recordSet = recordSet.Where(t => t.GameID==gameID);
+            }
+            agent = Md5.GetMD5String(agent);
+         return    (from r in recordSet
+              join g in dbContext.Set<User>()
+              on r.AccountName equals g.AccountName
+              where g.UserPassWord==agent
+              group r by new { r.CreateDate } into rg
+              select new
+              {
+                  Date =rg.Key.CreateDate ,
+                  NamRecordCount =rg.Count(),
+                  IntegralSum = rg.Sum(b => b.Integral)
+              }
+             );
+
+
+        }
+
+     
+
 
 
     }

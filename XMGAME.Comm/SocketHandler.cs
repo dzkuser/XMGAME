@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SuperWebSocket;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -117,17 +118,15 @@ namespace XMGAME.Comm
             {
                 gdicSessiomMap.Remove(aSession.SessionID);
             }
-            string strUserKey = gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
-            if (strUserKey == null)
-            {
-                strUserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
+               string strUserKey = null;
+                strUserKey  = gdicSessiomMap.Where(u => u.Value == aSession).FirstOrDefault().Key;
                 if (strUserKey == null)
-                    return;
-            }         
-            //string strUserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
-            //if (strUserKey == null) {
-            //    return;
-            //}
+                {
+                    strUserKey = gdicSessionClose.Where(u => u.Value == aSession).FirstOrDefault().Key;
+                    if (strUserKey == null)
+                        return;
+                }
+       
             gdicSessiomMap.Remove(strUserKey);
             string strRoomId = objRoom.Where(u => u.Value.Contains(strUserKey)).FirstOrDefault().Key;
             if (strRoomId == null) {
@@ -159,7 +158,8 @@ namespace XMGAME.Comm
                 }
                 SocketEntity socketEntity = new SocketEntity()
                 {
-                    Tag = SocketEnum.s.ToString(),
+                    FromUser=strUserKey,
+                    Tag = SocketEnum.lost.ToString(),
                     Message = ResourceHelp.GetResourceString("lostConn"),
                     ToUser = Room
                 };
@@ -579,18 +579,18 @@ namespace XMGAME.Comm
             //得到要执行的方法对象和类实例对象
         
             ResponseVo responseVo = null;
-          try
+         try
             {
                 MethodInfo method = GetActionMethod(out backObj, className: am[0], method: am[1]);
                 //得到方法执行数据
                 object result = takeData(method, param, backObj);
                  responseVo = GetErroResult(method, result);
-            }
+          }
             catch (Exception ex)
           {
     
-               responseVo = getResponseVo(500, ex.StackTrace);
-            }
+              responseVo = getResponseVo(500, ex.Message);
+           }
 
 
             //处理ResponseVo对象并发送数据
@@ -672,12 +672,13 @@ namespace XMGAME.Comm
             if (method == null) {
                 return null;
             }
-
+            
             Dictionary<string, object> paramMethod = new Dictionary<string, object>();
             if (param != null) {
                 keyToUpper(ref param);
                 //如果参数为实体的话就把参数封装为实体类
-                entityMapping(ref paramMethod, method, ref param);
+                ParameterInfo[] parameterInfo = method.GetParameters();
+                entityMapping(ref paramMethod, ParameterInfoArrayToDic(parameterInfo), ref param);
 
                 if (param == null)
                 {
@@ -723,33 +724,99 @@ namespace XMGAME.Comm
                     
         }
 
+
+        private Dictionary<string, Type> ParameterInfoArrayToDic(ParameterInfo[] parameterInfo)
+        {
+            Dictionary<string, Type> pairs = new Dictionary<string, Type>();
+            foreach (var item in parameterInfo)
+            {
+                pairs.Add(item.Name,item.ParameterType);
+            }
+            return pairs;
+        }
+
+        private Dictionary<string, Type> ParameterInfoArrayToDic(PropertyInfo[] parameterInfo)
+        {
+            Dictionary<string, Type> pairs = new Dictionary<string, Type>();
+            foreach (var item in parameterInfo)
+            {
+                pairs.Add(item.Name, item.PropertyType);
+            }
+            return pairs;
+        }
+
         /// <summary>
         /// 实体映射 把传来的参数
         /// </summary>
         /// <param name="paramMethod"></param>
         /// <param name="method"></param>
         /// <param name="param"></param>
-        private void entityMapping(ref Dictionary<string, object> paramMethod,MethodInfo method,ref Dictionary<string, object> param) {
-            ParameterInfo[] parameterInfo = method.GetParameters();
-            foreach (var item in parameterInfo)
+        private void entityMapping(ref Dictionary<string, object> paramMethod, Dictionary<string, Type> parameter, ref Dictionary<string, object> param,bool takeKey=false) {
+         
+           
+            foreach (var item in parameter)
             {
-                Type type = item.ParameterType;
+                Type type = item.Value;
+
                 if (type.IsClass&&type!=typeof(string))
                 {
                     Dictionary<string, PropertyInfo> pairs = type.GetProperties().ToDictionary(t => t.Name);
-                    Debug.Write(type.FullName);
                     object newObj = type.Assembly.CreateInstance(type.FullName);
-                    MapperEntity(pairs, ref param, ref newObj);
-                    paramMethod.Add(item.Name, newObj);
+                    if (parameter.Count > 1) {
+                        takeKey = true;
+                    }
+                    if (typeof(IList).IsAssignableFrom(type))
+                    {
+                        Type[] types= type.GetGenericArguments();
+                        if (!param.ContainsKey(item.Key.ToUpper())) {
+                            continue;
+                        }
+                        AssembleList(ref newObj,param[item.Key.ToUpper()],types[0]);
+                    }
+                    else {
+                        if (takeKey)
+                        {
+                            Dictionary<string,object> objValue =(Dictionary<string,object>)param[item.Key.ToUpper()];
+                            keyToUpper(ref objValue);
+                            MapperEntity(pairs,objValue, ref newObj);
+                        }
+                        else {
+                            MapperEntity(pairs, param, ref newObj);
+                        }
+                       
+                    }                  
+                    paramMethod.Add(item.Key, newObj);
                 }
                 else
                 {
-                    if(param.ContainsKey(item.Name.ToUpper()))
-                    paramMethod.Add(item.Name, param[item.Name.ToUpper()]);
+                    if(param.ContainsKey(item.Key.ToUpper()))
+                    paramMethod.Add(item.Key, param[item.Key.ToUpper()]);
                 }
 
             }
         }
+
+        /// <summary>
+        /// 映射集合类型数据
+        /// </summary>
+        /// <param name="obj">方法参数对象</param>
+        /// <param name="param">参数</param>
+        /// <param name="valueType">值类型</param>
+        private void AssembleList(ref object obj,object param,Type valueType) {               
+                Type type = param.GetType();     
+            
+                foreach (var value in (ArrayList)param)
+                {                                     
+                        Dictionary<string,object> valueV = (Dictionary<string,object>)value;
+                        object objValue = valueType.Assembly.CreateInstance(valueType.FullName);
+                        keyToUpper(ref valueV);
+                        MapperEntity(valueType.GetProperties().ToDictionary(t => t.Name),  valueV, ref objValue);
+                        Type objType = obj.GetType();
+                       
+                        objType.GetMethod("Add").Invoke(obj, new object[] { objValue });                   
+                }                         
+        }
+
 
 
         /// <summary>
@@ -779,27 +846,63 @@ namespace XMGAME.Comm
         /// <param name="fields">实体类属性</param>
         /// <param name="param">前端的参数</param>
         /// <param name="obj">实体类对象</param>
-        private void MapperEntity(Dictionary<string, PropertyInfo> fields,ref Dictionary<string, object> param, ref object obj) {
+        private void MapperEntity(Dictionary<string, PropertyInfo> fields, Dictionary<string, object> param, ref object obj) {
 
             foreach (var item in fields)
             {
-                if (param.ContainsKey(item.Key.ToUpper())) {
-               
-                    object value = null;
-                    if (item.Value.GetCustomAttribute(typeof(DateTimeAttribute)) != null)
+                if (item.Value.PropertyType.IsClass && item.Value.PropertyType != typeof(string))
+                {
+                    object newObj = null;
+                    Type objValueType = item.Value.PropertyType;
+                    if (typeof(IList).IsAssignableFrom(objValueType))
                     {
-                        value = Convert.ToDateTime(param[item.Key.ToUpper()]);
+                        Type[] types = objValueType.GetGenericArguments();
+                        if (!param.ContainsKey(item.Key.ToUpper()))
+                        {
+                            continue;
+                        }
+                        newObj= objValueType.Assembly.CreateInstance(objValueType.FullName);
+                     
+                        AssembleList(ref newObj, param[item.Key.ToUpper()], types[0]);
                     }
                     else {
-                        value = param[item.Key.ToUpper()];
-                    }   
-                    item.Value.SetValue(obj, value);
+                        Dictionary<string, object> pairs = new Dictionary<string, object>();
+                        PropertyInfo[] propertyInfos = objValueType.GetProperties();
+                        Dictionary<string, Type> keys = new Dictionary<string, Type>();
+                        keys.Add(objValueType.Name,objValueType);
+                        entityMapping(ref pairs,keys, ref param,true);
+                        newObj= pairs.Values.ToArray()[0];
+                    }
+                  
+                    item.Value.SetValue(obj, newObj);
                     param.Remove(item.Key);
-                }                                    
+                }
+                else {
+
+                    if (param.ContainsKey(item.Key.ToUpper()))
+                    {
+
+                        object value = null;
+                        if (item.Value.GetCustomAttribute(typeof(DateTimeAttribute)) != null)
+                        {
+                            value = Convert.ToDateTime(param[item.Key.ToUpper()]);
+                        }
+                        else
+                        {
+                            value = param[item.Key.ToUpper()];
+                        }
+                        item.Value.SetValue(obj, value);
+                        param.Remove(item.Key);
+                    }
+
+                }
+                                                    
             }
         }
 
-     
+      
+
+
         /// <summary>
         /// 把字典的键变成大写
         /// </summary>

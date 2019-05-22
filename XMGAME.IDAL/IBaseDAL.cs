@@ -18,6 +18,13 @@ namespace XMGAME.IDAL
         bool Insert(T entity);
 
         /// <summary>
+        /// 增加多条记录
+        /// </summary>
+        /// <param name="entitys">实体集合</param>
+        /// <returns></returns>
+        bool InsertMore(List<T> entitys);
+
+        /// <summary>
         /// 修改一条记录
         /// </summary>
         /// <param name="entity">实体类</param>
@@ -49,11 +56,17 @@ namespace XMGAME.IDAL
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        IQueryable<T> GetByWhere(T entity, Dictionary<string, string> fieldRelation, string relation);
+        IQueryable<T> GetByWhere(T entity, Dictionary<string, string> fieldRelation, string relation, bool isPage = false, int pageNum = 1, int pageSize = 10);
+
+        /// <summary>
+        /// 使用sql语句查询
+        /// </summary>
+        /// <param name="sql">sql 语句</param>
+        /// <param name="param">参数</param>
+        /// <returns></returns>
+        IQueryable<T> QueryBySql<T>(string sql,object[] param);
 
         #endregion
-
-
 
     }
 }

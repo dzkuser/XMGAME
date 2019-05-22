@@ -175,7 +175,7 @@
     <value>游戏编号出错，请重试</value>
   </data>
   <data name="ip" xml:space="preserve">
-    <value>172.16.31.236</value>
+    <value>127.16.31.236</value>
   </data>
   <data name="loginErro" xml:space="preserve">
     <value>登录异常，已在其他地方登录</value>
@@ -190,7 +190,7 @@
     <value>你已经被请出房间</value>
   </data>
   <data name="port" xml:space="preserve">
-    <value>7009</value>
+    <value>7787</value>
   </data>
   <data name="ready" xml:space="preserve">
     <value>用户准备</value>
@@ -218,5 +218,11 @@
   </data>
   <data name="timerTime" xml:space="preserve">
     <value>10000</value>
+  </data>
+  <data name="120" xml:space="preserve">
+    <value>操作成功</value>
+  </data>
+  <data name="121" xml:space="preserve">
+    <value>操作失败</value>
   </data>
 </root>

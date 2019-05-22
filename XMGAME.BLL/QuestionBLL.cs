@@ -76,7 +76,7 @@ namespace XMGAME.BLL
         [ErroAttribute(Rule = new object[] { 106, null })]
         public IQueryable<QuestionEntity> GetQuestions() {
            
-            int max= GetAll().Count();
+              int max= GetAll().Count();
               int [] ids= getRadomNumber(1,max,5);
             return AssembleQuestions(questionDAL.GetByIDs(ids));
         }

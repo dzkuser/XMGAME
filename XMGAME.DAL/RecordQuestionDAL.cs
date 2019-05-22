@@ -62,7 +62,7 @@ namespace XMGAME.DAL
                          AccountName=r.AccountName,
                          Integral=r.Integral,
                          CreateTime=r.CreateTime,
-                         EndTime=r.EndTime,
+                         CreateDate=r.CreateDate,
                          RoomID=r.RoomID,
                          Atime=rq.Atime,
                          Reply=rq.Reply

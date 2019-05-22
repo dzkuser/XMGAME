@@ -24,9 +24,9 @@ namespace UnitTestProject1
         [TestMethod]
         public void  GetUserInfoByID()
         {
-            int  id = 7;
+            int  id = 1118;
             User user=  userBLL.GetUserInfoByID(id);
-            Assert.AreEqual(user.ID,7);
+            Assert.AreEqual(user.ID,1118);
              
         }
 
@@ -62,7 +62,7 @@ namespace UnitTestProject1
         public void  UpdateIntegral()
         {
             User userEdit = new User();
-            userEdit.Token = "3919f72d-960f-47a4-b874-2c81b2a47947";
+            userEdit.AccountName = "123";
             userEdit.Integral = 20;
             bool isSuccess= userBLL.UpdateIntegral(userEdit);
             Assert.AreEqual(isSuccess,true);

@@ -29,6 +29,9 @@ namespace XMGAME.DATA
             modelBuilder.Configurations.Add(new RecordQuestionMapper());
             modelBuilder.Configurations.Add(new ExceptioLogMapper());
             modelBuilder.Configurations.Add(new DealMapper());
+            modelBuilder.Configurations.Add(new ActivityMapper());
+            modelBuilder.Configurations.Add(new ActToRecordMapper());
+            modelBuilder.Configurations.Add(new ActRecordMapper());
             base.OnModelCreating(modelBuilder);
         }
     } 
