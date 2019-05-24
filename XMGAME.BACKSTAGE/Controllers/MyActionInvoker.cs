@@ -27,24 +27,34 @@ namespace XMGAME.BACKSTAGE.Controllers
 
         protected override ActionResult InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary<string, object> parameters)
         {
-             string path= controllerContext.HttpContext.Request.Url.AbsolutePath;
-             string filePath =controllerContext.HttpContext.Server.MapPath("/");
-             bool isPower= GetJson(filePath,path,"dzk");
-            if (isPower) {
-                ContentResult contentResult = new ContentResult();
-                contentResult.Content="你没有权限";
-                return contentResult;
+            string path = controllerContext.HttpContext.Request.Url.AbsolutePath;
+            string filePath = controllerContext.HttpContext.Server.MapPath("/");
+            bool isPower = GetJson(filePath, path, "dzk");
+            //if (isPower)
+            //{
+            //    ContentResult contentResult = new ContentResult();
+            //    contentResult.Content = "你没有权限";
+            //    return contentResult;
+            //}
+
+            ResponseVo responseVo = new ResponseVo();
+            Type type = actionDescriptor.ControllerDescriptor.ControllerType;
+            string name = actionDescriptor.ActionName;
+
+          //  ContentResult actionResult = (ContentResult)base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
+            ActionResult actionResult = base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
+            if ( actionResult is ContentResult) {
+                ContentResult contentResult =(ContentResult) actionResult;
+                GetErroResult(type, name, contentResult.Content, ref responseVo);
+                contentResult.Content = JsonConvert.SerializeObject(responseVo);
             }
-             ResponseVo responseVo = new ResponseVo();
-             Type type= actionDescriptor.ControllerDescriptor.ControllerType;   
-             string name= actionDescriptor.ActionName;
-             ContentResult actionResult = (ContentResult)base.InvokeActionMethod(controllerContext, actionDescriptor, parameters);
-             GetErroResult(type,name,actionResult.Content,ref responseVo);
-            actionResult.Content = JsonConvert.SerializeObject(responseVo);
-             return actionResult;
+
+            return actionResult;
         }
 
-       
+
+
+
         /// <summary>
         /// 获取错误
         /// </summary>
@@ -66,7 +76,7 @@ namespace XMGAME.BACKSTAGE.Controllers
                     {
                         strCode = objRelus[i].ToString();
                         responseVo.Message = ResourceHelp.GetResourceString(strCode);
-                        responseVo.Code = Convert.ToInt32(strCode);
+                       // responseVo.Code = Convert.ToInt32);
                         break;
                     }
                 }
@@ -88,7 +98,9 @@ namespace XMGAME.BACKSTAGE.Controllers
             
             string josnString = File.ReadAllText(filePath+"\\Content\\authority.json", Encoding.Default);
             JObject jObject = JObject.Parse(josnString);
-            List<string> userName= JsonConvert.DeserializeObject<List<string>>(jObject[path]["user"].ToString());
+             JToken zh= jObject["zh_cn"];
+            Dictionary<int,JToken> tokens = zh.ToDictionary(t=>int.Parse(t.First.First.ToString()));
+            List<JToken> userName= JsonConvert.DeserializeObject<List<JToken>>(jObject["zh_cn"].ToString());
             return userName.Contains(user);
 
         }

@@ -1,14 +1,96 @@
 {
 
-
-    "/User/Index": {
-      "user": [ "dzk" ]
+  "zh_cn": [
+    {
+      "id": 1,
+      "text": "主页",
+      "level": 1,
+      "role": [ "dzk", "agent" ],
+      "gametype": [ "Basketball", "Boxing" ],
+      "sort": 4,
+      "path": "/Test/Index",
+      "action": "",
+      "parentID": 0
     },
-    "/Game/Index": {
+    {
+      "id": 2,
+      "text": "功能管理",
+      "level": 1,
+      "role": [ "dzk", "agent" ],
+      "gametype": [ "Basketball", "Boxing" ],
+      "sort": 4,
+      "path": "/Test/Function",
+      "action": [
+        {
+          "text": "查询",
+          "role": [ "admin", "agent", "dzk" ],
+          "gametype": [ "Boxing" ]
+        },
+        {
+          "text": "新增",
+          "role": [ "admin","dzk" ],
+          "gametype": [ "Boxing" ]
+        },
+        {
+          "text": "修改",
+          "role": [ "admin", "agent" ],
+          "gametype": [ "Boxing" ]
+        },
+        {
+          "text": "删除",
+          "role": [ "admin" ],
+          "gametype": [ "Boxing" ]
+        }
+      ],
+      "parentID": 1
+    },
 
-      "user": ["kkk"]
+
+    {
+      "id": 3,
+      "text": "权限管理",
+      "level": 1,
+      "role": [ "admin", "agent" ],
+      "gametype": [ "Basketball", "Boxing" ],
+      "sort": 2,
+      "path": "",
+      "action": "",
+      "parentID": 1
+    },
+
+
+    {
+      "id": 4,
+      "text": "赛事设定",
+      "level": 1,
+      "role": [ "admin", "agent" ],
+      "gametype": [ "Basketball", "Boxing" ],
+      "sort": 4,
+      "path": "/admin/MatchSetting.html",
+      "action": [
+        {
+          "text": "查询",
+          "role": [ "admin", "agent" ],
+          "gametype": [ "Boxing" ]
+        },
+        {
+          "text": "新增",
+          "role": [ "admin" ],
+          "gametype": [ "Boxing" ]
+        },
+        {
+          "text": "修改",
+          "role": [ "admin", "agent" ],
+          "gametype": [ "Boxing" ]
+        },
+        {
+          "text": "删除",
+          "role": [ "admin" ],
+          "gametype": [ "Boxing" ]
+        }
+      ],
+      "parentID": 0
     }
+  ]
 
-  
-  
 }

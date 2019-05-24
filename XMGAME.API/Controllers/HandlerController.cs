@@ -72,7 +72,7 @@ namespace XMGAME.API.Controllers
         /// paras:[0]代理 [1]帐号 [2]PC端0 移动端1
         /// aulture:语系
         /// </param>
-        [Erro(Rule =new Object[] {100,100})]
+        [Erro(Rule =new Object[] {"ch100", 100})]
         private object Login(ParsItem aobjParsItem) {
             List<string> objParam = aobjParsItem.paras;
             User user = userBLL.Login(objParam[1], objParam[0]);
@@ -114,7 +114,7 @@ namespace XMGAME.API.Controllers
         /// </param>
         /// <returns></returns>
         [Transaction]
-        [Erro(Rule =new object[] {1001,1001,1002,1002,1003,1003})]
+        [Erro(Rule =new object[] { "ch1001", 1001, "ch1002", 1002, "ch1003", 1003})]
         private  object EditCredit(ParsItem aobjParsItem) {        
             result_base _ret = new result_base();
             List<string> paras = aobjParsItem.paras;
@@ -167,7 +167,7 @@ namespace XMGAME.API.Controllers
         /// </param>
         /// <returns></returns>
 
-        [Erro(Rule = new object[] { 1004, 1004 })]
+        [Erro(Rule = new object[] { "ch1004", 1004 })]
         private object EditCreditConfirm(ParsItem aobjParsItem) {      
             List<string> paras = aobjParsItem.paras;
             bool isExist = dealBLL.IsExistTradingCode(paras[0],paras[1]);
@@ -262,6 +262,7 @@ namespace XMGAME.API.Controllers
             {
                 object obj = new
                 {
+                    RecordID=item.ID,
                     AccountName=item.AccountName,
                     Integral=item.Integral,
                     Time=item.Time,
@@ -274,7 +275,11 @@ namespace XMGAME.API.Controllers
 
 
 
-
+        /// <summary>
+        /// 游戏记录汇总
+        /// </summary>
+        /// <param name="aobjParsItem"></param>
+        /// <returns></returns>
         private IQueryable<object> GetRecordCollect(ParsItem aobjParsItem) {
             List<string> paras = aobjParsItem.paras;
             string strAccountName = null;

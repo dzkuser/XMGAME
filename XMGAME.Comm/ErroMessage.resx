@@ -117,52 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="100" xml:space="preserve">
+  <data name="ch100" xml:space="preserve">
     <value>用户登录失败</value>
   </data>
-  <data name="1001" xml:space="preserve">
+  <data name="ch1001" xml:space="preserve">
     <value>以存在交易</value>
   </data>
-  <data name="1002" xml:space="preserve">
+  <data name="ch1002" xml:space="preserve">
     <value>余额不足</value>
   </data>
-  <data name="1003" xml:space="preserve">
+  <data name="ch1003" xml:space="preserve">
     <value>交易失败</value>
   </data>
-  <data name="1004" xml:space="preserve">
+  <data name="ch1004" xml:space="preserve">
     <value>不存在交易</value>
   </data>
-  <data name="101" xml:space="preserve">
+  <data name="ch101" xml:space="preserve">
     <value>没有该Token的用户</value>
   </data>
-  <data name="102" xml:space="preserve">
+  <data name="ch102" xml:space="preserve">
     <value>没有改ID的用户</value>
   </data>
-  <data name="103" xml:space="preserve">
+  <data name="ch103" xml:space="preserve">
     <value>注册失败</value>
   </data>
-  <data name="104" xml:space="preserve">
+  <data name="ch104" xml:space="preserve">
     <value>修改积分失败</value>
   </data>
-  <data name="105" xml:space="preserve">
+  <data name="ch105" xml:space="preserve">
     <value>修改或增加token失败</value>
   </data>
-  <data name="106" xml:space="preserve">
+  <data name="ch106" xml:space="preserve">
     <value>题库题目为空</value>
   </data>
-  <data name="107" xml:space="preserve">
+  <data name="ch107" xml:space="preserve">
     <value>没有为改ID的题目</value>
   </data>
-  <data name="108" xml:space="preserve">
+  <data name="ch108" xml:space="preserve">
     <value>添加记录失败</value>
   </data>
-  <data name="109" xml:space="preserve">
+  <data name="ch109" xml:space="preserve">
     <value>修改记录失败</value>
   </data>
-  <data name="200" xml:space="preserve">
+  <data name="ch200" xml:space="preserve">
     <value>成功</value>
   </data>
-  <data name="500" xml:space="preserve">
+  <data name="ch500" xml:space="preserve">
     <value>系统失败</value>
   </data>
   <data name="expirationTime" xml:space="preserve">
@@ -175,7 +175,7 @@
     <value>游戏编号出错，请重试</value>
   </data>
   <data name="ip" xml:space="preserve">
-    <value>127.16.31.236</value>
+    <value>172.16.31.236</value>
   </data>
   <data name="loginErro" xml:space="preserve">
     <value>登录异常，已在其他地方登录</value>
@@ -190,7 +190,7 @@
     <value>你已经被请出房间</value>
   </data>
   <data name="port" xml:space="preserve">
-    <value>7787</value>
+    <value>8009</value>
   </data>
   <data name="ready" xml:space="preserve">
     <value>用户准备</value>
@@ -219,10 +219,10 @@
   <data name="timerTime" xml:space="preserve">
     <value>10000</value>
   </data>
-  <data name="120" xml:space="preserve">
+  <data name="ch120" xml:space="preserve">
     <value>操作成功</value>
   </data>
-  <data name="121" xml:space="preserve">
+  <data name="ch121" xml:space="preserve">
     <value>操作失败</value>
   </data>
 </root>

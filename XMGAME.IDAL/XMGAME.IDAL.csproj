@@ -50,10 +50,14 @@
     <Compile Include="IGameDAL.cs" />
     <Compile Include="IGameRuleDAL.cs" />
     <Compile Include="IGenreDAL.cs" />
+    <Compile Include="IPowerDAL.cs" />
     <Compile Include="IQuestionDAL.cs" />
     <Compile Include="IRecordDAL.cs" />
     <Compile Include="IRecordQuestionDAL.cs" />
+    <Compile Include="IRoleDAL.cs" />
+    <Compile Include="IRolePowerDAL.cs" />
     <Compile Include="IUserDAL.cs" />
+    <Compile Include="IUserRoleDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

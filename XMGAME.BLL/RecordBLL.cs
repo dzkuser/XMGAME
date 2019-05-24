@@ -95,7 +95,7 @@ namespace XMGAME.BLL
         /// <param name="record">记录信息实体类</param>
         /// <returns></returns>
         //   [Redis("recordInfo",ArgumentName ="accountName",IsDelete =true)]
-        [ErroAttribute(Rule = new object[] { 108, null })]
+        [ErroAttribute(Rule = new object[] { "ch108", null })]
         public Record AddRecord(Record record)
         {
             string strToken = record.AccountName;
@@ -153,7 +153,7 @@ namespace XMGAME.BLL
         /// </summary>
         /// <param name="record">记录信息</param>
         /// <returns></returns>
-        [ErroAttribute(Rule = new object[] { 109, false })]
+        [ErroAttribute(Rule = new object[] { "ch109", false })]
         public bool UpdateRecord(Record record)
         {
             User userEdit = userDAL.GetUserByToken(record.AccountName);

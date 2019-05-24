@@ -10,19 +10,20 @@ using XMGAME.Model;
 
 namespace XMGAME.BACKSTAGE.Controllers
 {
-    public class UserController : Controller
+    public class UserInfoController : BaseController
     {
 
         private UserBLL mobjUserBLL = new UserBLL();
         // GET: User
-        public ActionResult Index(string account,int pageNum=0,int pageSize=10)
+        public ActionResult GetAll(string account, int pageNum = 0, int pageSize = 10)
         {
             IQueryable<XMGAME.Model.User> objUser = mobjUserBLL.GetUserALL();
 
-            return Content(JsonConvert.SerializeObject(objUser)); 
+            return Content(JsonConvert.SerializeObject(objUser));
         }
 
-        [Erro(Rule = new object[] { "120", 120, "121", 121 })]
+        [HttpPost]
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult DeleteUser(int id) {
 
             bool isSuccess = mobjUserBLL.DeleteUser(id);
@@ -38,8 +39,11 @@ namespace XMGAME.BACKSTAGE.Controllers
 
         }
 
+
+        [HttpPost]
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult InsertUser(User user) {
-            bool isSuccess= mobjUserBLL.Register(user);
+            bool isSuccess = mobjUserBLL.Register(user);
 
             if (isSuccess)
             {
@@ -51,7 +55,8 @@ namespace XMGAME.BACKSTAGE.Controllers
             }
         }
 
-
+        [HttpPost]
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult UpdateUser(User user) {
             bool isSuccess = mobjUserBLL.UpdateUser(user);
             if (isSuccess)
@@ -64,5 +69,11 @@ namespace XMGAME.BACKSTAGE.Controllers
             }
         }
 
+        
+        public ActionResult GetUserByID(int id) {
+
+            var userInfo= mobjUserBLL.GetUserInfoByID(id);
+            return Content(JsonConvert.SerializeObject(userInfo));
+        }
     }
 }

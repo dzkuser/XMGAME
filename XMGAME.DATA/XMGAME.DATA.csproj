@@ -56,11 +56,15 @@
     <Compile Include="mapper\GameMapper.cs" />
     <Compile Include="mapper\GameRuleMapper.cs" />
     <Compile Include="mapper\GenreMapper.cs" />
+    <Compile Include="mapper\PowerMapper.cs" />
     <Compile Include="mapper\QuestionMapper.cs" />
     <Compile Include="mapper\RecordMapper.cs" />
     <Compile Include="mapper\RecordQuestionMapper.cs" />
+    <Compile Include="mapper\RoleMapper.cs" />
+    <Compile Include="mapper\RolePowerMapper.cs" />
     <Compile Include="mapper\TokenMapper.cs" />
     <Compile Include="mapper\UserMapper.cs" />
+    <Compile Include="mapper\UserRoleMapper.cs" />
     <Compile Include="MyDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -53,16 +53,22 @@
     <Compile Include="GameRuleEntity.cs" />
     <Compile Include="GenreEntity.cs" />
     <Compile Include="Page.cs" />
+    <Compile Include="Power.cs" />
+    <Compile Include="PowerEntity.cs" />
+    <Compile Include="PowerItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionEntity.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="RecordQuestion.cs" />
     <Compile Include="RecordQuestionDTO.cs" />
     <Compile Include="ResponseVo.cs" />
+    <Compile Include="RoleEntity.cs" />
+    <Compile Include="RolePowerEntity.cs" />
     <Compile Include="SocketEntity.cs" />
     <Compile Include="TokenEntity.cs" />
     <Compile Include="Topic.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserRoleEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

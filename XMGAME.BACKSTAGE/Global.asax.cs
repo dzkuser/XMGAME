@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using XMGAME.BACKSTAGE.Controllers;
 
 namespace XMGAME.BACKSTAGE
 {
@@ -12,10 +13,15 @@ namespace XMGAME.BACKSTAGE
     {
         protected void Application_Start()
         {
+           
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        
+
+
+
     }
 }

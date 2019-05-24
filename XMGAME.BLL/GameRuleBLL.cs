@@ -55,8 +55,25 @@ namespace XMGAME.BLL
         /// 查询所有
         /// </summary>
         /// <returns></returns>
-        public IQueryable<object> GetALLByFill() {
+        public IQueryable<object> GetALLByFill()
+        {
             return mobjGameRuleDAL.GetAllByFill();
+        }
+
+        public GameRuleEntity GetByID(int id) {
+            return mobjGameRuleDAL.GetEntityByID(id);
+        }
+
+        public GameRuleEntity GetByGameID(int gameID) {
+
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            pairs.Add("GameID", "==");
+            GameRuleEntity gameRuleEntity = new GameRuleEntity() {
+                GameID = gameID
+             };
+
+          return  mobjGameRuleDAL.GetByWhere(gameRuleEntity,pairs,"").FirstOrDefault();
+
         }
     }
 }

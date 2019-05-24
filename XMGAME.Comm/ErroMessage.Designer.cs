@@ -63,162 +63,162 @@ namespace XMGAME.Comm {
         /// <summary>
         ///   查找类似 用户登录失败 的本地化字符串。
         /// </summary>
-        internal static string _100 {
+        internal static string ch100 {
             get {
-                return ResourceManager.GetString("100", resourceCulture);
+                return ResourceManager.GetString("ch100", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 以存在交易 的本地化字符串。
         /// </summary>
-        internal static string _1001 {
+        internal static string ch1001 {
             get {
-                return ResourceManager.GetString("1001", resourceCulture);
+                return ResourceManager.GetString("ch1001", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 余额不足 的本地化字符串。
         /// </summary>
-        internal static string _1002 {
+        internal static string ch1002 {
             get {
-                return ResourceManager.GetString("1002", resourceCulture);
+                return ResourceManager.GetString("ch1002", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 交易失败 的本地化字符串。
         /// </summary>
-        internal static string _1003 {
+        internal static string ch1003 {
             get {
-                return ResourceManager.GetString("1003", resourceCulture);
+                return ResourceManager.GetString("ch1003", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 不存在交易 的本地化字符串。
         /// </summary>
-        internal static string _1004 {
+        internal static string ch1004 {
             get {
-                return ResourceManager.GetString("1004", resourceCulture);
+                return ResourceManager.GetString("ch1004", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 没有该Token的用户 的本地化字符串。
         /// </summary>
-        internal static string _101 {
+        internal static string ch101 {
             get {
-                return ResourceManager.GetString("101", resourceCulture);
+                return ResourceManager.GetString("ch101", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 没有改ID的用户 的本地化字符串。
         /// </summary>
-        internal static string _102 {
+        internal static string ch102 {
             get {
-                return ResourceManager.GetString("102", resourceCulture);
+                return ResourceManager.GetString("ch102", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 注册失败 的本地化字符串。
         /// </summary>
-        internal static string _103 {
+        internal static string ch103 {
             get {
-                return ResourceManager.GetString("103", resourceCulture);
+                return ResourceManager.GetString("ch103", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 修改积分失败 的本地化字符串。
         /// </summary>
-        internal static string _104 {
+        internal static string ch104 {
             get {
-                return ResourceManager.GetString("104", resourceCulture);
+                return ResourceManager.GetString("ch104", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 修改或增加token失败 的本地化字符串。
         /// </summary>
-        internal static string _105 {
+        internal static string ch105 {
             get {
-                return ResourceManager.GetString("105", resourceCulture);
+                return ResourceManager.GetString("ch105", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 题库题目为空 的本地化字符串。
         /// </summary>
-        internal static string _106 {
+        internal static string ch106 {
             get {
-                return ResourceManager.GetString("106", resourceCulture);
+                return ResourceManager.GetString("ch106", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 没有为改ID的题目 的本地化字符串。
         /// </summary>
-        internal static string _107 {
+        internal static string ch107 {
             get {
-                return ResourceManager.GetString("107", resourceCulture);
+                return ResourceManager.GetString("ch107", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 添加记录失败 的本地化字符串。
         /// </summary>
-        internal static string _108 {
+        internal static string ch108 {
             get {
-                return ResourceManager.GetString("108", resourceCulture);
+                return ResourceManager.GetString("ch108", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 修改记录失败 的本地化字符串。
         /// </summary>
-        internal static string _109 {
+        internal static string ch109 {
             get {
-                return ResourceManager.GetString("109", resourceCulture);
+                return ResourceManager.GetString("ch109", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 操作成功 的本地化字符串。
         /// </summary>
-        internal static string _120 {
+        internal static string ch120 {
             get {
-                return ResourceManager.GetString("120", resourceCulture);
+                return ResourceManager.GetString("ch120", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 操作失败 的本地化字符串。
         /// </summary>
-        internal static string _121 {
+        internal static string ch121 {
             get {
-                return ResourceManager.GetString("121", resourceCulture);
+                return ResourceManager.GetString("ch121", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 成功 的本地化字符串。
         /// </summary>
-        internal static string _200 {
+        internal static string ch200 {
             get {
-                return ResourceManager.GetString("200", resourceCulture);
+                return ResourceManager.GetString("ch200", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 系统失败 的本地化字符串。
         /// </summary>
-        internal static string _500 {
+        internal static string ch500 {
             get {
-                return ResourceManager.GetString("500", resourceCulture);
+                return ResourceManager.GetString("ch500", resourceCulture);
             }
         }
         
@@ -250,7 +250,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 127.16.31.236 的本地化字符串。
+        ///   查找类似 172.16.31.236 的本地化字符串。
         /// </summary>
         internal static string ip {
             get {
@@ -295,7 +295,7 @@ namespace XMGAME.Comm {
         }
         
         /// <summary>
-        ///   查找类似 7787 的本地化字符串。
+        ///   查找类似 8009 的本地化字符串。
         /// </summary>
         internal static string port {
             get {

@@ -74,7 +74,7 @@ namespace XMGAME.BLL
             
         }
 
-        [ErroAttribute(Rule = new object[] { 102, null })]
+        [ErroAttribute(Rule = new object[] { "ch102", null })]
         public User GetUserInfoByID(int id)
         {
             return userDAL.GetEntityByID(id);
@@ -88,7 +88,7 @@ namespace XMGAME.BLL
         /// <param name="token">用户令牌</param>
         /// <returns></returns>
  
-        [ErroAttribute(Rule = new object[] { 101, null })]
+        [ErroAttribute(Rule = new object[] { "ch101", null })]
         public User GetUserInfoByToken(string token) {        
              return userDAL.GetUserByToken(token);
                                   
@@ -102,7 +102,7 @@ namespace XMGAME.BLL
         /// <param name="accountName">用户名</param>
         /// <param name="userPassWord">密码</param>
         /// <returns></returns>
-        [ErroAttribute(Rule =new object[]{100,null})]  
+        [ErroAttribute(Rule =new object[]{ "ch100", null})]  
         public User Login(string accountName, string userPassWord) {
             
             User record = new User();
@@ -133,7 +133,7 @@ namespace XMGAME.BLL
         /// </summary>
         /// <param name="user">用户信息</param>
         /// <returns></returns>
-        [ErroAttribute(Rule = new object[] { 103,false })]
+        [ErroAttribute(Rule = new object[] { "ch103", false })]
         public bool Register(User user) {
             user.UserPassWord = Md5.GetMD5String(user.UserPassWord);
             return userDAL.Insert(user);
@@ -145,7 +145,7 @@ namespace XMGAME.BLL
         /// </summary>
         /// <param name="user">用户信息  AccountName 的值是用户令牌</param>
         /// <returns></returns>    
-        [ErroAttribute(Rule = new object[] { 104, false })]
+        [ErroAttribute(Rule = new object[] { "ch104", false })]
         public bool UpdateIntegral(User user) {
 
             User userToken= GetUserInfoByToken(user.AccountName);
@@ -180,7 +180,7 @@ namespace XMGAME.BLL
         /// <param name="user">用户信息</param>
         /// <returns></returns>
     
-        [ErroAttribute(Rule = new object[] { 105, false })]
+        [ErroAttribute(Rule = new object[] { "ch105", false })]
         public bool UpdateOrAddToken(User user) {
             
             return userDAL.UpdateOrAddToken(user);

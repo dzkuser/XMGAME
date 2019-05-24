@@ -20,7 +20,7 @@ namespace XMGAME.BACKSTAGE.Controllers
     public class GameController : BaseController
     {
 
-     
+
         /// <summary>
         /// 游戏逻辑处理层
         /// </summary>
@@ -31,17 +31,17 @@ namespace XMGAME.BACKSTAGE.Controllers
         /// 得到所有游戏
         /// </summary>
         /// <returns></returns>
-        [Erro(Rule =new object[] {"120",120,"121",121})]
-        public ActionResult Index()
+        public ActionResult GetAll()
         {
-            IQueryable<Game> objGames = mobjGameBLL.GetGames();
-            return Content(JsonConvert.SerializeObject(objGames));
+            IQueryable<Game> objGames = mobjGameBLL.GetGames();     
+            return Content(JsonConvert.SerializeObject(objGames));           
         }
 
         /// <summary>
         /// 根据游戏ID 得到游戏信息
         /// </summary>
         /// <returns></returns>
+        
         public ActionResult GetGameByID() {
             int id =Convert.ToInt32(Request["id"]);
             Game objGame = mobjGameBLL.GetGame(id);
@@ -53,8 +53,8 @@ namespace XMGAME.BACKSTAGE.Controllers
         /// </summary>
         /// <param name="aobjGame">前端数据</param>
         /// <returns></returns>
-        
-        [Erro(Rule =new object[] {"120",120,"121",121})]
+
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch121" })]
         public ActionResult EditGame(Game aobjGame) {
             bool isSuccess = mobjGameBLL.EditGame(aobjGame);
             if (isSuccess)
@@ -71,6 +71,8 @@ namespace XMGAME.BACKSTAGE.Controllers
         /// </summary>
         /// <param name="id">游戏ID</param>
         /// <returns></returns>
+        /// 
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult DeleteGame(int id) {
            bool isSuccess= mobjGameBLL.DeleteGame(id);
             if (isSuccess)
@@ -80,6 +82,19 @@ namespace XMGAME.BACKSTAGE.Controllers
             else {
                 return Content("121");
             }
+        }
+
+        public ActionResult InsertGame(Game game) {
+            bool isSuccess = mobjGameBLL.AddGame(game);
+            if (isSuccess)
+            {
+                return Content("120");
+            }
+            else
+            {
+                return Content("121");
+            }
+
         }
 
 

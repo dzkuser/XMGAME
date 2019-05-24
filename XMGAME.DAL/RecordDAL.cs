@@ -100,6 +100,8 @@ namespace XMGAME.DAL
 
         }
 
+     
+
         public IQueryable<object> GetRecordCollectByAgency(string agent, DateTime? createTime, DateTime? endTime, int gameID) {
             IQueryable<Record> recordSet = dbContext.Set<Record>();
         

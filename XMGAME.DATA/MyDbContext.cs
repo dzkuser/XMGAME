@@ -32,6 +32,12 @@ namespace XMGAME.DATA
             modelBuilder.Configurations.Add(new ActivityMapper());
             modelBuilder.Configurations.Add(new ActToRecordMapper());
             modelBuilder.Configurations.Add(new ActRecordMapper());
+            modelBuilder.Configurations.Add(new GameRuleMapper());
+            modelBuilder.Configurations.Add(new PowerMapper());
+            modelBuilder.Configurations.Add(new RoleMapper());
+         //   modelBuilder.Configurations.Add(new );
+
+
             base.OnModelCreating(modelBuilder);
         }
     } 

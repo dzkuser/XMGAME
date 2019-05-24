@@ -73,7 +73,7 @@ namespace XMGAME.BLL
         /// 错误状态码：106 ：题库题目为空
         /// </summary>
         /// <returns></returns>
-        [ErroAttribute(Rule = new object[] { 106, null })]
+        [ErroAttribute(Rule = new object[] { "ch106", null })]
         public IQueryable<QuestionEntity> GetQuestions() {
            
               int max= GetAll().Count();
@@ -86,7 +86,7 @@ namespace XMGAME.BLL
         /// 错误状态码：106 题库题目为空
         /// </summary>
         /// <returns></returns>
-        [ErroAttribute(Rule = new object[] { 106, null })]
+        [ErroAttribute(Rule = new object[] { "ch106", null })]
         public IQueryable<QuestionEntity> GetAll() {
             return AssembleQuestions(questionDAL.GetAll());
         }
@@ -97,7 +97,7 @@ namespace XMGAME.BLL
         /// </summary>
         /// <param name="id">题目ID</param>
         /// <returns></returns>
-        [ErroAttribute(Rule = new object[] { 107, null })]
+        [ErroAttribute(Rule = new object[] { "ch107", null })]
         public QuestionEntity GetQuestion(int id) {
             QuestionEntity question = new QuestionEntity();
             question.ID = id;

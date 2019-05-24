@@ -10,19 +10,19 @@ using XMGAME.Model;
 
 namespace XMGAME.BACKSTAGE.Controllers
 {
-    public class GameRuleController : Controller
+    public class GameRuleController : BaseController
     {
 
         private GameRuleBLL mobjGameRule = new GameRuleBLL();
 
         // GET: GameRule
-        public ActionResult Index()
+        public ActionResult GetAll()
         {
               object objs= mobjGameRule.GetALLByFill();
             return Content(JsonConvert.SerializeObject(objs));
         }
 
-        [Erro(Rule = new object[] { "120", 120, "121", 121 })]
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult DeleteGameRule(int id) {
 
              bool isSuccess=mobjGameRule.DeleteGameRule(id);
@@ -35,7 +35,8 @@ namespace XMGAME.BACKSTAGE.Controllers
                 return Content("121");
             }
         }
-        [Erro(Rule = new object[] { "120", 120, "121", 121 })]
+
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult UpdateGameRule(GameRuleEntity aAddGameRule) {
  
             bool isSuccess = mobjGameRule.UpdateGameRule(aAddGameRule);
@@ -49,6 +50,7 @@ namespace XMGAME.BACKSTAGE.Controllers
             }
         }
 
+        [Erro(Rule = new object[] { "120", "ch120", "121", "ch120" })]
         public ActionResult InsertGameRule(GameRuleEntity aEditGameRule) {
 
             bool isSuccess= mobjGameRule.InsertGameRule(aEditGameRule);
@@ -61,6 +63,11 @@ namespace XMGAME.BACKSTAGE.Controllers
                 return Content("121");
             }
 
+        }
+
+        public ActionResult GetGameRuleByID(int id) {
+            GameRuleEntity  gameRule= mobjGameRule.GetByID(id);
+            return Content(JsonConvert.SerializeObject(gameRule));
         }
     }
 }
