@@ -35,7 +35,9 @@ namespace XMGAME.DATA
             modelBuilder.Configurations.Add(new GameRuleMapper());
             modelBuilder.Configurations.Add(new PowerMapper());
             modelBuilder.Configurations.Add(new RoleMapper());
-         //   modelBuilder.Configurations.Add(new );
+            modelBuilder.Configurations.Add(new RolePowerMapper());
+            modelBuilder.Configurations.Add(new UserRoleMapper());
+
 
 
             base.OnModelCreating(modelBuilder);
